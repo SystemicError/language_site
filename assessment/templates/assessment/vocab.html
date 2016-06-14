@@ -1,7 +1,7 @@
 <h1>Vocab quiz</h1>
 <p>You have completed {{ num_complete }} question(s).</p>
 {% if finished %}
-	<p>You are done with vocab.  Please <a href = "{% url 'assessment:index' %}">click here</a>.</p><br />
+	<p>You are done with vocab.  Please <a href = "{% url 'assessment:index' %}">click here</a> to continue your assessment.</p><br />
 {% else %}
 	<p>Is {{ word }} a word?</p><br />
 	<form method="post" action="vocab">

@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .models import *
@@ -17,7 +17,9 @@ import random
 def indexView(request):
 	#print request.POST
 	#print request.POST.keys()
+	context = {}
 	if request.user.is_authenticated():
+		print "Got authenticated user."
 		context = get_user_context(request.user.username)
 	else:
 		# have we come here from the login page?
@@ -33,6 +35,9 @@ def indexView(request):
 			if user is not None:
 				# if so, log them in
 				login(request, user)
+				if user.is_authenticated():
+					print "Logged you in."
+					context = get_user_context(request.user.username)
 			else:
 				# if not, try again
 				context = {'greeting':  "Invalid login info.  Please try again.", 'content': "", 'link': "login"}
@@ -66,7 +71,12 @@ def loginView(request):
 	context = {}
 	return render(request, 'assessment/login.html', context)
 
-@login_required
+def logoutView(request):
+	context = {}
+	logout(request)
+	return render(request, 'assessment/logout.html', context)
+
+@login_required(login_url='/assessment/login')
 def vocabView(request):
 	context = {}
 	st = Student(name = request.user.username)
