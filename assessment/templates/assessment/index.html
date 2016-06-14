@@ -1,0 +1,14 @@
+<h1>Welcome to the language assessment!</h1>
+<p>{{ greeting }}</p>
+<p>{{ content }}</p>
+<p>
+{% if link == "login" %}
+	<a href = "{% url 'assessment:login' %}">Login page</a>
+{% endif %}
+{% if link == "vocab" %}
+	<a href = "{% url 'assessment:vocab' %}">Take the vocab quiz</a>
+{% endif %}
+{% if link == "passage" %}
+	<a href = "{% url 'assessment:passage' %}">Take the passage test</a>
+{% endif %}
+</p>

@@ -1,0 +1,15 @@
+<h1>Vocab quiz</h1>
+<p>You have completed {{ num_complete }} question(s).</p>
+{% if finished %}
+	<p>You are done with vocab.  Please <a href = "{% url 'assessment:index' %}">click here</a>.</p><br />
+{% else %}
+	<p>Is {{ word }} a word?</p><br />
+	<form method="post" action="vocab">
+	{% csrf_token %}
+	<p><input type="hidden" name="word" value="{{ word }}"></p>
+       	<p><input type="radio" name="is_word" value="yes" checked>Yes</p>
+       	<p><input type="radio" name="is_word" value="no">No</p>
+       	</p>
+       	<p class="submit"><input type="submit" name="commit" value="Submit"></p>
+     		</form>
+{% endif %}
