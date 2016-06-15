@@ -3,7 +3,7 @@
 {% if finished %}
 	<p>You are done with vocab.  Please <a href = "{% url 'assessment:index' %}">click here</a> to continue your assessment.</p><br />
 {% else %}
-	<p>Is {{ word }} a word?</p><br />
+	<p>Is "{{ word }}" a word?</p><br />
 	<form method="post" action="vocab">
 	{% csrf_token %}
 	<p><input type="hidden" name="word" value="{{ word }}"></p>
