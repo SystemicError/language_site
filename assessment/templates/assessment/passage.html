@@ -32,7 +32,7 @@
 	<form method="post" action="passage" id="answerform">
 	{% csrf_token %}
 	{% for answer_choice in answer_choices %}
-		<p><input type="checkbox" name="pickmany" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+		<p><input type="checkbox" name="pickmany{{ forloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
 	{% endfor %}
 	<input type="hidden" name="question_id" value="{{ question_id }}">
 	<input type="submit" value="Submit">

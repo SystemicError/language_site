@@ -180,7 +180,7 @@ class PassageQuestion(models.Model):
 	def get_correct_answer(self):
 		"Return correct answer as int, if pick one, tuple if pick many or table."
 		if self.question_type == "pick one":
-			return int(self.correct_answer)
+			return self.correct_answer
 		elif self.question_type == "pick many" or self.question_type == "table":
 			return tuple([int(x) for x in self.correct_answer.split()])
 		else:

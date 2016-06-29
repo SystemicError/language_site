@@ -19,7 +19,7 @@ def indexView(request):
 	#print request.POST.keys()
 	context = {}
 	if request.user.is_authenticated():
-		print "Got authenticated user."
+		#print "Got authenticated user."
 		context = get_user_context(request.user.username)
 	else:
 		# have we come here from the login page?
@@ -27,16 +27,13 @@ def indexView(request):
 			# if so, try to log in
 			username = request.POST['login']
 			password = request.POST['password']
-			print "Attempting to authenticate . . ."
 			user = authenticate(username = username, password = password)
 
-			print user
 			# is this a real account?
 			if user is not None:
 				# if so, log them in
 				login(request, user)
 				if user.is_authenticated():
-					print "Logged you in."
 					context = get_user_context(request.user.username)
 			else:
 				# if not, try again
@@ -80,18 +77,12 @@ def vocabView(request):
 	# for vocab quiz questions
 	context = {}
 	st = Student.objects.get(name = request.user.username)
-	print "Student:" + str(st)
 
 	# process previous answer, if any
-	print request.POST
-	print request.POST.keys()
 
 	if "is_word" in request.POST.keys():
-		print request.POST["is_word"]
 		previous_response = (request.POST["is_word"] == "yes")
 		previous_word = request.POST["word"]
-		print "Previous response was " + str(previous_response)
-		print "Previous word was:" + previous_word
 		vq = VocabQuestion.objects.get(word = previous_word)
 		st.add_vocab_result(vq, previous_response)
 		st.save()
@@ -138,19 +129,44 @@ def passageView(request):
 
 
 	# process previous answer, if any
-	print "POST data"
-	print request.POST.keys()
 	if "pickone" in request.POST.keys():
-		print "Got pick one answer."
-		print request.POST["pickone"]
 		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
 		st.add_passage_result(pq, request.POST["pickone"])
 		st.save()
-	if "pickmany" in request.POST.keys():
-		print "Got pick many answer."
-		print request.POST["pickmany"]
+	if "pickmany" in " ".join(request.POST.keys()):
+		# remember, checkboxes only send POST data when checked
 		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		st.add_passage_result(pq, request.POST["pickmany"])
+		boxes = len(pq.get_correct_answer())
+		response = ""
+		for box in range(boxes):
+			entry_name = "pickmany" + str(box)
+			if entry_name in request.POST.keys():
+				response = response + str(box) + " "
+		response = response.strip()
+		st.add_passage_result(pq, response)
+		st.save()
+
+	if "table0-0" in request.POST.keys():
+		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
+		rows = len(pq.get_row_headings())
+		cols = len(pq.get_col_headings())
+		response = ""
+		for row in range(rows):
+			for col in range(cols):
+				entry_name = "table" + str(row) + "-" + str(col)
+				response = response + request.POST[entry_name] + " "
+		response = response.strip()
+		st.add_passage_result(pq, response)
+		st.save()
+
+	if "shortresponse" in request.POST.keys():
+		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
+		st.add_passage_result(pq, request.POST["shortresponse"])
+		st.save()
+
+	if "longresponse" in request.POST.keys():
+		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
+		st.add_passage_result(pq, request.POST["longresponse"])
 		st.save()
 
 	# unfinished, needs to process other question types
@@ -158,8 +174,6 @@ def passageView(request):
 	# give a question, if necessary
 
 	results = st.get_passage_results()
-	print results
-	print st.passage_results
 
 	# if they've finished the passage, just return them
 
@@ -179,10 +193,7 @@ def passageView(request):
 
 	previous_question = PassageQuestion.objects.get(pq_id = results[-1][0])
 	previous_response = results[-1][1]
-	correct_response = previous_question.correct_answer
-	print previous_question
-	print previous_response
-	print correct_response
+	correct_response = previous_question.correct_answer.strip()
 
 		# got the last one right
 		# or ran out of hints
@@ -234,9 +245,9 @@ def set_context_from_passage_question(context, pq, hint):
 def link_vocab_hints(text):
 	"Links all vocab words in text."
 	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
-		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a>"
+		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a target=\"_blank\">"
 		text = text.replace(vocab_word, link)
-		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a>"
+		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a target=\"_blank\">"
 		text = text.replace(string.capwords(vocab_word), caplink)
 	return text
 
