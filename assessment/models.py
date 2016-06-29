@@ -146,6 +146,9 @@ class Passage(models.Model):
 class PassageQuestion(models.Model):
 	pq_id = models.IntegerField(unique=True, default = 0)
 
+	# what's the name of our associated passage?
+	passage = models.CharField(max_length = 64, default = "")
+
 	# pick one, pick many, table, short response, long response
 	question_type = models.CharField(max_length = 64)
 
@@ -153,8 +156,8 @@ class PassageQuestion(models.Model):
 	prompt = models.TextField(default = "")
 
 	# two hints in the event of a wrong answer
-	hint1 = models.CharField(max_length = 64, default = "")
-	hint2 = models.CharField(max_length = 64, default = "")
+	hint1 = models.TextField(default = "")
+	hint2 = models.TextField(default = "")
 
 	# answer choices, enclosed with <choice> tags
 	answer_choices = models.TextField(default = "")
