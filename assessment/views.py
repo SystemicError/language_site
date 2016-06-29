@@ -124,14 +124,63 @@ def passageView(request):
 	# if vocab_score == -1, they shouldn't be here
 	if st.vocab_score() == -1:
 		context['message'] = "You need to go back to the index."
+		return render(request, 'assessment/passage.html', context)
 	elif st.vocab_score() > .5:
 		context['message'] = "You get the hard passage."
 		psg = Passage.objects.get(passage_name = "hard")
 		context['passage_text'] = link_vocab_hints(psg.passage_text)
+		pqs = PassageQuestion.objects.filter(passage = "hard")
 	else:
 		context['message'] = "You get the easy passage."
 		psg = Passage.objects.get(passage_name = "easy")
 		context['passage_text'] = link_vocab_hints(psg.passage_text)
+		pqs = PassageQuestion.objects.filter(passage = "easy")
+
+
+	# process previous answer, if any
+	print "POST data"
+	print request.POST.keys()
+	if "pickone" in request.POST.keys():
+		print "Got pick one answer."
+		print request.POST["pickone"]
+		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
+		st.add_passage_result(pq, request.POST["pickone"])
+		st.save()
+	if "pickmany" in request.POST.keys():
+		print "Got pick many answer."
+		print request.POST["pickmany"]
+		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
+		st.add_passage_result(pq, request.POST["pickmany"])
+		st.save()
+
+	# give a question, if necessary
+
+	results = st.get_passage_results()
+	print results
+	print st.passage_results
+
+	# if they've finished the passage, just return them
+
+	if len(set([x[0] for x in results])) == len(pqs):
+		context['message'] = "Thank you for completing the assessment."
+		context['passage_text'] = ""
+		return render(request, 'assessment/passage.html', context)
+
+	# if they still have questions to take, provide one
+
+	# if this is their first question or they got the last one right or they ran out of hints, give them a new one
+
+	if len(results) == 0:
+		context['question_id'] = pqs[0].pq_id
+		context['question_type'] = pqs[0].question_type
+		context['question'] = pqs[0].prompt
+		context['answer_choices'] = pqs[0].get_answer_choices()
+		context['hint'] = ""
+		return render(request, 'assessment/passage.html', context)
+
+	previous_question = results[-1]
+
+	print previous_question
 
 	return render(request, 'assessment/passage.html', context)
 

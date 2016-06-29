@@ -23,6 +23,7 @@ class Student(models.Model):
 	vocab_results = models.TextField(default = "")
 
 	# populate with (question_id, response) pairs
+	# question_id not unique, as some questions have multiple attempts
 	passage_results = models.TextField(default = "")
 
 	# vocabhint lookups, and their counts
@@ -33,7 +34,7 @@ class Student(models.Model):
 	def add_passage_result(self, pq, response):
 		"Adds question_id of pq and response to passage_results."
 		result = "<response question_id="
-		result = result + str(pq.question_id)
+		result = result + str(pq.pq_id)
 		result = result + ">" + response + "</response>"
 		self.passage_results = self.passage_results + result
 		return
@@ -42,7 +43,7 @@ class Student(models.Model):
 		"Returns a list of tuples of the passage question_ids and responses."
 		results = []
 		results_string = copy.deepcopy(self.passage_results)
-		first_result = results_string.find("<response question_id =")
+		first_result = results_string.find("<response question_id=")
 		while first_result != -1:
 			results_string = results_string[first_result + len("<response question_id="):]
 			tag_close_index = results_string.find(">")
@@ -52,6 +53,7 @@ class Student(models.Model):
 			results_string = results_string[tag_close_index + 1:]
 			result_end = results_string.find("</response>")
 			results.append((question_id, results_string[:result_end]))
+			first_result = results_string.find("<response question_id=")
 		return results
 
 		
@@ -97,12 +99,7 @@ class Student(models.Model):
 			print "Empty vocab results."
 			return []
 
-		print "Vocab split:"
-		print self.vocab_results.split(";")
-
 		for entry in self.vocab_results.split(";")[:-1]:
-			print "Entry:"
-			print entry
 			wd = entry.split(",")[0]
 			response = entry.split(",")[1]
 			vq = VocabQuestion.objects.get(word = wd)
