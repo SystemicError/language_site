@@ -153,6 +153,8 @@ def passageView(request):
 		st.add_passage_result(pq, request.POST["pickmany"])
 		st.save()
 
+	# unfinished, needs to process other question types
+
 	# give a question, if necessary
 
 	results = st.get_passage_results()
@@ -170,19 +172,64 @@ def passageView(request):
 
 	# if this is their first question or they got the last one right or they ran out of hints, give them a new one
 
+		# first question
 	if len(results) == 0:
-		context['question_id'] = pqs[0].pq_id
-		context['question_type'] = pqs[0].question_type
-		context['question'] = pqs[0].prompt
-		context['answer_choices'] = pqs[0].get_answer_choices()
-		context['hint'] = ""
+		set_context_from_passage_question(context, pqs[0], 0)
 		return render(request, 'assessment/passage.html', context)
 
-	previous_question = results[-1]
-
+	previous_question = PassageQuestion.objects.get(pq_id = results[-1][0])
+	previous_response = results[-1][1]
+	correct_response = previous_question.correct_answer
 	print previous_question
+	print previous_response
+	print correct_response
+
+		# got the last one right
+		# or ran out of hints
+	if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or results[-1][0] == results[-3][0]:
+		next_q_index = len(set([x[0] for x in results]))
+		set_context_from_passage_question(context, pqs[next_q_index], 0)
+		return render(request, 'assessment/passage.html', context)
+
+	# if they got the last one wrong and have hints remaining, display that one
+
+	if results[-1][0] == results[-2][0]:
+		# last two were wrong
+		next_q_index = len(set([x[0] for x in results])) - 1
+		set_context_from_passage_question(context, pqs[next_q_index], 2)
+		return render(request, 'assessment/passage.html', context)
+	else:
+		# only one wrong so far
+		next_q_index = len(set([x[0] for x in results])) - 1
+		set_context_from_passage_question(context, pqs[next_q_index], 1)
+		return render(request, 'assessment/passage.html', context)
+
+	# Uh oh, shouldn't be here
+
+	context['message'] = "Uh oh, something is wrong if you got this far."
 
 	return render(request, 'assessment/passage.html', context)
+
+
+def set_context_from_passage_question(context, pq, hint):
+	context['question_id'] = pq.pq_id
+	context['question_type'] = pq.question_type
+	context['question'] = pq.prompt
+	context['answer_choices'] = pq.get_answer_choices()
+	if hint == 0:
+		context['hint'] = ""
+	elif hint == 1:
+		context['hint'] = pq.hint1
+	else:
+		context['hint'] = pq.hint2
+
+	# additional info for table questions
+
+	if pq.question_type == "table":
+		context['rows'] = pq.get_row_headings()
+		context['cols'] = pq.get_col_headings()
+
+	return
 
 def link_vocab_hints(text):
 	"Links all vocab words in text."
