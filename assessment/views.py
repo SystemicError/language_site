@@ -186,7 +186,7 @@ def passageView(request):
 
 		# got the last one right
 		# or ran out of hints
-	if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or results[-1][0] == results[-3][0]:
+	if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or (len(results) >= 3 and results[-1][0] == results[-3][0]):
 		next_q_index = len(set([x[0] for x in results]))
 		set_context_from_passage_question(context, pqs[next_q_index], 0)
 		return render(request, 'assessment/passage.html', context)
