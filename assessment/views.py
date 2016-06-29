@@ -193,7 +193,7 @@ def passageView(request):
 
 	# if they got the last one wrong and have hints remaining, display that one
 
-	if results[-1][0] == results[-2][0]:
+	if len(results) >=2 and results[-1][0] == results[-2][0]:
 		# last two were wrong
 		next_q_index = len(set([x[0] for x in results])) - 1
 		set_context_from_passage_question(context, pqs[next_q_index], 2)
