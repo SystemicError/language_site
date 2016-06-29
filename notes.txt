@@ -1,1 +1,4 @@
 reuse a lot of vocabquizview code on passage view.  Just needs to have more flexible code in the template for how to deal with the five question types.
+
+
+add wrong_answer_hints[] to model of passageQuestion

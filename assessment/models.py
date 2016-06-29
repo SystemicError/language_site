@@ -11,6 +11,7 @@ class VocabQuestion(models.Model):
 	k_band = models.IntegerField(default=0)
 	word = models.CharField(unique=True, max_length = 64)
 	is_word = models.BooleanField(default=False)
+
 	def __str__(self):
 		return self.word
 
@@ -151,8 +152,15 @@ class PassageQuestion(models.Model):
 	# includes the quesiton, or, if table, the rows, columns in xmlish tags
 	prompt = models.TextField(default = "")
 
+	# two hints in the event of a wrong answer
+	hint1 = models.CharField(max_length = 64, default = "")
+	hint2 = models.CharField(max_length = 64, default = "")
+
 	# answer choices, enclosed with <choice> tags
 	answer_choices = models.TextField(default = "")
+
+	# correct answer, needed to determine when to give hints for multiple choice questions
+	correct_answer = models.CharField(max_length = 32, default = "")
 
 	def get_answer_choices(self):
 		"Returns the answer choices as a list, unless open answer."
@@ -167,6 +175,15 @@ class PassageQuestion(models.Model):
 			choices.append(choices_string[:choice_end])
 			first_choice = choices_string.find("<choice>")
 		return choices
+
+	def get_correct_answer(self):
+		"Return correct answer as int, if pick one, tuple if pick many or table."
+		if self.question_type == "pick one":
+			return int(self.correct_answer)
+		elif self.question_type == "pick many" or self.question_type == "table":
+			return tuple([int(x) for x in self.correct_answer.split()])
+		else:
+			return None
 
 	def get_row_headings(self):
 		"For a table type question, gets row headings."

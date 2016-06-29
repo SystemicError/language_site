@@ -1,0 +1,2 @@
+white	the opposite of black
+black	the opposite of white

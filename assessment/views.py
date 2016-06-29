@@ -64,16 +64,16 @@ def vocabQueryView(request, vocab_word):
 
 	# give them the definition of this vocab word and note the query in the student database
 
-	vh = VocabHint.objects.get(word = vocab_word)
+	if vocab_word in [x.word for x in VocabHint.objects.all()]:
+		vh = VocabHint.objects.get(word = vocab_word)
+		st.add_vocab_query(vh)
+		context['word'] = vh.word
+		context['definition'] = vh.definition
+	else:
+		context['word'] = "Unknown word:  " + vocab_word
+		context['definition'] = "I don't know this word.  I'm not sure how you got here."
 
-	# unfinished, need to account of invalid word looked up
-
-	st.add_vocab_query(vh)
-
-	context['word'] = vh.word
-	context['definition'] = vh.definition
-
-	return context
+	return render(request, 'assessment/vocab_query.html', context)
 
 @login_required(login_url='/assessment/login')
 def vocabView(request):
@@ -105,9 +105,14 @@ def vocabView(request):
 		return render(request, 'assessment/vocab.html', context)
 	else:
 		# select the next word
-		# unfinished -- doesn't currently select a unique word
-		# unfinished -- doesn't select by band/frequency
+
+		# select all words not already used
 		vqs = [x for x in VocabQuestion.objects.all() if x not in [y[0] for y in vresults]]
+
+		# select those of correct k_band
+		# vqs = [x for x in vqs if 
+		# unfinished, not yet clear how many of each
+
 		vq = vqs[random.randint(0, len(vqs) - 1)]
 		context['word'] = vq.word
 	return render(request, 'assessment/vocab.html', context)

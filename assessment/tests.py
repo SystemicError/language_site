@@ -10,9 +10,13 @@ class PassageQuestionMethodTests(TestCase):
 		pq.question_type = "pick one"
 		pq.prompt = "Check one."
 		pq.answer_choices = "<choice>A</choice><choice>B</choice>"
+		pq.correct_answer = "0"
+		pq.hint1 = "No . . ."
+		pq.hint1 = "Still no . . ."
 		self.assertEqual(len(pq.get_answer_choices()), 2)
 		self.assertEqual(pq.get_row_headings(), None)
 		self.assertEqual(pq.get_col_headings(), None)
+		self.assertEqual(pq.get_correct_answer(), 0)
 		return
 		
 	def test_pick_many(self):
@@ -22,9 +26,13 @@ class PassageQuestionMethodTests(TestCase):
 		pq.question_type = "pick many"
 		pq.prompt = "Check all that apply."
 		pq.answer_choices = "<choice>A</choice><choice>B</choice>"
+		pq.correct_answer = "0 1"
+		pq.hint1 = "No . . ."
+		pq.hint1 = "Still no . . ."
 		self.assertEqual(len(pq.get_answer_choices()), 2)
 		self.assertEqual(pq.get_row_headings(), None)
 		self.assertEqual(pq.get_col_headings(), None)
+		self.assertEqual(pq.get_correct_answer(), (0, 1))
 		return
 
 	def test_table(self):
@@ -34,9 +42,13 @@ class PassageQuestionMethodTests(TestCase):
 		pq.question_type = "table"
 		pq.prompt = "<row>Rhymes with tea</row><row>Rhymes with dew</row><col>after S</col><col>Before S</col>"
 		pq.answer_choices = "<choice>Q</choice><choice>U</choice><choice>V</choice><choice>B</choice>"
+		pq.correct_answer = "2 3 1 0"
+		pq.hint1 = "No . . ."
+		pq.hint1 = "Still no . . ."
 		self.assertEqual(len(pq.get_answer_choices()), 4)
 		self.assertEqual(len(pq.get_row_headings()), 2)
 		self.assertEqual(len(pq.get_col_headings()), 2)
+		self.assertEqual(pq.get_correct_answer(), (2, 3, 1, 0))
 		return
 
 	def test_short_response(self):
@@ -49,6 +61,7 @@ class PassageQuestionMethodTests(TestCase):
 		self.assertEqual(pq.get_answer_choices(), None)
 		self.assertEqual(pq.get_row_headings(), None)
 		self.assertEqual(pq.get_col_headings(), None)
+		self.assertEqual(pq.get_correct_answer(), None)
 		return
 
 	def test_long_response(self):
@@ -61,6 +74,7 @@ class PassageQuestionMethodTests(TestCase):
 		self.assertEqual(pq.get_answer_choices(), None)
 		self.assertEqual(pq.get_row_headings(), None)
 		self.assertEqual(pq.get_col_headings(), None)
+		self.assertEqual(pq.get_correct_answer(), None)
 		return
 
 class StudentMethodTests(TestCase):
