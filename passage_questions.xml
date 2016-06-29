@@ -94,8 +94,8 @@
 	<prompt>
 		<row>Fruits</row>
 		<row>Non-fruit</row>
-		<col>Green like an artichoke</row>
-		<col>Not Green like an artichoke</row>
+		<col>Green like an artichoke</col>
+		<col>Not Green like an artichoke</col>
 	</prompt>
 	<hint1>That is incorrect.  Tomatillos are green.</hint1>
 	<hint2>That is also incorrect.  Tomatoes are a fruit.</hint2>

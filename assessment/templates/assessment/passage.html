@@ -39,7 +39,31 @@
 	</form>
 {% endif %}
 {% if question_type == "table" %}
-	<p>Sorry, tables aren't supported yet.</p>
+	<form method="post" action="passage" id="answerform">
+	{% csrf_token %}
+	<table border="1">
+	<tr>
+	<td></td>
+	{% for col in cols %}
+		<td>{{ col }}</td>
+	{% endfor %}
+	</tr>
+	{% for row in rows %}
+		<tr>
+		<td>{{ row }}</td>
+		{% for col in cols %}
+			<td>
+			{% for answer_choice in answer_choices %}
+				<p><input type="radio" name="table{{ forloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.counter0}}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+			{% endfor %}
+			</td>
+		{% endfor %}
+		</tr>
+	{% endfor %}
+	</table>
+	<input type="hidden" name="question_id" value="{{ question_id }}">
+	<input type="submit" value="Submit">
+	</form>
 {% endif %}
 {% if question_type == "short response" %}
 	<form method="post" action="passage" id="answerform">
