@@ -33,8 +33,8 @@
 	<prompt>
 		<row>Fruits</row>
 		<row>Non-fruit</row>
-		<col>Green</row>
-		<col>Not Green</row>
+		<col>Green</col>
+		<col>Not Green</col>
 	</prompt>
 	<hint1>That is incorrect.  Tomatillos are green.</hint1>
 	<hint2>That is also incorrect.  Tomatoes are a fruit.</hint2>
