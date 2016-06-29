@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import *
 
-import random
+import random, string
 
 def indexView(request):
 	#print request.POST
@@ -126,17 +126,23 @@ def passageView(request):
 		context['message'] = "You need to go back to the index."
 	elif st.vocab_score() > .5:
 		context['message'] = "You get the hard passage."
-		psg = Passage.objects.get(passage_id = 0)
-		context['passage_text'] = psg.passage_text
+		psg = Passage.objects.get(passage_name = "hard")
+		context['passage_text'] = link_vocab_hints(psg.passage_text)
 	else:
 		context['message'] = "You get the easy passage."
-		psg = Passage.objects.get(passage_id = 1)
-		context['passage_text'] = psg.passage_text
+		psg = Passage.objects.get(passage_name = "easy")
+		context['passage_text'] = link_vocab_hints(psg.passage_text)
 
 	return render(request, 'assessment/passage.html', context)
 
-
-
+def link_vocab_hints(text):
+	"Links all vocab words in text."
+	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
+		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a>"
+		text = text.replace(vocab_word, link)
+		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a>"
+		text = text.replace(string.capwords(vocab_word), caplink)
+	return text
 
 def get_user_context(username):
 	context = {}

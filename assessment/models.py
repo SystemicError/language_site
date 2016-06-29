@@ -138,9 +138,10 @@ class VocabHint(models.Model):
 @python_2_unicode_compatible
 class Passage(models.Model):
 	passage_id = models.IntegerField(unique=True, default = 0)
+	passage_name = models.CharField(max_length = 64, default = "")
 	passage_text = models.TextField(default = "")
 	def __str__(self):
-		return self.passage_id
+		return self.passage_name
 
 @python_2_unicode_compatible
 class PassageQuestion(models.Model):
