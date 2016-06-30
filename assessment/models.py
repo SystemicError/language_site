@@ -32,21 +32,44 @@ class Student(models.Model):
 
 	passage_assigned = models.CharField(max_length = 64, default = "")
 
-
-	def has_completed_passage(self):
+	def get_next_passage_question_and_hint(self):
+		"returns (passage_question, hint_needed)"
 		if self.passage_assigned == "":
-			return False
-		num_questions = len(PassageQuestion.objects.filter(passage = self.passage_assigned))
+			print "Error:  Why are we asking for the next question when passage is unassigned?"
+			return (None, -1)
+
+		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned)
+		num_questions = len(pqs)
 		results = self.get_passage_results()
 		num_answered = len(set([x[0] for x in results]))
 
-		if num_answered < num_questions:
-			return False
+		# if we haven't answered anything
+		if num_answered == 0:
+			return (pqs[0], 0)
 
-		if len(results) >=3 and results[-1][0] == results[-3][0]:
-			return True
+		previous_question = PassageQuestion.objects.get(pq_id = results[-1][0])
+		previous_response = results[-1][1]
+		correct_response = previous_question.correct_answer #.strip()?
 
-		return False
+		# got the last one right (or it's not a type that can be wrong)
+		# or ran out of hints
+		if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or (len(results) >= 3 and results[-1][0] == results[-3][0]):
+			# if there are no more, we're done
+			if num_answered == num_questions:
+				return (None, 0)
+			else:
+				return (pqs[num_answered], 0)
+
+		# if they got the last one wrong and have hints remaining, display that one
+
+		if len(results) >=2 and results[-1][0] == results[-2][0]:
+			# last two were wrong
+			return (pqs[num_answered - 1], 2) # needs hint 2
+		else:
+			# only one wrong so far
+			return (pqs[num_answered - 1], 1) # needs hint 1
+
+
 
 	def add_passage_result(self, pq, response):
 		"Adds question_id of pq and response to passage_results."

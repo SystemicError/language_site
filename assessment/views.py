@@ -188,50 +188,17 @@ def passageView(request):
 
 	# if they still have questions to take, provide one
 
-	# if they've finished the passage, just return them
+	(pq, hint) = st.get_next_passage_question_and_hint()
 
-	if st.has_completed_passage():
+	# if they've finished the passage, just return them
+	if pq == None:
 		context['message'] = "Thank you for completing the assessment."
 		context['passage_text'] = ""
 		return render(request, 'assessment/passage.html', context)
 
-	# if this is their first question or they got the last one right or they ran out of hints, give them a new one
+	# Otherwise, give the next question
 
-		# first question
-	if len(results) == 0:
-		set_context_from_passage_question(context, pqs[0], 0)
-		return render(request, 'assessment/passage.html', context)
-
-	previous_question = PassageQuestion.objects.get(pq_id = results[-1][0])
-	previous_response = results[-1][1]
-	correct_response = previous_question.correct_answer.strip()
-
-		# got the last one right
-		# or ran out of hints
-	if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or (len(results) >= 3 and results[-1][0] == results[-3][0]):
-		next_q_index = len(set([x[0] for x in results]))
-
-
-		set_context_from_passage_question(context, pqs[next_q_index], 0)
-		return render(request, 'assessment/passage.html', context)
-
-	# if they got the last one wrong and have hints remaining, display that one
-
-	if len(results) >=2 and results[-1][0] == results[-2][0]:
-		# last two were wrong
-		next_q_index = len(set([x[0] for x in results])) - 1
-		set_context_from_passage_question(context, pqs[next_q_index], 2)
-		return render(request, 'assessment/passage.html', context)
-	else:
-		# only one wrong so far
-		next_q_index = len(set([x[0] for x in results])) - 1
-		set_context_from_passage_question(context, pqs[next_q_index], 1)
-		return render(request, 'assessment/passage.html', context)
-
-	# Uh oh, shouldn't be here
-
-	context['message'] = "Uh oh, something is wrong if you got this far."
-
+	set_context_from_passage_question(context, pq, hint)
 	return render(request, 'assessment/passage.html', context)
 
 
