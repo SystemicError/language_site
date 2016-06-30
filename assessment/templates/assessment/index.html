@@ -11,7 +11,10 @@
 {% if link == "passage" %}
 	<a href = "{% url 'assessment:passage' %}">Take the passage test</a>
 {% endif %}
-{% if link != "login" %}
+{% if link == "logout" %}
+	<a href = "{% url 'assessment:logout' %}">Log out</a>
+{% endif %}
+{% if link != "login" and link != "logout" %}
 <br />
 <br />
 Or, you may <a href = "{% url 'assessment:logout' %}">log out</a>.

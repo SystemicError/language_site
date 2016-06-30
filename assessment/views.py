@@ -22,7 +22,7 @@ def indexView(request):
 	context = {}
 	if request.user.is_authenticated():
 		#print "Got authenticated user."
-		context = get_user_context(request.user.username)
+		context = get_index_context_from_user(request.user.username)
 	else:
 		# have we come here from the login page?
 		if 'login' in request.POST.keys():
@@ -36,7 +36,7 @@ def indexView(request):
 				# if so, log them in
 				login(request, user)
 				if user.is_authenticated():
-					context = get_user_context(request.user.username)
+					context = get_index_context_from_user(request.user.username)
 			else:
 				# if not, try again
 				context = {'greeting':  "Invalid login info.  Please try again.", 'content': "", 'link': "login"}
@@ -231,7 +231,7 @@ def link_vocab_hints(text):
 		text = text.replace(string.capwords(vocab_word), caplink)
 	return text
 
-def get_user_context(username):
+def get_index_context_from_user(username):
 	context = {}
 	context['greeting'] = "Welcome, " + username + "."
 	# if they're not in the database, add them, and direct them to vocab quiz
@@ -242,8 +242,12 @@ def get_user_context(username):
 			context['content'] = "You need to take the vocab test."
 			context['link'] = "vocab"
 		else:
-			context['content'] = "You took the test and got " + str((st.vocab_score()*100)) + "%.  It's time to take the passage test."
-			context['link'] = "passage"
+			if st.get_next_passage_question_and_hint() == (None, 0):
+				context['content'] = "You have completed the assessment.  Please log out."
+				context['link'] = "logout"
+			else:
+				context['content'] = "You took the test and got " + str((st.vocab_score()*100)) + "%.  It's time to take the passage test."
+				context['link'] = "passage"
 	else:
 		context['content'] = "Welcome to your first login.  I'm adding you to the database.  Go take the vocab quiz."
 		context['link'] = "vocab"
