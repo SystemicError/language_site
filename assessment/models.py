@@ -49,11 +49,13 @@ class Student(models.Model):
 
 		previous_question = PassageQuestion.objects.get(pq_id = results[-1][0])
 		previous_response = results[-1][1]
-		correct_response = previous_question.correct_answer #.strip()?
+		correct_response = previous_question.correct_answer.strip()
+		prev_num_hints = previous_question.get_number_of_hints()
+		print prev_num_hints
 
 		# got the last one right (or it's not a type that can be wrong)
 		# or ran out of hints
-		if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or (len(results) >= 3 and results[-1][0] == results[-3][0]):
+		if prev_num_hints == 0 or previous_response == correct_response or (len(results) >= prev_num_hints + 1 and results[-1][0] == results[-prev_num_hints - 1][0]):
 			# if there are no more, we're done
 			if num_answered == num_questions:
 				return (None, 0)
@@ -62,7 +64,7 @@ class Student(models.Model):
 
 		# if they got the last one wrong and have hints remaining, display that one
 
-		if len(results) >=2 and results[-1][0] == results[-2][0]:
+		if len(results) >= 2 and results[-1][0] == results[-2][0]:
 			# last two were wrong
 			return (pqs[num_answered - 1], 2) # needs hint 2
 		else:
@@ -89,7 +91,7 @@ class Student(models.Model):
 			tag_close_index = results_string.find(">")
 			if tag_close_index == -1:
 				print "No closing > on result string, panic!"
-			question_id = int(results_string[:tag_close_index])
+			question_id = results_string[:tag_close_index]
 			results_string = results_string[tag_close_index + 1:]
 			result_end = results_string.find("</response>")
 			results.append((question_id, results_string[:result_end]))
@@ -210,6 +212,13 @@ class PassageQuestion(models.Model):
 
 	# correct answer, needed to determine when to give hints for multiple choice questions
 	correct_answer = models.CharField(max_length = 32, default = "")
+
+	def get_number_of_hints(self):
+		if self.hint2 != "None":
+			return 2
+		if self.hint1 != "None":
+			return 1
+		return 0
 
 	def get_answer_choices(self):
 		"Returns the answer choices as a list, unless open answer."

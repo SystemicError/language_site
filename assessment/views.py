@@ -17,11 +17,8 @@ from .models import *
 import random, string
 
 def indexView(request):
-	#print request.POST
-	#print request.POST.keys()
 	context = {}
 	if request.user.is_authenticated():
-		#print "Got authenticated user."
 		context = get_index_context_from_user(request.user.username)
 	else:
 		# have we come here from the login page?
@@ -179,12 +176,9 @@ def passageView(request):
 		st.add_passage_result(pq, request.POST["longresponse"])
 		st.save()
 
-	# unfinished, needs to process other question types
-
 	# give a question, if necessary
 
 	results = st.get_passage_results()
-
 
 	# if they still have questions to take, provide one
 
