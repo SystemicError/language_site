@@ -30,6 +30,23 @@ class Student(models.Model):
 	# want to treat these like a dictionary/key
 	vocab_query_counts = models.TextField(default = "")
 
+	passage_assigned = models.CharField(max_length = 64, default = "")
+
+
+	def has_completed_passage(self):
+		if self.passage_assigned == "":
+			return False
+		num_questions = len(PassageQuestion.objects.filter(passage = self.passage_assigned))
+		results = self.get_passage_results()
+		num_answered = len(set([x[0] for x in results]))
+
+		if num_answered < num_questions:
+			return False
+
+		if len(results) >=3 and results[-1][0] == results[-3][0]:
+			return True
+
+		return False
 
 	def add_passage_result(self, pq, response):
 		"Adds question_id of pq and response to passage_results."
@@ -56,8 +73,16 @@ class Student(models.Model):
 			first_result = results_string.find("<response question_id=")
 		return results
 
-		
-
+	def assign_passage(self):
+		"Assigns passage based on vocab quiz results."
+		if self.vocab_score() == -1:
+			print "Error, can't assign passage without complete vocab score."
+			self.passage_assigned = ""
+		elif self.vocab_score() > .5:
+			self.passage_assigned = "hard"
+		else:
+			self.passage_assigned = "easy"
+		return
 
 	def add_vocab_query(self, vh):
 		"Adds one to query of vocabHint vh (or creates new record if previously zero)."

@@ -10,6 +10,8 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import *
 
 import random, string
@@ -59,6 +61,13 @@ def vocabQueryView(request, vocab_word):
 	context = {}
 	st = Student.objects.get(name = request.user.username)
 
+	# reject users who are done with the assessment
+
+	if st.has_completed_passage():
+		context['word'] = ""
+		context['definition'] = "No definitions are available as you have completed the assessment."
+		return render(request, 'assessment/vocab_query.html', context)
+
 	# give them the definition of this vocab word and note the query in the student database
 
 	if vocab_word in [x.word for x in VocabHint.objects.all()]:
@@ -93,6 +102,8 @@ def vocabView(request):
 	context['num_complete'] = len(vresults)
 	context['finished'] = len(vresults) >= 30
 	if context['finished']:
+		st.assign_passage()
+		st.save()
 		return render(request, 'assessment/vocab.html', context)
 	else:
 		# select the next word
@@ -116,17 +127,16 @@ def passageView(request):
 	if st.vocab_score() == -1:
 		context['message'] = "You need to go back to the index."
 		return render(request, 'assessment/passage.html', context)
-	elif st.vocab_score() > .5:
-		context['message'] = "You get the hard passage."
-		psg = Passage.objects.get(passage_name = "hard")
-		context['passage_text'] = link_vocab_hints(psg.passage_text)
-		pqs = PassageQuestion.objects.filter(passage = "hard")
-	else:
-		context['message'] = "You get the easy passage."
-		psg = Passage.objects.get(passage_name = "easy")
-		context['passage_text'] = link_vocab_hints(psg.passage_text)
-		pqs = PassageQuestion.objects.filter(passage = "easy")
+	context['message'] = "You get the " + st.passage_assigned + " passage."
 
+	try:
+		psg = Passage.objects.get(passage_name = st.passage_assigned)
+	except ObjectDoesNotExist:
+		context['message'] = "Error:  can't find assigned passage \'" + st.passage_assigned + "\'"
+		return render(request, 'assessment/passage.html', context)
+
+	context['passage_text'] = link_vocab_hints(psg.passage_text)
+	pqs = PassageQuestion.objects.filter(passage = st.passage_assigned)
 
 	# process previous answer, if any
 	if "pickone" in request.POST.keys():
@@ -175,14 +185,15 @@ def passageView(request):
 
 	results = st.get_passage_results()
 
+
+	# if they still have questions to take, provide one
+
 	# if they've finished the passage, just return them
 
-	if len(set([x[0] for x in results])) == len(pqs):
+	if st.has_completed_passage():
 		context['message'] = "Thank you for completing the assessment."
 		context['passage_text'] = ""
 		return render(request, 'assessment/passage.html', context)
-
-	# if they still have questions to take, provide one
 
 	# if this is their first question or they got the last one right or they ran out of hints, give them a new one
 
@@ -199,6 +210,8 @@ def passageView(request):
 		# or ran out of hints
 	if previous_question.question_type == "short response" or previous_question.question_type == "long response" or previous_response == correct_response or (len(results) >= 3 and results[-1][0] == results[-3][0]):
 		next_q_index = len(set([x[0] for x in results]))
+
+
 		set_context_from_passage_question(context, pqs[next_q_index], 0)
 		return render(request, 'assessment/passage.html', context)
 
@@ -258,7 +271,7 @@ def get_user_context(username):
 	# if they are in the database, see how much progress they've made and direct them
 	if username in [x.name for x in Student.objects.all()]:
 		st = Student.objects.get(name = username)
-		if len(st.get_vocab_results()) < 30:
+		if st.passage_assigned == "":
 			context['content'] = "You need to take the vocab test."
 			context['link'] = "vocab"
 		else:
