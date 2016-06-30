@@ -190,7 +190,7 @@ class Passage(models.Model):
 
 @python_2_unicode_compatible
 class PassageQuestion(models.Model):
-	pq_id = models.IntegerField(unique=True, default = 0)
+	pq_id = models.CharField(unique=True, max_length = 16, default = "")
 
 	# what's the name of our associated passage?
 	passage = models.CharField(max_length = 64, default = "")

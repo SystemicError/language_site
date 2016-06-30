@@ -1,9 +1,9 @@
 <question>
 	<id>1</id>
-	<passage>easy</passage>
+	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>The word (1) endogenously in paragraph 1 is closest in meaning to:</prompt>
-	<hint1>That is incorrect. Locate the word "endogenously" in the text. What is the general meaning of the whole sentence in which the word appears?</hint1>
+	<hint1>That is incorrect. Locate the word "endogenously" in the text. What is the general meaning of the whole sentence in which the word appears? </hint1>
 	<hint2>That is also incorrect. Focus on the contextual clues provided in the text. What is the connection between the part of the sentence before the comma and the part that comes after the comma (line 3)?</hint2>
 	<answer choice>flexibility</answer choice>
 	<answer choice>internally</answer choice>
@@ -13,109 +13,626 @@
 </question>
 
 <question>
-	<id>2</id>
-	<passage>easy</passage>
-	<question type>pick many</question type>
-	<prompt>What kinds of food do I like?</prompt>
-	<hint1>That is incorrect.  I only like fruit.</hint1>
-	<hint2>That is also incorrect.  Tomatoes are a fruit.</hint2>
-	<answer choice>Tomatoes</answer choice>
-	<answer choice>Apples</answer choice>
-	<answer choice>Hot dogs</answer choice>
-	<answer choice>Clam chowder</answer choice>
-	<correct answer>0 1</correct answer>
+	<id>2.1</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>What time of day do you often feel alert? </prompt>
+	<answer choice>between 4am and 8am</answer choice>
+	<answer choice>between 8am and 12pm</answer choice>
+	<answer choice>between 12pm and 4pm</answer choice>
+	<answer choice>between 4pm and 8pm</answer choice>
+	<answer choice>between 8pm and 12am</answer choice>
+	<answer choice>between 12am - 4am</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+2.2
+Is your most alert time during the day consistent with what the passage says about circadian biological clocks?
+pick one
+Yes
+No
+Yes (if they pick any answer from question2.1 except option 3 "between 12pm and 4pm" or option 6 "between 12am and 4am") or No (if they pick "between 12pm and 4pm" or "between 12am and 4am")
+Look at the paragraph 1 again. When do circadian rhythms create our strongest sleep drive?  Is this time different from when you are alert, or is it the same?
+
+<question>
+	<id>2.3</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>Why?</prompt>
 </question>
 
 <question>
 	<id>3</id>
-	<passage>easy</passage>
-	<question type>table</question type>
-	<prompt>
-		<row>Fruits</row>
-		<row>Non-fruit</row>
-		<col>Green</col>
-		<col>Not Green</col>
-	</prompt>
-	<hint1>That is incorrect.  Tomatillos are green.</hint1>
-	<hint2>That is also incorrect.  Tomatoes are a fruit.</hint2>
-	<answer choice>Tomatoes</answer choice>
-	<answer choice>Tomatillos</answer choice>
-	<answer choice>Hot dogs</answer choice>
-	<answer choice>Broccoli</answer choice>
-	<correct answer>1 0 3 2</correct answer>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>Why might teenagers have difficulty getting enough sleep?</prompt>
 </question>
 
 <question>
 	<id>4</id>
-	<passage>easy</passage>
-	<question type>short response</question type>
-	<prompt>Tell me your favorite food.</prompt>
+	<passage>hard</passage>
+	<question type>pick many</question type>
+	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? Check all that apply.</prompt>
+	<hint1>That is incorrect.  Focus on the relations between parts of the text. Pay attention to lexical and grammatical cohesion devices used within and across sentences. </hint1>
+	<hint2>What is the literal meaning of each sentence in the paragraph?</hint2>
+	<answer choice>changing your work hours from a day shift to a night shift (explicit)</answer choice>
+	<answer choice>staying up unusually late every night watching TV (implicit)</answer choice>
+	<answer choice>exercising</answer choice>
+	<answer choice>drinking too much coffee</answer choice>
+	<answer choice>moving from New York to California</answer choice>
+	<answer choice>sleeping until 12pm for three days in a row</answer choice>
+	<correct answer>0 1 4 5</correct answer>
 </question>
 
 <question>
 	<id>5</id>
-	<passage>easy</passage>
-	<question type>long response</question type>
-	<prompt>Tell me the story of your favorite meal.</prompt>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>What is the main purpose of paragraph 3? </prompt>
+	<hint1>That is incorrect.  Evaluate the importance of information in paragraph 3 by distinguishing major ideas from supporting details.</hint1>
+	<answer choice>To summarize what a circadian rhythm is.</answer choice>
+	<answer choice>To describe the causes of circadian rhythm disorders.</answer choice>
+	<answer choice>To emphasize the harmfulness of circadian rhythm disorder.</answer choice>
+	<answer choice>To describe possible ways to treat circadian rhythm disorder.</answer choice>
+	<correct answer>1</correct answer>
 </question>
 
 <question>
-	<id>6</id>
+	<id>6.1</id>
 	<passage>hard</passage>
 	<question type>pick one</question type>
-	<prompt>The word (1) "artichoke" in paragraph 1 is closest in meaning to:</prompt>
-	<hint1>That is incorrect. Locate the word "endogenously" in the text. What is the general meaning of the whole sentence in which the word appears?</hint1>
-	<hint2>That is also incorrect. Focus on the contextual clues provided in the text. What is the connection between the part of the sentence before the comma and the part that comes after the comma (line 3)?</hint2>
-	<answer choice>flexibility</answer choice>
-	<answer choice>internally</answer choice>
-	<answer choice>quickly</answer choice>
-	<answer choice>routinely</answer choice>
+	<prompt>According to the text, could moving from Boston, MA to California lead to a circadian rhythm disorder?</prompt>
+	<hint1>That is incorrect.  Think about where Boston, MA and California are located.  Is there a time difference between these places?</hint1>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
 	<correct answer>0</correct answer>
 </question>
 
 <question>
-	<id>7</id>
+	<id>6.2</id>
 	<passage>hard</passage>
-	<question type>pick many</question type>
-	<prompt>What kinds of food do I like?</prompt>
-	<hint1>That is incorrect.  I only like fruit.</hint1>
-	<hint2>That is also incorrect.  Tomatoes are a fruit.</hint2>
-	<answer choice>Tomatoes</answer choice>
-	<answer choice>Apples</answer choice>
-	<answer choice>Hot dogs</answer choice>
-	<answer choice>Artichokes</answer choice>
-	<correct answer>0 1</correct answer>
+	<question type>short response</question type>
+	<prompt>Why?</prompt>
 </question>
 
 <question>
-	<id>8</id>
+	<id>6.3</id>
 	<passage>hard</passage>
-	<question type>table</question type>
-	<prompt>
-		<row>Fruits</row>
-		<row>Non-fruit</row>
-		<col>Green like an artichoke</col>
-		<col>Not Green like an artichoke</col>
-	</prompt>
-	<hint1>That is incorrect.  Tomatillos are green.</hint1>
-	<hint2>That is also incorrect.  Tomatoes are a fruit.</hint2>
-	<answer choice>Tomatoes</answer choice>
-	<answer choice>Tomatillos</answer choice>
-	<answer choice>Hot dogs</answer choice>
-	<answer choice>Broccoli</answer choice>
-	<correct answer>1 0 3 2</correct answer>
+	<question type>pick one</question type>
+	<prompt>Once in California, will your body feel awake or drowsy at 7:00am?</prompt>
+	<answer choice>awake</answer choice>
+	<answer choice>drowsy</answer choice>
+	<correct answer>0</correct answer>
+</question>
+
+<question>
+	<id>7.1</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>At what time do you usually go to sleep in Boston?</prompt>
+</question>
+
+<question>
+	<id>7.2</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>When it is 8:00 am in Boston, Massachusetts, it is only 2:00 am in Honolulu, Hawaii.  If you travel to Hawaii for a week, what time of day (in Hawaii) will your body want to go to sleep during the first couple of days?</prompt>
+</question>
+
+<question>
+	<id>7.3</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>What cues does your circadian rhythm use to "reset" itself during jet lag?</prompt>
+</question>
+
+<question>
+	<id>8.1</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>In what types of jobs might Shift Work Sleep disorder be dangerous?</prompt>
+</question>
+
+<question>
+	<id>8.2</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>Why?</prompt>
 </question>
 
 <question>
 	<id>9</id>
 	<passage>hard</passage>
 	<question type>short response</question type>
-	<prompt>Tell me your favorite non-artichoke food.</prompt>
+	<prompt>What does "excessive sleepiness" mean?</prompt>
 </question>
 
 <question>
 	<id>10</id>
 	<passage>hard</passage>
-	<question type>long response</question type>
-	<prompt>Tell me the story of artichokes.</prompt>
+	<question type>pick one</question type>
+	<prompt>The phrase "sleep deprivation" is closest in meaning to:</prompt>
+	<hint1>That is incorrect.  Locate the phrase "sleep deprivation" in the text. What is the general meaning of the whole sentence in which the phrase appears? </hint1>
+	<hint2>That is also incorrect.  Focus on the contextual clues provided in the text. What is the connection between the part of the sentence after the second comma ("it requires waking up earlier than would otherwise be natural") and the part that comes after the third comma ("so the disorder could lead to sleep deprivation")?</hint2>
+	<answer choice>delayed sleep</answer choice>
+	<answer choice>natural sleep</answer choice>
+	<answer choice>being unable to fall asleep</answer choice>
+	<answer choice>lack of sleep</answer choice>
+	<correct answer>3</correct answer>
 </question>
+
+<question>
+	<id>11</id>
+	<passage>hard</passage>
+	<question type>pick many</question type>
+	<prompt>What are the author's main ponts of writing paragraph 6? Check all that apply.</prompt>
+	<hint1>Evaluate the importance of the information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
+	<answer choice>To indicate that DSPS is the most common circadian rhythm disorder.</answer choice>
+	<answer choice>To inform us that people with DSPS stay up from 1:00 am to 4:00 am.</answer choice>
+	<answer choice>To emphasize that people with DSPS stay up late and wake up late.</answer choice>
+	<answer choice>To inform us that people with DSPS may suffer from sleep deprivation.</answer choice>
+	<correct answer>2 3</correct answer>
+</question>
+
+<question>
+	<id>12</id>
+	<passage>hard</passage>
+	<question type>table</question type>
+	<prompt>
+		<row>I have</row>
+		<row>no clue</row>
+		<col>what to make</col>
+		<col>of the data for this question.</col>
+	</prompt>
+	<answer choice>Me,</answer choice>
+	<answer choice>neither.</answer choice>
+	<answer choice>What</answer choice>
+	<answer choice>gives?</answer choice>
+	<correct answer>0 1 2 3</answer choice>
+</question>
+
+Change in work schedule
+Sleeping in late every day
+Moving across time zones
+Staying up late every night
+Your body feels like it is a different time than it actually is
+Chronic sleep deficiency 
+Sleep up to 4 hours less than the average person
+Feeling like you want to sleep when you are working or doing leisure activities
+Leads to sleep deprivation when one cannot "sleep in," or wake up later in the morning
+
+<question>
+	<id>13</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>The word (3) "conducive" is closest in meaning to:</prompt>
+	<answer choice>proper</answer choice>
+	<answer choice>harmful</answer choice>
+	<answer choice>relative</answer choice>
+	<answer choice>helpful</answer choice>
+	<correct answer>3</correct answer>
+</question>
+
+<question>
+	<id>14</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>According to paragraph 7, all the following are treatments of circadian rhythm disorders EXCEPT:</prompt>
+	<hint1>That is incorrect.  What are two major categories of circadian rhythm disorders?</hint1>
+	<hint2>What are the two major types of external stimulus therapy?</hint2>
+	<answer choice>Chronotherapy</answer choice>
+	<answer choice>Bright light therapy</answer choice>
+	<answer choice>Sleep disorder diagnosis</answer choice>
+	<answer choice>Sleep hygiene techniques</answer choice>
+	<correct answer>3</correct answer>
+</question>
+
+<question>
+	<id>15</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>In your own words, what are some ways people can alleviate sleep depreivation due to a circadian rhythm disorder?</prompt>
+</question>
+
+<question>
+	<id>16</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>Why would bright light therapy be an effective treatment for a circadian rhythm disorder?</prompt>
+	<answer choice>The light serves as an external cue that helps your body's clock adjust to a different time schedule.</answer choice>
+	<answer choice>The light helps you relax and get more sleep.</answer choice>
+	<answer choice>It helps you gradually and systematically adjust your sleep schedule until a desired bedtime is achieved.</answer choice>
+	<answer choice>It helps you decide what time to go to sleep every day.</answer choice>
+	<correct answer>0</correct answer>
+</question>
+
+<question>
+	<id>17</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>Please summarize the main points of the whole passage in 1-2 sentences.</prompt>
+</question>
+
+<question>
+	<id>18.1</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>In your own life, have you experienced any changes that may have led to a temporary or permanent circadian rhythm disorder?</prompt>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+<question>
+	<id>18.2</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>What was the change?</prompt>
+</question>
+
+<question>
+	<id>18.3</id>
+	<passage>hard</passage>
+	<question type>short response</question type>
+	<prompt>How did it influence your sleepiness and wakefulness throughout the day?</prompt>
+</question>
+
+<question>
+	<id>19.1</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>Do you think that you currently have a healthy sleep schedule?  </prompt>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+<question>
+	<id>19.2</id>
+	<passage>hard</passage>
+	<question type>long response</question type>
+	<prompt>In what way do you think circadian rhythms influence your health? (e.g., body, sleep schedule, alertness) Please give examples and answer in 4-7 sentences.</prompt>
+</question>
+
+<question>
+	<id>20</id>
+	<passage>hard</passage>
+	<question type>long response</question type>
+	<prompt>If you could change your schedule or lifestyle to maximize your alertness and productivity, how would you use your knowledge of circadian rhythms to make changes? Please give examples and answer in 4-7 sentences.</prompt>
+</question>
+
+<question>
+	<id>21.1</id>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>Do you know anyone who has experienced Delayed Sleep Phase Syndrome or another circadian rhythm disorder?  </prompt>
+	<answer choice>Yes </answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+<question>
+	<id>21.2</id>
+	<passage>hard</passage>
+	<question type>long response</question type>
+	<prompt>What recommendations would you give to a person who suffers from a circadian rhythm disorder and why?</prompt>
+</question>
+
+<question>
+	<id>1</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>The word (1) endogenously in paragraph 1 is closest in meaning to:</prompt>
+	<hint1>That is incorrect. Locate the word "endogenously" in the text. What is the general meaning of the whole sentence in which the word appears? </hint1>
+	<hint2>That is also incorrect. Focus on the contextual clues provided in the text. What is the connection between the part of the sentence before the comma and the part that comes after the comma (line 3)?</hint2>
+	<answer choice>flexibility</answer choice>
+	<answer choice>internally</answer choice>
+	<answer choice>quickly</answer choice>
+	<answer choice>routinely</answer choice>
+	<correct answer>0</correct answer>
+</question>
+
+<question>
+	<id>2.1</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>What time of day do you often feel alert? </prompt>
+	<answer choice>between 4am and 8am</answer choice>
+	<answer choice>between 8am and 12pm</answer choice>
+	<answer choice>between 12pm and 4pm</answer choice>
+	<answer choice>between 4pm and 8pm</answer choice>
+	<answer choice>between 8pm and 12am</answer choice>
+	<answer choice>between 12am - 4am</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+2.2
+Is your most alert time during the day consistent with what the passage says about circadian biological clocks?
+pick one
+Yes
+No
+Yes (if they pick any answer from question2.1 except option 3 "between 12pm and 4pm" or option 6 "between 12am and 4am") or No (if they pick "between 12pm and 4pm" or "between 12am and 4am")
+Look at the paragraph 1 again. When do circadian rhythms create our strongest sleep drive?  Is this time different from when you are alert, or is it the same?
+
+<question>
+	<id>2.3</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>Why?</prompt>
+</question>
+
+<question>
+	<id>3</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>Why might teenagers have difficulty getting enough sleep?</prompt>
+</question>
+
+<question>
+	<id>4</id>
+	<passage>easy</passage>
+	<question type>pick many</question type>
+	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? Check all that apply.</prompt>
+	<hint1>That is incorrect.  Focus on the relations between parts of the text. Pay attention to lexical and grammatical cohesion devices used within and across sentences. </hint1>
+	<hint2>What is the literal meaning of each sentence in the paragraph?</hint2>
+	<answer choice>changing your work hours from a day shift to a night shift (explicit)</answer choice>
+	<answer choice>staying up unusually late every night watching TV (implicit)</answer choice>
+	<answer choice>exercising</answer choice>
+	<answer choice>drinking too much coffee</answer choice>
+	<answer choice>moving from New York to California</answer choice>
+	<answer choice>sleeping until 12pm for three days in a row</answer choice>
+	<correct answer>0 1 4 5</correct answer>
+</question>
+
+<question>
+	<id>5</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>What is the main purpose of paragraph 3? </prompt>
+	<hint1>That is incorrect.  Evaluate the importance of information in paragraph 3 by distinguishing major ideas from supporting details.</hint1>
+	<answer choice>To summarize what a circadian rhythm is.</answer choice>
+	<answer choice>To describe the causes of circadian rhythm disorders.</answer choice>
+	<answer choice>To emphasize the harmfulness of circadian rhythm disorder.</answer choice>
+	<answer choice>To describe possible ways to treat circadian rhythm disorder.</answer choice>
+	<correct answer>1</correct answer>
+</question>
+
+<question>
+	<id>6.1</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>According to the text, could moving from Boston, MA to California lead to a circadian rhythm disorder?</prompt>
+	<hint1>That is incorrect.  Think about where Boston, MA and California are located.  Is there a time difference between these places?</hint1>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>0</correct answer>
+</question>
+
+<question>
+	<id>6.2</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>Why?</prompt>
+</question>
+
+<question>
+	<id>6.3</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>Once in California, will your body feel awake or drowsy at 7:00am?</prompt>
+	<answer choice>awake</answer choice>
+	<answer choice>drowsy</answer choice>
+	<correct answer>0</correct answer>
+</question>
+
+<question>
+	<id>7.1</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>At what time do you usually go to sleep in Boston?</prompt>
+</question>
+
+<question>
+	<id>7.2</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>When it is 8:00 am in Boston, Massachusetts, it is only 2:00 am in Honolulu, Hawaii.  If you travel to Hawaii for a week, what time of day (in Hawaii) will your body want to go to sleep during the first couple of days?</prompt>
+</question>
+
+<question>
+	<id>7.3</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>What cues does your circadian rhythm use to "reset" itself during jet lag?</prompt>
+</question>
+
+<question>
+	<id>8.1</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>In what types of jobs might Shift Work Sleep disorder be dangerous?</prompt>
+</question>
+
+<question>
+	<id>8.2</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>Why?</prompt>
+</question>
+
+<question>
+	<id>9</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>What does "excessive sleepiness" mean?</prompt>
+</question>
+
+<question>
+	<id>10</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>The phrase "sleep deprivation" is closest in meaning to:</prompt>
+	<hint1>That is incorrect.  Locate the phrase "sleep deprivation" in the text. What is the general meaning of the whole sentence in which the phrase appears? </hint1>
+	<hint2>That is also incorrect.  Focus on the contextual clues provided in the text. What is the connection between the part of the sentence after the second comma (“it requires waking up earlier than would otherwise be natural”) and the part that comes after the third comma (“so the disorder could lead to sleep deprivation”)?</hint2>
+	<answer choice>delayed sleep</answer choice>
+	<answer choice>natural sleep</answer choice>
+	<answer choice>being unable to fall asleep</answer choice>
+	<answer choice>lack of sleep</answer choice>
+	<correct answer>3</correct answer>
+</question>
+
+<question>
+	<id>11</id>
+	<passage>easy</passage>
+	<question type>pick many</question type>
+	<prompt>What are the author's main ponts of writing paragraph 6? Check all that apply.</prompt>
+	<hint1>Evaluate the importance of the information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
+	<answer choice>To indicate that DSPS is the most common circadian rhythm disorder.</answer choice>
+	<answer choice>To inform us that people with DSPS stay up from 1:00 am to 4:00 am.</answer choice>
+	<answer choice>To emphasize that people with DSPS stay up late and wake up late.</answer choice>
+	<answer choice>To inform us that people with DSPS may suffer from sleep deprivation.</answer choice>
+	<correct answer>2 3</correct answer>
+</question>
+<question>
+	<id>12</id>
+	<passage>easy</passage>
+	<question type>table</question type>
+	<prompt>
+		<row>I have</row>
+		<row>no clue</row>
+		<col>what to make</col>
+		<col>of the data for this question.</col>
+	</prompt>
+	<answer choice>Me,</answer choice>
+	<answer choice>neither.</answer choice>
+	<answer choice>What</answer choice>
+	<answer choice>gives?</answer choice>
+	<correct answer>0 1 2 3</answer choice>
+</question>
+Change in work schedule
+Sleeping in late every day
+Moving across time zones
+Staying up late every night
+Your body feels like it is a different time than it actually is
+Chronic sleep deficiency 
+Sleep up to 4 hours less than the average person
+Feeling like you want to sleep when you are working or doing leisure activities
+Leads to sleep deprivation when one cannot "sleep in," or wake up later in the morning
+
+<question>
+	<id>13</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>The word (3) "conducive" is closest in meaning to:</prompt>
+	<answer choice>proper</answer choice>
+	<answer choice>harmful</answer choice>
+	<answer choice>relative</answer choice>
+	<answer choice>helpful</answer choice>
+	<correct answer>3</correct answer>
+</question>
+
+<question>
+	<id>14</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>According to paragraph 7, all the following are treatments of circadian rhythm disorders EXCEPT:</prompt>
+	<hint1>That is incorrect.  What are two major categories of circadian rhythm disorders?</hint1>
+	<hint2>What are the two major types of external stimulus therapy?</hint2>
+	<answer choice>Chronotherapy</answer choice>
+	<answer choice>Bright light therapy</answer choice>
+	<answer choice>Sleep disorder diagnosis</answer choice>
+	<answer choice>Sleep hygiene techniques</answer choice>
+	<correct answer>3</correct answer>
+</question>
+
+<question>
+	<id>15</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>In your own words, what are some ways people can alleviate sleep depreivation due to a circadian rhythm disorder?</prompt>
+</question>
+
+<question>
+	<id>16</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>Why would bright light therapy be an effective treatment for a circadian rhythm disorder?</prompt>
+	<answer choice>The light serves as an external cue that helps your body's clock adjust to a different time schedule.</answer choice>
+	<answer choice>The light helps you relax and get more sleep.</answer choice>
+	<answer choice>It helps you gradually and systematically adjust your sleep schedule until a desired bedtime is achieved.</answer choice>
+	<answer choice>It helps you decide what time to go to sleep every day.</answer choice>
+	<correct answer>0</correct answer>
+</question>
+
+<question>
+	<id>17</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>Please summarize the main points of the whole passage in 1-2 sentences.</prompt>
+</question>
+
+<question>
+	<id>18.1</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>In your own life, have you experienced any changes that may have led to a temporary or permanent circadian rhythm disorder?</prompt>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+<question>
+	<id>18.2</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>What was the change?</prompt>
+</question>
+
+<question>
+	<id>18.3</id>
+	<passage>easy</passage>
+	<question type>short response</question type>
+	<prompt>How did it influence your sleepiness and wakefulness throughout the day?</prompt>
+</question>
+
+<question>
+	<id>19.1</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>Do you think that you currently have a healthy sleep schedule?  </prompt>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+<question>
+	<id>19.2</id>
+	<passage>easy</passage>
+	<question type>long response</question type>
+	<prompt>In what way do you think circadian rhythms influence your health? (e.g., body, sleep schedule, alertness) Please give examples and answer in 4-7 sentences.</prompt>
+</question>
+
+<question>
+	<id>20</id>
+	<passage>easy</passage>
+	<question type>long response</question type>
+	<prompt>If you could change your schedule or lifestyle to maximize your alertness and productivity, how would you use your knowledge of circadian rhythms to make changes? Please give examples and answer in 4-7 sentences.</prompt>
+</question>
+
+<question>
+	<id>21.1</id>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>Do you know anyone who has experienced Delayed Sleep Phase Syndrome or another circadian rhythm disorder?  </prompt>
+	<answer choice>Yes </answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
+<question>
+	<id>21.2</id>
+	<passage>easy</passage>
+	<question type>long response</question type>
+	<prompt>What recommendations would you give to a person who suffers from a circadian rhythm disorder and why?</prompt>
+</question>
+

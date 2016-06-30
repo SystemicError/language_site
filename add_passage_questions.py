@@ -37,14 +37,22 @@ print "Adding passage questions."
 
 questions = split_by_tag(text, "question")
 for question in questions:
-	id = int(split_by_tag(question, "id")[0])
+	id = split_by_tag(question, "id")[0].strip()
 	passage = split_by_tag(question, "passage")[0]
 	question_type = split_by_tag(question, "question type")[0]
 	prompt = split_by_tag(question, "prompt")[0]
 
 	if question_type == "pick one" or question_type == "pick many" or question_type == "table":
-		hint1 = split_by_tag(question, "hint1")[0]
-		hint2 = split_by_tag(question, "hint2")[0]
+		hint1 = split_by_tag(question, "hint1")
+		if len(hint1) == 0:
+			hint1 = None
+		else:
+			hint1 = hint1[0]
+		hint2 = split_by_tag(question, "hint2")
+		if len(hint2) == 0:
+			hint2 = None
+		else:
+			hint2 = hint2[0]
 		answer_choices = ""
 		choices = split_by_tag(question, "answer choice")
 		for choice in choices:
