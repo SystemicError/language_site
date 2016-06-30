@@ -23,9 +23,9 @@ from assessment.models import PassageQuestion
 django.setup()
 
 
-print "Reading xml file."
+print "Reading passage questions file."
 try:
-	fin = open("passage_questions.xml")
+	fin = open("passage_questions.txt")
 	text = fin.read()
 except IOError:
 	print "Couldn't open passage questions file!"
