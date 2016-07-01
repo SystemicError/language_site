@@ -14,7 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .models import *
 
-import random, string
+import random, string, re
 
 def indexView(request):
 	context = {}
@@ -316,10 +316,21 @@ def set_context_from_passage_question(context, pq, hint):
 def link_vocab_hints(text):
 	"Links all vocab words in text."
 	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
-		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a target=\"_blank\">"
-		text = text.replace(vocab_word, link)
-		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a target=\"_blank\">"
-		text = text.replace(string.capwords(vocab_word), caplink)
+		link = "<a href=\"/assessment/vocab_query/LOWERCASEVOCABWORD\"/>LOWERCASEVOCABWORD</a target=\"_blank\">"
+		pattern = r"[^A-Za-z]" + vocab_word + r"[^A-Za-z]"
+		m = re.search(pattern, text)
+		while m:
+			text = text[:m.start() + 1] + link + text[m.end() - 1:]
+			m = re.search(pattern, text)
+
+		caplink = "<a href=\"/assessment/vocab_query/LOWERCASEVOCABWORD\"/>UPPERCASEVOCABWORD</a target=\"_blank\">"
+		pattern = r"[^A-Za-z]" + string.capwords(vocab_word) + r"[^A-Za-z]"
+		m = re.search(pattern, text)
+		while m:
+			text = text[:m.start() + 1] + caplink + text[m.end() - 1:]
+			m = re.search(pattern, text)
+		text = text.replace("LOWERCASEVOCABWORD", vocab_word)
+		text = text.replace("UPPERCASEVOCABWORD", string.capwords(vocab_word))
 	return text
 
 def get_index_context_from_user(username):
