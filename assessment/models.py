@@ -51,7 +51,6 @@ class Student(models.Model):
 		previous_response = results[-1][1]
 		correct_response = previous_question.correct_answer.strip()
 		prev_num_hints = previous_question.get_number_of_hints()
-		print prev_num_hints
 
 		# got the last one right (or it's not a type that can be wrong)
 		# or ran out of hints
@@ -139,14 +138,11 @@ class Student(models.Model):
 
 	def add_vocab_result(self, vq, response):
 		self.vocab_results = self.vocab_results + str(vq.word) + "," + str(response) + ";"
-		print "Updated vocab results:"
-		print self.vocab_results
 		return
 
 	def get_vocab_results(self):
 		vr = []
 		if self.vocab_results.find(";") == -1:
-			print "Empty vocab results."
 			return []
 
 		for entry in self.vocab_results.split(";")[:-1]:
@@ -164,9 +160,9 @@ class Student(models.Model):
 		vresults = self.get_vocab_results()
 		if len(vresults) < 150:
 			return -1
-		k_band_2_results = [x for x in vresults if x[0].k_band == 2]
+		k_band_2_results = vresults[30:60]
 		num_correct_words = len([x for x in k_band_2_results if x[0].is_word and x[1]])
-		num_incorrect_nonwords = len([x for x in k_band_2_results if not x[0].is_word and x[1]])
+		num_incorrect_nonwords = len([x for x in k_band_2_results if (not x[0].is_word) and x[1]])
 		score = num_correct_words - 2*num_incorrect_nonwords
 		return score/20.0
 
