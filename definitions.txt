@@ -1,2 +1,5 @@
 white	the opposite of black
 black	the opposite of white
+sleep	the opposite of waking
+body	that thing you're made of
+person	like people, but fewer

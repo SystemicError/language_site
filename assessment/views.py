@@ -60,7 +60,7 @@ def vocabQueryView(request, vocab_word):
 
 	# reject users who are done with the assessment
 
-	if st.has_completed_passage():
+	if st.get_next_passage_question_and_hint() == (None, 0):
 		context['word'] = ""
 		context['definition'] = "No definitions are available as you have completed the assessment."
 		return render(request, 'assessment/vocab_query.html', context)
@@ -240,7 +240,7 @@ def passageView(request):
 	if "pickmany" in " ".join(request.POST.keys()):
 		# remember, checkboxes only send POST data when checked
 		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		boxes = len(pq.get_correct_answer())
+		boxes = len(pq.get_answer_choices())
 		response = ""
 		for box in range(boxes):
 			entry_name = "pickmany" + str(box)
