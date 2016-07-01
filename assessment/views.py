@@ -316,21 +316,29 @@ def set_context_from_passage_question(context, pq, hint):
 def link_vocab_hints(text):
 	"Links all vocab words in text."
 	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
-		link = "<a href=\"/assessment/vocab_query/LOWERCASEVOCABWORD\"/>LOWERCASEVOCABWORD</a target=\"_blank\">"
+		print vocab_word
+		pieces = []
 		pattern = r"[^A-Za-z]" + vocab_word + r"[^A-Za-z]"
-		m = re.search(pattern, text)
-		while m:
-			text = text[:m.start() + 1] + link + text[m.end() - 1:]
-			m = re.search(pattern, text)
+		previous = 0
+		for m in re.finditer(pattern, text):
+			print m.start()
+			pieces.append(text[previous:m.start() + 1])
+			previous = m.end() - 1
+		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a target=\"_blank\">"
+		if previous != 0:
+			pieces.append(text[previous:])
+			text = link.join(pieces)
 
-		caplink = "<a href=\"/assessment/vocab_query/LOWERCASEVOCABWORD\"/>UPPERCASEVOCABWORD</a target=\"_blank\">"
+		pieces = []
 		pattern = r"[^A-Za-z]" + string.capwords(vocab_word) + r"[^A-Za-z]"
-		m = re.search(pattern, text)
-		while m:
-			text = text[:m.start() + 1] + caplink + text[m.end() - 1:]
-			m = re.search(pattern, text)
-		text = text.replace("LOWERCASEVOCABWORD", vocab_word)
-		text = text.replace("UPPERCASEVOCABWORD", string.capwords(vocab_word))
+		previous = 0
+		for m in re.finditer(pattern, text):
+			pieces.append(text[previous:m.start() + 1])
+			previous = m.end() - 1
+		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a target=\"_blank\">"
+		if previous != 0:
+			pieces.append(text[previous:])
+			text = caplink.join(pieces)
 	return text
 
 def get_index_context_from_user(username):
