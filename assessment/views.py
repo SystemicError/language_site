@@ -97,7 +97,7 @@ def vocabView(request):
 
 	vresults = st.get_vocab_results()
 	context['num_complete'] = len(vresults)
-	context['finished'] = len(vresults) >= 30
+	context['finished'] = len(vresults) >= 150
 	if context['finished']:
 		st.assign_passage()
 		st.save()
@@ -106,13 +106,110 @@ def vocabView(request):
 		# select the next word
 
 		# select all words not already used
-		vqs = [x for x in VocabQuestion.objects.all() if x not in [y[0] for y in vresults]]
+		unused_vqs = [x for x in VocabQuestion.objects.all() if x not in [y[0] for y in vresults]]
 
-		# select those of correct k_band
-		# vqs = [x for x in vqs if 
-		# unfinished, not yet clear how many of each
+		# kband		nonword length
+		# 1-2		3-7
+		# 3-4		5-8
+		# 5		5-9
 
-		vq = vqs[random.randint(0, len(vqs) - 1)]
+		# gather unused words of first 5 kbands
+		k_bands = [[] for x in range(5)]
+		for band in range(5):
+			k_bands[band] = [x for x in unused_vqs if x.k_band == band + 1]
+
+		# sort nonwords into kbands
+		nonwords_1_2 = [x for x in unused_vqs if x.k_band == -1 and len(x.word) >= 3 and len(x.word) <= 7]
+		nonwords_3_4 = [x for x in unused_vqs if x.k_band == -1 and len(x.word) >= 5 and len(x.word) <= 8]
+		nonwords_5 = [x for x in unused_vqs if x.k_band == -1 and len(x.word) >= 5 and len(x.word) <= 9]
+
+		# figure out what k_band we should be in
+		if len(vresults) < 30:
+			# band 1
+			w_count = len([x for x in vresults if x[0].k_band == 1])
+			nw_count = len(vresults) - w_count
+
+			if w_count == 20:
+				# if we have twenty words, pick a non-word
+				vq = random.choice(nonwords_1_2)
+			elif nw_count == 10:
+				# if we have ten non-words, pick a word
+				vq = random.choice(k_bands[0])
+			else:
+				# otherwise, flip a 2:1 coin for word vs. nonword
+				if random.randint(0, 2) == 0:
+					vq = random.choice(nonwords_1_2)
+				else:
+					vq = random.choice(k_bands[0])
+		elif len(vresults) < 60:
+			# band 2
+			w_count = len([x for x in vresults if x[0].k_band == 2])
+			nw_count = len(vresults) - w_count - 30
+
+			if w_count == 20:
+				# if we have twenty words, pick a non-word
+				vq = random.choice(nonwords_1_2)
+			elif nw_count == 10:
+				# if we have ten non-words, pick a word
+				vq = random.choice(k_bands[1])
+			else:
+				# otherwise, flip a 2:1 coin for word vs. nonword
+				if random.randint(0, 2) == 0:
+					vq = random.choice(nonwords_1_2)
+				else:
+					vq = random.choice(k_bands[1])
+		elif len(vresults) < 90:
+			# band 3
+			w_count = len([x for x in vresults if x[0].k_band == 3])
+			nw_count = len(vresults) - w_count - 60
+
+			if w_count == 20:
+				# if we have twenty words, pick a non-word
+				vq = random.choice(nonwords_3_4)
+			elif nw_count == 10:
+				# if we have ten non-words, pick a word
+				vq = random.choice(k_bands[2])
+			else:
+				# otherwise, flip a 2:1 coin for word vs. nonword
+				if random.randint(0, 2) == 0:
+					vq = random.choice(nonwords_3_4)
+				else:
+					vq = random.choice(k_bands[2])
+		elif len(vresults) < 120:
+			# band 4
+			w_count = len([x for x in vresults if x[0].k_band == 4])
+			nw_count = len(vresults) - w_count - 90
+
+			if w_count == 20:
+				# if we have twenty words, pick a non-word
+				vq = random.choice(nonwords_3_4)
+			elif nw_count == 10:
+				# if we have ten non-words, pick a word
+				vq = random.choice(k_bands[3])
+			else:
+				# otherwise, flip a 2:1 coin for word vs. nonword
+				if random.randint(0, 2) == 0:
+					vq = random.choice(nonwords_3_4)
+				else:
+					vq = random.choice(k_bands[3])
+		elif len(vresults) < 150:
+			# band 5
+			w_count = len([x for x in vresults if x[0].k_band == 5])
+			nw_count = len(vresults) - w_count - 120
+
+			if w_count == 20:
+				# if we have twenty words, pick a non-word
+				vq = random.choice(nonwords_5)
+			elif nw_count == 10:
+				# if we have ten non-words, pick a word
+				vq = random.choice(k_bands[4])
+			else:
+				# otherwise, flip a 2:1 coin for word vs. nonword
+				if random.randint(0, 2) == 0:
+					vq = random.choice(nonwords_5)
+				else:
+					vq = random.choice(k_bands[4])
+
 		context['word'] = vq.word
 	return render(request, 'assessment/vocab.html', context)
 
