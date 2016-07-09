@@ -1,7 +1,14 @@
+<html>
+<body>
 <h1>Passage quiz</h1>
 <p>{{ message }}</p><br /><br />
+<table border="1" cellpadding="10">
+<tr>
+<td width="50%">
 <p>{{ passage_text|safe }}</p>
 {# question #}
+</td>
+<td valign="top">
 <p>
 {% if question_type == "pick one" or question_type == "pick many" or question_type == "short response" or question_type = "long response" %}
 	{{ question }}
@@ -11,7 +18,7 @@
 {% endif %}
 </p>
 {# hint #}
-<p>
+<p style="color:red">
 {% if hint %}
 	{{ hint }}
 {% endif %}
@@ -82,3 +89,8 @@
 	<textarea name="longresponse" form="answerform"></textarea>
 {% endif %}
 </p>
+</td>
+</tr>
+</table>
+</body>
+</html>

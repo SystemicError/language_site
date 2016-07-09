@@ -1,5 +1,23 @@
 <h1>Welcome to the language assessment!</h1>
 <p>{{ greeting }}</p>
+{# Vocab quiz results #}
+{% if scores %}
+	<p>
+	<table border="1">
+	<tr>
+	<td>K Band</td>
+	<td>Score</td>
+	</tr>
+	{% for score in scores %}
+		<tr>
+		<td>{{ forloop.counter }}</td>
+		<td>{{ score }}%</td>
+		</tr>
+	{% endfor %}
+	</table><br />
+	Your overall vocabulary score was {{ overall_score }}%
+	</p>
+{% endif %}
 <p>{{ content }}</p>
 <p>
 {% if link == "login" %}

@@ -101,7 +101,7 @@ class Student(models.Model):
 		if self.vocab_score() == -1:
 			#print("Error, can't assign passage without complete vocab score.")
 			self.passage_assigned = ""
-		elif self.vocab_score() >= .85:
+		elif self.vocab_score(2) >= .85:
 			self.passage_assigned = "hard"
 		else:
 			self.passage_assigned = "easy"
@@ -155,14 +155,20 @@ class Student(models.Model):
 			vr.append((vq, response))
 		return vr
 
-	def vocab_score(self):
+	def vocab_score(self, k_band=-1):
+		"Returns score for a given k band (or overall by default)."
 		vresults = self.get_vocab_results()
 		if len(vresults) < 150:
 			return -1
+		if k_band > 0:
+			vresults = vresults[(k_band - 1)*30:k_band*30]
 		num_correct_words = len([x for x in vresults if x[0].is_word and x[1]])
 		num_incorrect_nonwords = len([x for x in vresults if (not x[0].is_word) and x[1]])
 		score = num_correct_words - 2*num_incorrect_nonwords
-		return score/100.0
+		if k_band > 0:
+			return score/20.0
+		else:
+			return score/100.0
 
 	def __str__(self):
 		return self.name

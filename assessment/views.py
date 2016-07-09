@@ -357,7 +357,9 @@ def get_index_context_from_user(username):
 				context['content'] = "You have completed the assessment.  Please log out."
 				context['link'] = "logout"
 			else:
-				context['content'] = "You took the test and got " + str((st.vocab_score()*100)) + "%.  It's time to take the passage test."
+				context['scores'] = [st.vocab_score(x + 1)*100.0 for x in range(5)]
+				context['overall_score'] = st.vocab_score()*100.0
+				context['content'] = "It's time to take the passage test."
 				context['link'] = "passage"
 	else:
 		context['content'] = "Welcome to your first login.  I'm adding you to the database.  Go take the vocab quiz."
