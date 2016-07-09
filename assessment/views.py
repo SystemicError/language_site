@@ -316,12 +316,10 @@ def set_context_from_passage_question(context, pq, hint):
 def link_vocab_hints(text):
 	"Links all vocab words in text."
 	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
-		print vocab_word
 		pieces = []
 		pattern = r"[^A-Za-z]" + vocab_word + r"[^A-Za-z]"
 		previous = 0
 		for m in re.finditer(pattern, text):
-			print m.start()
 			pieces.append(text[previous:m.start() + 1])
 			previous = m.end() - 1
 		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a target=\"_blank\">"

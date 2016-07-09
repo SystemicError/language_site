@@ -4,7 +4,7 @@ from .models import VocabQuestion, Student, VocabHint, PassageQuestion
 
 class PassageQuestionMethodTests(TestCase):
 	def test_pick_one(self):
-		print "Pick one test."
+		#print("Pick one test.")
 		pq = PassageQuestion()
 		pq.pq_id = 0
 		pq.question_type = "pick one"
@@ -20,7 +20,7 @@ class PassageQuestionMethodTests(TestCase):
 		return
 		
 	def test_pick_many(self):
-		print "Pick many test."
+		#print("Pick many test.")
 		pq = PassageQuestion()
 		pq.pq_id = 0
 		pq.question_type = "pick many"
@@ -36,7 +36,7 @@ class PassageQuestionMethodTests(TestCase):
 		return
 
 	def test_table(self):
-		print "Table test."
+		#print("Table test.")
 		pq = PassageQuestion()
 		pq.pq_id = 0
 		pq.question_type = "table"
@@ -52,7 +52,7 @@ class PassageQuestionMethodTests(TestCase):
 		return
 
 	def test_short_response(self):
-		print "Short response test."
+		#print("Short response test.")
 		pq = PassageQuestion()
 		pq.pq_id = 0
 		pq.question_type = "short response"
@@ -65,7 +65,7 @@ class PassageQuestionMethodTests(TestCase):
 		return
 
 	def test_long_response(self):
-		print "Long response test."
+		#print("Long response test.")
 		pq = PassageQuestion()
 		pq.pq_id = 0
 		pq.question_type = "long response"
@@ -79,7 +79,7 @@ class PassageQuestionMethodTests(TestCase):
 
 class StudentMethodTests(TestCase):
 	def test_add_and_fetch_passage_results(self):
-		print "add and fetch test."
+		#print("add and fetch test.")
 		pq1 = PassageQuestion(pq_id = 0)
 		pq2 = PassageQuestion(pq_id = 1)
 		pq3 = PassageQuestion(pq_id = 2)

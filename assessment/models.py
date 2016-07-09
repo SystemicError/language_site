@@ -35,7 +35,6 @@ class Student(models.Model):
 	def get_next_passage_question_and_hint(self):
 		"returns (passage_question, hint_needed)"
 		if self.passage_assigned == "":
-			print "Error:  Why are we asking for the next question when passage is unassigned?"
 			return (None, -1)
 
 		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned)
@@ -88,8 +87,8 @@ class Student(models.Model):
 		while first_result != -1:
 			results_string = results_string[first_result + len("<response question_id="):]
 			tag_close_index = results_string.find(">")
-			if tag_close_index == -1:
-				print "No closing > on result string, panic!"
+			#if tag_close_index == -1:
+				#print("No closing > on result string, panic!")
 			question_id = results_string[:tag_close_index]
 			results_string = results_string[tag_close_index + 1:]
 			result_end = results_string.find("</response>")
@@ -100,7 +99,7 @@ class Student(models.Model):
 	def assign_passage(self):
 		"Assigns passage based on vocab quiz results."
 		if self.vocab_score() == -1:
-			print "Error, can't assign passage without complete vocab score."
+			#print("Error, can't assign passage without complete vocab score.")
 			self.passage_assigned = ""
 		elif self.vocab_score() >= .85:
 			self.passage_assigned = "hard"
@@ -160,11 +159,10 @@ class Student(models.Model):
 		vresults = self.get_vocab_results()
 		if len(vresults) < 150:
 			return -1
-		k_band_2_results = vresults[30:60]
-		num_correct_words = len([x for x in k_band_2_results if x[0].is_word and x[1]])
-		num_incorrect_nonwords = len([x for x in k_band_2_results if (not x[0].is_word) and x[1]])
+		num_correct_words = len([x for x in vresults if x[0].is_word and x[1]])
+		num_incorrect_nonwords = len([x for x in vresults if (not x[0].is_word) and x[1]])
 		score = num_correct_words - 2*num_incorrect_nonwords
-		return score/20.0
+		return score/100.0
 
 	def __str__(self):
 		return self.name
