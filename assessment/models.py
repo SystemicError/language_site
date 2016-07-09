@@ -172,6 +172,7 @@ class Student(models.Model):
 class VocabHint(models.Model):
 	# For giving clues to highlighted words in the passage
 	word = models.CharField(unique=True, max_length = 64)
+	translation = models.CharField(default = "", max_length = 64)
 	definition = models.TextField(default = "")
 	def __str__(self):
 		return self.word

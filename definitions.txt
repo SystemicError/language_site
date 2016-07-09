@@ -1,5 +1,51 @@
-white	the opposite of black
-black	the opposite of white
-sleep	the opposite of waking
-body	that thing you're made of
-person	like people, but fewer
+Word in the text	Spanish translation	Simple definition in Englsih
+roughly	aproximadamente	approximately
+wakefulness	desvelo	a state during which you are conscious and aware of the world
+dips and rises	baja y sube	going down and up
+delay	retraso	a period of time by which something is late or postponed
+pregnancy	embarazo	the time during which a baby develops inside a woman
+sleep in	dormir hasta tarde	"to sleep later than you usually do, or later than most people do"
+expect	creer que	to think that something will happen
+struggle	luchar	to experience difficulty and make a very great effort in order to do something
+nap	tomar una siesta	"sleep lightly or briefly, especially during the day"
+relief	alivio	a feeling of comfort and relaxation
+fit	acomodar	to be the right for someone or something
+desired	deseado	correct; proper; wished for
+internal	interno	inside; 
+regulate	regular	control
+periods	períodos	lengths of time
+variation	variación	something that is slightly different from the usual form
+depending	dependiendo de	being influenced by; being changed because of something
+generally	generalmente	usually; in most situations
+adolescence	adolescencia	the period of time between childhood and adulthood
+alert	estar alerta	quick to notice or react to things around you
+rhythm	ritmo	"a regular, repeating pattern"
+time zone	zona horaria	"a range of longitudes where a common standard time is used. (e.g. Eastern Standard Time, Pacific Standard Time)"
+routine	rutina	a sequence of actions regularly followed; a fixed program
+conflict	en conflicto con	being incompatible or at variance; clash
+natural	natural	existing in or caused by nature
+wristwatch	reloj de mano	a watch worn on a strap around the wrist (lower arm)
+disoriented	desorientada/o	"feeling confused, having lost a sense of direction"
+adjust	ajustar	"to alter or move something slightly to allow a desired fit, appearance or result"
+disorder	desorden	a disease or abnormal health condition
+supposed	supuesto	assumed or believed to be true in most cases
+leisure	ocio	use of free time for enjoyment
+techniques	técnicas	a way of carrying out a particular task
+hygiene	higiene	practices/habits used to maintain health and prevent illness
+stimulus	estímulo	a thing or event that evokes a specific reaction
+gradually	gradualmente	"slowly, little by little"
+systematically	sistemáticamente	using a fixed method or a specific set of steps
+therapy	terapia	treatment intended to relieve or heal an illness or disorder
+sufficient	suficiente	adequate; enough
+intense	intenso	of extreme force or strength
+chronic	crónico	persisting for a long time or constantly recurring
+deficiency	deficiencia	a lack or shortage
+implications	implicancia	a likely consequence or result of something
+sensation	sensación	a physical feeling that results from something that happens to the body
+symptom	síntomas	"a problem or condition that indicates a specific type of illness, disease, or other condition"
+involuntary	involuntariamente	done without conscious control; not done on purpose
+interferes	interferir	to prevent something from continuing or being carried out properly
+requires	requerir	to need something for a particular purpose
+compensate	compensar	to try to correct for something negative by doing another action
+counterbalance	contrapeso	to neutralize or cancel by creating an opposite force 
+perpetuates	perpetuar	to make something continue without stop

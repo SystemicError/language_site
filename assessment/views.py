@@ -62,6 +62,7 @@ def vocabQueryView(request, vocab_word):
 
 	if st.get_next_passage_question_and_hint() == (None, 0):
 		context['word'] = ""
+		context['translation'] = ""
 		context['definition'] = "No definitions are available as you have completed the assessment."
 		return render(request, 'assessment/vocab_query.html', context)
 
@@ -71,9 +72,11 @@ def vocabQueryView(request, vocab_word):
 		vh = VocabHint.objects.get(word = vocab_word)
 		st.add_vocab_query(vh)
 		context['word'] = vh.word
+		context['translation'] = vh.translation
 		context['definition'] = vh.definition
 	else:
 		context['word'] = "Unknown word:  " + vocab_word
+		context['translation'] = ""
 		context['definition'] = "I don't know this word.  I'm not sure how you got here."
 
 	return render(request, 'assessment/vocab_query.html', context)

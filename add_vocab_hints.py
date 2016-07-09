@@ -7,6 +7,7 @@ from django.core.management import execute_from_command_line
 
 
 import django
+from django.utils.encoding import smart_text
 from assessment.models import VocabHint
 django.setup()
 
@@ -23,22 +24,24 @@ fin.close()
 print "Adding words."
 
 for line in lines:
-	fields = line.split()
-	word = fields[0]
+	fields = line.split("\t")
+	word = smart_text(fields[0])
 
 	if word in [vh.word for vh in VocabHint.objects.all()]:
-		print "Skipping " + word + " (already in database) . . ."
+		print "Updating " + word + " (already in database) . . ."
+		vh = VocabHint.objects.get(word=word)
 	else:
-		definition = ""
-		for x in fields[1:]:
-			definition = definition + x + " "
-
-		print "Adding \'" + word + "\': " + definition
-
 		vh = VocabHint()
-		vh.word = word
-		vh.definition = definition
-		vh.save()
+		print "Adding \'" + word + "\': " + translation + " - " + definition
+
+	translation = smart_text(fields[1])
+	definition = smart_text(fields[2])
+
+
+	vh.word = word
+	vh.translation = translation
+	vh.definition = definition
+	vh.save()
 
 
 print VocabHint.objects.all()
