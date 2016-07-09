@@ -2,95 +2,97 @@
 <body>
 <h1>Passage quiz</h1>
 <p>{{ message }}</p><br /><br />
-<table border="1" cellpadding="10">
-<tr>
-<td width="50%">
-<p>{{ passage_text|safe }}</p>
-{# question #}
-</td>
-<td valign="top">
-<p>
-{% if question_type == "pick one" or question_type == "pick many" or question_type == "short response" or question_type = "long response" %}
-	{{ question }}
-{% endif %}
-{% if question_type == "table" %}
-	{# tables don't include a question #}
-{% endif %}
-</p>
-{# hint #}
-<p style="color:red">
-{% if hint %}
-	{{ hint }}
-{% endif %}
-</p>
-{# answer form #}
-<p>
-{% if question_type == "pick one" %}
-	<form method="post" action="passage" id="answerform">
-	{% csrf_token %}
-	{% for answer_choice in answer_choices %}
-		<p><input type="radio" name="pickone" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
-	{% endfor %}
-	<input type="hidden" name="question_id" value="{{ question_id }}">
-	<input type="submit" value="Submit">
-	</form>
-{% endif %}
-{% if question_type == "pick many" %}
-	<form method="post" action="passage" id="answerform">
-	{% csrf_token %}
-	{% for answer_choice in answer_choices %}
-		<p><input type="checkbox" name="pickmany{{ forloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
-	{% endfor %}
-	<input type="hidden" name="question_id" value="{{ question_id }}">
-	<input type="submit" value="Submit">
-	</form>
-{% endif %}
-{% if question_type == "table" %}
-	<form method="post" action="passage" id="answerform">
-	{% csrf_token %}
-	<table border="1">
+{% if question %}
+	<table border="1" cellpadding="10">
 	<tr>
-	<td></td>
-	{% for col in cols %}
-		<td>{{ col }}</td>
-	{% endfor %}
-	</tr>
-	{% for row in rows %}
+	<td width="50%">
+	<p>{{ passage_text|safe }}</p>
+	{# question #}
+	</td>
+	<td valign="top">
+	<p>
+	{% if question_type == "pick one" or question_type == "pick many" or question_type == "short response" or question_type = "long response" %}
+		{{ question }}
+	{% endif %}
+	{% if question_type == "table" %}
+		{# tables don't include a question #}
+	{% endif %}
+	</p>
+	{# hint #}
+	<p style="color:red">
+	{% if hint %}
+		{{ hint }}
+	{% endif %}
+	</p>
+	{# answer form #}
+	<p>
+	{% if question_type == "pick one" %}
+		<form method="post" action="passage" id="answerform">
+		{% csrf_token %}
+		{% for answer_choice in answer_choices %}
+			<p><input type="radio" name="pickone" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+		{% endfor %}
+		<input type="hidden" name="question_id" value="{{ question_id }}">
+		<input type="submit" value="Submit">
+		</form>
+	{% endif %}
+	{% if question_type == "pick many" %}
+		<form method="post" action="passage" id="answerform">
+		{% csrf_token %}
+		{% for answer_choice in answer_choices %}
+			<p><input type="checkbox" name="pickmany{{ forloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+		{% endfor %}
+		<input type="hidden" name="question_id" value="{{ question_id }}">
+		<input type="submit" value="Submit">
+		</form>
+	{% endif %}
+	{% if question_type == "table" %}
+		<form method="post" action="passage" id="answerform">
+		{% csrf_token %}
+		<table border="1">
 		<tr>
-		<td>{{ row }}</td>
+		<td></td>
 		{% for col in cols %}
-			<td>
-			{% for answer_choice in answer_choices %}
-				<p><input type="radio" name="table{{ forloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.counter0}}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
-			{% endfor %}
-			</td>
+			<td>{{ col }}</td>
 		{% endfor %}
 		</tr>
-	{% endfor %}
+		{% for row in rows %}
+			<tr>
+			<td>{{ row }}</td>
+			{% for col in cols %}
+				<td>
+				{% for answer_choice in answer_choices %}
+					<p><input type="radio" name="table{{ forloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.counter0}}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+				{% endfor %}
+				</td>
+			{% endfor %}
+			</tr>
+		{% endfor %}
+		</table>
+		<input type="hidden" name="question_id" value="{{ question_id }}">
+		<input type="submit" value="Submit">
+		</form>
+	{% endif %}
+	{% if question_type == "short response" %}
+		<form method="post" action="passage" id="answerform">
+		{% csrf_token %}
+		<input type="hidden" name="question_id" value="{{ question_id }}">
+		<input type="submit" value="Submit">
+		</form>
+		<textarea name="shortresponse" form="answerform"></textarea>
+	{% endif %}
+	{% if question_type = "long response" %}
+		<form method="post" action="passage" id="answerform">
+		{% csrf_token %}
+		<input type="hidden" name="question_id" value="{{ question_id }}">
+		<input type="submit" value="Submit">
+		</form>
+		<textarea name="longresponse" form="answerform"></textarea>
+	{% endif %}
+	</p>
+	</td>
+	</tr>
 	</table>
-	<input type="hidden" name="question_id" value="{{ question_id }}">
-	<input type="submit" value="Submit">
-	</form>
 {% endif %}
-{% if question_type == "short response" %}
-	<form method="post" action="passage" id="answerform">
-	{% csrf_token %}
-	<input type="hidden" name="question_id" value="{{ question_id }}">
-	<input type="submit" value="Submit">
-	</form>
-	<textarea name="shortresponse" form="answerform"></textarea>
-{% endif %}
-{% if question_type = "long response" %}
-	<form method="post" action="passage" id="answerform">
-	{% csrf_token %}
-	<input type="hidden" name="question_id" value="{{ question_id }}">
-	<input type="submit" value="Submit">
-	</form>
-	<textarea name="longresponse" form="answerform"></textarea>
-{% endif %}
-</p>
-</td>
-</tr>
-</table>
 </body>
 </html>
