@@ -60,7 +60,7 @@ def vocabQueryView(request, vocab_word):
 
 	# reject users who are done with the assessment
 
-	if st.get_next_passage_question_and_hint() == (None, 0):
+	if st.get_next_question_set_and_saved_responses_and_hints() == "finished":
 		context['word'] = ""
 		context['translation'] = ""
 		context['definition'] = "No definitions are available as you have completed the assessment."
@@ -233,86 +233,124 @@ def passageView(request):
 		return render(request, 'assessment/passage.html', context)
 
 	context['passage_text'] = link_vocab_hints(psg.passage_text)
-	pqs = PassageQuestion.objects.filter(passage = st.passage_assigned)
 
-	# process previous answer, if any
-	if "pickone" in request.POST.keys():
-		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		st.add_passage_result(pq, request.POST["pickone"])
-		st.save()
-	if "pickmany" in " ".join(request.POST.keys()):
-		# remember, checkboxes only send POST data when checked
-		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		boxes = len(pq.get_answer_choices())
-		response = ""
-		for box in range(boxes):
-			entry_name = "pickmany" + str(box)
-			if entry_name in request.POST.keys():
-				response = response + str(box) + " "
-		response = response.strip()
-		st.add_passage_result(pq, response)
-		st.save()
-
-	if "table0-0" in request.POST.keys():
-		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		rows = len(pq.get_row_headings())
-		cols = len(pq.get_col_headings())
-		response = ""
-		for row in range(rows):
-			for col in range(cols):
-				entry_name = "table" + str(row) + "-" + str(col)
-				response = response + request.POST[entry_name] + " "
-		response = response.strip()
-		st.add_passage_result(pq, response)
-		st.save()
-
-	if "shortresponse" in request.POST.keys():
-		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		st.add_passage_result(pq, request.POST["shortresponse"])
-		st.save()
-
-	if "longresponse" in request.POST.keys():
-		pq = PassageQuestion.objects.get(pq_id = request.POST["question_id"])
-		st.add_passage_result(pq, request.POST["longresponse"])
-		st.save()
+	# process previous answers, if any
+	process_previous_passage_answers(request.POST, st)
 
 	# give a question, if necessary
 
-	results = st.get_passage_results()
-
-	# if they still have questions to take, provide one
-
-	(pq, hint) = st.get_next_passage_question_and_hint()
+	next_qs_sr_h = st.get_next_question_set_and_saved_responses_and_hints()
 
 	# if they've finished the passage, just return them
-	if pq == None:
+	if next_qs_sr_h == "finished":
 		context['message'] = "Thank you for completing the assessment."
 		context['passage_text'] = ""
 		return render(request, 'assessment/passage.html', context)
 
 	# Otherwise, give the next question
 
-	set_context_from_passage_question(context, pq, hint)
+	(qset, saved_rs, hints) = next_qs_sr_h
+	pqs = PassageQuestion.objects.filter(question_set = qset, passage = st.passage_assigned)
+	set_context_from_passage_questions(context, pqs, saved_rs, hints)
 	return render(request, 'assessment/passage.html', context)
 
+def process_previous_passage_answers(postdata, st):
+	"Takes in POST data and Student, updates student passage results."
 
-def set_context_from_passage_question(context, pq, hint):
-	context['question_id'] = pq.pq_id
-	context['question_type'] = pq.question_type
-	context['question'] = pq.prompt
-	context['answer_choices'] = pq.get_answer_choices()
-	if hint == 0:
-		context['hint'] = ""
-	elif hint == 1:
-		context['hint'] = pq.hint1
-	else:
-		context['hint'] = pq.hint2
+	more_qs = "pickone0" in postdata.keys()
+	more_qs = more_qs or "pickmany0" in postdata.keys()
+	more_qs = more_qs or "table0-0-0" in postdata.keys()
+	more_qs = more_qs or "shortresponse0" in postdata.keys()
+	more_qs = more_qs or "longresponse0" in postdata.keys()
+	question_index = 0
+	qi_str = str(question_index)
+	responses = []
+	while more_qs:
+		print "Found question " + qi_str + " of this question set."
+		if "pickone" + qi_str in postdata.keys():
+			print "It is pick one."
+			#pq_id = postdata["question_id" + qi_str]
+			response = postdata["pickone" + qi_str]
 
-	# additional info for table questions
+		if "pickmany" + qi_str in " ".join(postdata.keys()):
+			print "It is pick many."
+			# remember, checkboxes only send POST data when checked
+			#pq_id = postdata["question_id" + qi_str]
+			boxes = len(pq.get_answer_choices())
+			response = ""
+			for box in range(boxes):
+				entry_name = "pickmany" + qi_str + "-" + str(box)
+				if entry_name in postdata.keys():
+					response = response + str(box) + " "
+			response = response.strip()
 
-	if pq.question_type == "table":
-		context['rows'] = pq.get_row_headings()
-		context['cols'] = pq.get_col_headings()
+		if "table" + qi_str + "-0-0" in postdata.keys():
+			print "It is table."
+			#pq_id = postdata["question_id" + qi_str]
+			rows = len(pq.get_row_headings())
+			cols = len(pq.get_col_headings())
+			response = ""
+			for row in range(rows):
+				for col in range(cols):
+					entry_name = "table" + qi_str + "-" + str(row) + "-" + str(col)
+					response = response + postdata[entry_name] + " "
+			response = response.strip()
+
+		if "shortresponse" + qi_str in postdata.keys():
+			print "It is short response."
+			#pq_id = postdata["question_id" + qi_str]
+			response = postdata["shortresponse" + qi_str]
+
+		if "longresponse" + qi_str in postdata.keys():
+			print "It is long response."
+			#pq_id = postdata["question_id" + qi_str]
+			response = postdata["longresponse" + qi_str]
+
+		responses.append(response)
+
+		question_index += 1
+		qi_str = str(question_index)
+		more_qs = "pickone" + qi_str in postdata.keys()
+		more_qs = more_qs or "pickmany" + qi_str in postdata.keys()
+		more_qs = more_qs or "table" + qi_str + "-0-0" in postdata.keys()
+		more_qs = more_qs or "shortresponse" + qi_str in postdata.keys()
+		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
+
+	st.submit_question_set(responses)
+	st.save()
+
+	return
+
+def set_context_from_passage_questions(context, pqs, saved_rs, hints):
+	"Set context for passage view."
+	context['questions'] = []
+	for i in range(len(pqs)):
+		question = {}
+		pq = pqs[i]
+		hint = hints[i]
+
+		question['id'] = pq.pq_id
+		question['type'] = pq.question_type
+		question['prompt'] = pq.prompt
+		question['answer_choices'] = pq.get_answer_choices()
+		if hint == 0:
+			question['hint'] = ""
+		elif hint == 1:
+			question['hint'] = pq.hint1
+		elif hint == 2:
+			question['hint'] = pq.hint2
+		elif hint == -1:
+			question['hint'] = "That is correct!"
+		else:
+			question['hint'] = "You are out of attempts for this question."
+
+		# additional info for table questions
+
+		if pq.question_type == "table":
+			question['rows'] = pq.get_row_headings()
+			question['cols'] = pq.get_col_headings()
+
+		context['questions'].append(question)
 
 	return
 
@@ -353,7 +391,7 @@ def get_index_context_from_user(username):
 			context['content'] = "You need to take the vocab test."
 			context['link'] = "vocab"
 		else:
-			if st.get_next_passage_question_and_hint() == (None, 0):
+			if st.get_next_question_set_and_saved_responses_and_hints() == "finished":
 				context['content'] = "You have completed the assessment.  Please log out."
 				context['link'] = "logout"
 			else:

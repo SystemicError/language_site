@@ -38,6 +38,7 @@ print "Adding passage questions."
 questions = split_by_tag(text, "question")
 for question in questions:
 	id = split_by_tag(question, "id")[0].strip()
+	question_set = split_by_tag(question, "set")[0].strip()
 	passage = split_by_tag(question, "passage")[0]
 	question_type = split_by_tag(question, "question type")[0]
 	prompt = split_by_tag(question, "prompt")[0]
@@ -59,28 +60,29 @@ for question in questions:
 			answer_choices = answer_choices + "<choice>" + choice + "</choice>"
 		correct_answer = split_by_tag(question, "correct answer")[0]
 	else:
-		print "nones"
 		hint1 = None
 		hint2 = None
 		answer_choices = None
 		correct_answer = None
 
 	if id in [pq.pq_id for pq in PassageQuestion.objects.all()]:
-		print "Skipping question " + str(id) + " (already in database) . . ."
+		print "Updating question " + str(id) + " (already in database) . . ."
+		pq = PassageQuestion.objects.get(pq_id=id)
 	else:
 		print "Adding " + str(id) + " (" + question_type + ") . . ."
-
 		pq = PassageQuestion()
-		pq.pq_id = id
-		pq.passage = unicode(passage)
-		pq.question_type = unicode(question_type)
-		pq.prompt = unicode(prompt)
-		pq.hint1 = unicode(hint1)
-		pq.hint2 = unicode(hint2)
-		pq.answer_choices = unicode(answer_choices)
-		pq.correct_answer = unicode(correct_answer)
 
-		pq.save()
+	pq.pq_id = id
+	pq.question_set = question_set
+	pq.passage = unicode(passage)
+	pq.question_type = unicode(question_type)
+	pq.prompt = unicode(prompt)
+	pq.hint1 = unicode(hint1)
+	pq.hint2 = unicode(hint2)
+	pq.answer_choices = unicode(answer_choices)
+	pq.correct_answer = unicode(correct_answer)
+
+	pq.save()
 
 
 print PassageQuestion.objects.all()

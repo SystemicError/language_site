@@ -39,14 +39,26 @@ class Student(models.Model):
 		"returns (question_set, saved_responses, hints)"
 
 		if self.passage_assigned == "":
-			return (None, [], [])
+			return "unassigned"
 
-		(question_set, saved_responses) = self.pq_set_queue_peek()
+		peek = self.pq_set_queue_peek()
+
+		# if they're done with the assessment
+		if peek == None:
+			return "finished"
+
+		(question_set, saved_responses) = peek
 
 		hints = []
-		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned, pq_set = question_set)
+		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned, question_set = question_set)
 		p_results = self.get_passage_results()
-		qset_results = [p_results[x.pq_id] for x in pqs]
+
+		qset_results = []
+		for pq in pqs:
+			if pq.pq_id in p_results.keys():
+				qset_results.append(p_results[pq.pq_id])
+			else:
+				qset_results.append([])
 
 		for i in range(len(pqs)):
 			# check if each question has been answered, and whether it's due for a hint
@@ -80,7 +92,7 @@ class Student(models.Model):
 	def submit_question_set(self, responses):
 		"Adds each of the elements of responses as a passage result."
 		(question_set, responses) = self.pq_set_queue_peek()
-		pqs = PassageQuestion.objects.filter(passage_id=self.assigned_passage,pq_set=question_set)
+		pqs = PassageQuestion.objects.filter(passage=self.passage_assigned,question_set=question_set)
 		move_on = True
 		for i in range(len(responses)):
 			self.add_passage_result(pqs[i], responses[i])
@@ -121,7 +133,10 @@ class Student(models.Model):
 
 	def pq_set_queue_peek(self):
 		"Gets first entry in pq_set_queue without modifying."
-		entry = split_by_tag(self.pq_set_queue, "question_set")[0]
+		entries = split_by_tag(self.pq_set_queue, "question_set")
+		if len(entries) < 1:
+			return None
+		entry = entries[0]
 		question_set = split_by_tag(entry, "set_id")[0]
 		responses = split_by_tag(entry, "response")
 		return (question_set, responses)
@@ -165,9 +180,9 @@ class Student(models.Model):
 			self.passage_assigned = "hard"
 		else:
 			self.passage_assigned = "easy"
-		pq_sets = [pq.question_set for pq in PassageQuestion.objects.filter(passage=self.passage_assigned)]
+		pq_sets = set([pq.question_set for pq in PassageQuestion.objects.filter(passage=self.passage_assigned)])
 		for pq_set in pq_sets:
-			entry = "<question_set><set_id>" + pq_set + "</set_id></question_set>"
+			entry = "<question_set><set_id>" + str(pq_set) + "</set_id></question_set>"
 			self.pq_set_queue = self.pq_set_queue + entry
 		return
 
@@ -260,7 +275,7 @@ class PassageQuestion(models.Model):
 	pq_id = models.CharField(unique=True, max_length = 16, default = "")
 
 	# question set
-	question_set = models.CharField(max_length = 16, default = "")
+	question_set = models.IntegerField(default = 0)
 
 	# what's the name of our associated passage?
 	passage = models.CharField(max_length = 64, default = "")

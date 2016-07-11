@@ -1,5 +1,6 @@
 <question>
 	<id>hard_1</id>
+	<set>1</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>The word (1) endogenously in paragraph 1 is closest in meaning to:</prompt>
@@ -14,6 +15,7 @@
 
 <question>
 	<id>hard_2.1</id>
+	<set>2</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>What time of day do you often feel alert? </prompt>
@@ -36,6 +38,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_2.3</id>
+	<set>2</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>Why?</prompt>
@@ -43,6 +46,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_3</id>
+	<set>3</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>Why might teenagers have difficulty getting enough sleep?</prompt>
@@ -50,6 +54,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_4</id>
+	<set>4</set>
 	<passage>hard</passage>
 	<question type>pick many</question type>
 	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? Check all that apply.</prompt>
@@ -66,6 +71,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_5</id>
+	<set>5</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>What is the main purpose of paragraph 3? </prompt>
@@ -79,6 +85,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_6.1</id>
+	<set>6</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>According to the text, could moving from Boston, MA to California lead to a circadian rhythm disorder?</prompt>
@@ -90,6 +97,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_6.2</id>
+	<set>6</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>Why?</prompt>
@@ -97,6 +105,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_6.3</id>
+	<set>6</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>Once in California, will your body feel awake or drowsy at 7:00am?</prompt>
@@ -107,6 +116,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_7.1</id>
+	<set>7</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>At what time do you usually go to sleep in Boston?</prompt>
@@ -114,6 +124,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_7.2</id>
+	<set>7</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>When it is 8:00 am in Boston, Massachusetts, it is only 2:00 am in Honolulu, Hawaii.  If you travel to Hawaii for a week, what time of day (in Hawaii) will your body want to go to sleep during the first couple of days?</prompt>
@@ -121,6 +132,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_7.3</id>
+	<set>7</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>What cues does your circadian rhythm use to "reset" itself during jet lag?</prompt>
@@ -128,6 +140,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_8.1</id>
+	<set>8</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>In what types of jobs might Shift Work Sleep disorder be dangerous?</prompt>
@@ -135,6 +148,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_8.2</id>
+	<set>8</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>Why?</prompt>
@@ -142,6 +156,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_9</id>
+	<set>9</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>What does "excessive sleepiness" mean?</prompt>
@@ -149,6 +164,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_10</id>
+	<set>10</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>The phrase "sleep deprivation" is closest in meaning to:</prompt>
@@ -163,6 +179,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_11</id>
+	<set>11</set>
 	<passage>hard</passage>
 	<question type>pick many</question type>
 	<prompt>What are the author's main ponts of writing paragraph 6? Check all that apply.</prompt>
@@ -176,6 +193,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>hard_12</id>
+	<set>12</set>
 	<passage>hard</passage>
 	<question type>table</question type>
 	<prompt>
@@ -203,6 +221,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_13</id>
+	<set>13</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>The word (3) "conducive" is closest in meaning to:</prompt>
@@ -215,6 +234,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_14</id>
+	<set>14</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>According to paragraph 7, all the following are treatments of circadian rhythm disorders EXCEPT:</prompt>
@@ -229,6 +249,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_15</id>
+	<set>15</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>In your own words, what are some ways people can alleviate sleep depreivation due to a circadian rhythm disorder?</prompt>
@@ -236,6 +257,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_16</id>
+	<set>16</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>Why would bright light therapy be an effective treatment for a circadian rhythm disorder?</prompt>
@@ -248,6 +270,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_17</id>
+	<set>17</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>Please summarize the main points of the whole passage in 1-2 sentences.</prompt>
@@ -255,6 +278,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_18.1</id>
+	<set>18</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>In your own life, have you experienced any changes that may have led to a temporary or permanent circadian rhythm disorder?</prompt>
@@ -265,6 +289,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_18.2</id>
+	<set>18</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>What was the change?</prompt>
@@ -272,6 +297,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_18.3</id>
+	<set>18</set>
 	<passage>hard</passage>
 	<question type>short response</question type>
 	<prompt>How did it influence your sleepiness and wakefulness throughout the day?</prompt>
@@ -279,6 +305,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_19.1</id>
+	<set>19</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>Do you think that you currently have a healthy sleep schedule?  </prompt>
@@ -289,6 +316,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_19.2</id>
+	<set>19</set>
 	<passage>hard</passage>
 	<question type>long response</question type>
 	<prompt>In what way do you think circadian rhythms influence your health? (e.g., body, sleep schedule, alertness) Please give examples and answer in 4-7 sentences.</prompt>
@@ -296,6 +324,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_20</id>
+	<set>20</set>
 	<passage>hard</passage>
 	<question type>long response</question type>
 	<prompt>If you could change your schedule or lifestyle to maximize your alertness and productivity, how would you use your knowledge of circadian rhythms to make changes? Please give examples and answer in 4-7 sentences.</prompt>
@@ -303,6 +332,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_21.1</id>
+	<set>21</set>
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>Do you know anyone who has experienced Delayed Sleep Phase Syndrome or another circadian rhythm disorder?  </prompt>
@@ -313,6 +343,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>hard_21.2</id>
+	<set>21</set>
 	<passage>hard</passage>
 	<question type>long response</question type>
 	<prompt>What recommendations would you give to a person who suffers from a circadian rhythm disorder and why?</prompt>
@@ -320,6 +351,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_1</id>
+	<set>1</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>The word (1) endogenously in paragraph 1 is closest in meaning to:</prompt>
@@ -334,6 +366,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_2.1</id>
+	<set>2</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>What time of day do you often feel alert? </prompt>
@@ -356,6 +389,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_2.3</id>
+	<set>2</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>Why?</prompt>
@@ -363,6 +397,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_3</id>
+	<set>3</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>Why might teenagers have difficulty getting enough sleep?</prompt>
@@ -370,6 +405,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_4</id>
+	<set>4</set>
 	<passage>easy</passage>
 	<question type>pick many</question type>
 	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? Check all that apply.</prompt>
@@ -386,6 +422,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_5</id>
+	<set>5</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>What is the main purpose of paragraph 3? </prompt>
@@ -399,6 +436,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_6.1</id>
+	<set>6</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>According to the text, could moving from Boston, MA to California lead to a circadian rhythm disorder?</prompt>
@@ -410,6 +448,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_6.2</id>
+	<set>6</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>Why?</prompt>
@@ -417,6 +456,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_6.3</id>
+	<set>6</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>Once in California, will your body feel awake or drowsy at 7:00am?</prompt>
@@ -427,6 +467,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_7.1</id>
+	<set>7</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>At what time do you usually go to sleep in Boston?</prompt>
@@ -434,6 +475,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_7.2</id>
+	<set>7</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>When it is 8:00 am in Boston, Massachusetts, it is only 2:00 am in Honolulu, Hawaii.  If you travel to Hawaii for a week, what time of day (in Hawaii) will your body want to go to sleep during the first couple of days?</prompt>
@@ -441,6 +483,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_7.3</id>
+	<set>7</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>What cues does your circadian rhythm use to "reset" itself during jet lag?</prompt>
@@ -448,6 +491,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_8.1</id>
+	<set>8</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>In what types of jobs might Shift Work Sleep disorder be dangerous?</prompt>
@@ -455,6 +499,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_8.2</id>
+	<set>8</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>Why?</prompt>
@@ -462,6 +507,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_9</id>
+	<set>9</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>What does "excessive sleepiness" mean?</prompt>
@@ -469,6 +515,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_10</id>
+	<set>10</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>The phrase "sleep deprivation" is closest in meaning to:</prompt>
@@ -483,6 +530,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 
 <question>
 	<id>easy_11</id>
+	<set>11</set>
 	<passage>easy</passage>
 	<question type>pick many</question type>
 	<prompt>What are the author's main ponts of writing paragraph 6? Check all that apply.</prompt>
@@ -495,6 +543,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 </question>
 <question>
 	<id>easy_12</id>
+	<set>12</set>
 	<passage>easy</passage>
 	<question type>table</question type>
 	<prompt>
@@ -521,6 +570,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_13</id>
+	<set>13</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>The word (3) "conducive" is closest in meaning to:</prompt>
@@ -533,6 +583,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_14</id>
+	<set>14</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>According to paragraph 7, all the following are treatments of circadian rhythm disorders EXCEPT:</prompt>
@@ -547,6 +598,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_15</id>
+	<set>15</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>In your own words, what are some ways people can alleviate sleep depreivation due to a circadian rhythm disorder?</prompt>
@@ -554,6 +606,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_16</id>
+	<set>16</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>Why would bright light therapy be an effective treatment for a circadian rhythm disorder?</prompt>
@@ -566,6 +619,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_17</id>
+	<set>17</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>Please summarize the main points of the whole passage in 1-2 sentences.</prompt>
@@ -573,6 +627,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_18.1</id>
+	<set>18</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>In your own life, have you experienced any changes that may have led to a temporary or permanent circadian rhythm disorder?</prompt>
@@ -583,6 +638,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_18.2</id>
+	<set>18</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>What was the change?</prompt>
@@ -590,6 +646,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_18.3</id>
+	<set>18</set>
 	<passage>easy</passage>
 	<question type>short response</question type>
 	<prompt>How did it influence your sleepiness and wakefulness throughout the day?</prompt>
@@ -597,6 +654,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_19.1</id>
+	<set>19</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>Do you think that you currently have a healthy sleep schedule?  </prompt>
@@ -607,6 +665,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_19.2</id>
+	<set>19</set>
 	<passage>easy</passage>
 	<question type>long response</question type>
 	<prompt>In what way do you think circadian rhythms influence your health? (e.g., body, sleep schedule, alertness) Please give examples and answer in 4-7 sentences.</prompt>
@@ -614,6 +673,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_20</id>
+	<set>20</set>
 	<passage>easy</passage>
 	<question type>long response</question type>
 	<prompt>If you could change your schedule or lifestyle to maximize your alertness and productivity, how would you use your knowledge of circadian rhythms to make changes? Please give examples and answer in 4-7 sentences.</prompt>
@@ -621,6 +681,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_21.1</id>
+	<set>21</set>
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>Do you know anyone who has experienced Delayed Sleep Phase Syndrome or another circadian rhythm disorder?  </prompt>
@@ -631,6 +692,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 
 <question>
 	<id>easy_21.2</id>
+	<set>21</set>
 	<passage>easy</passage>
 	<question type>long response</question type>
 	<prompt>What recommendations would you give to a person who suffers from a circadian rhythm disorder and why?</prompt>
