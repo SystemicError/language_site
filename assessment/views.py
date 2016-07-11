@@ -316,8 +316,9 @@ def process_previous_passage_answers(postdata, st):
 		more_qs = more_qs or "shortresponse" + qi_str in postdata.keys()
 		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
 
-	st.submit_question_set(responses)
-	st.save()
+	if len(responses) > 0:
+		st.submit_question_set(responses)
+		st.save()
 
 	return
 
