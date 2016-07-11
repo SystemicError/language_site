@@ -132,6 +132,8 @@ def add_vocab_hints():
 	for line in lines:
 		fields = line.split("\t")
 		word = smart_text(fields[0])
+		translation = smart_text(fields[1])
+		definition = smart_text(fields[2])
 
 		if word in [vh.word for vh in VocabHint.objects.all()]:
 			print "Updating " + word + " (already in database) . . ."
@@ -139,10 +141,6 @@ def add_vocab_hints():
 		else:
 			vh = VocabHint()
 			print "Adding \'" + word + "\': " + translation + " - " + definition
-
-		translation = smart_text(fields[1])
-		definition = smart_text(fields[2])
-
 
 		vh.word = word
 		vh.translation = translation
