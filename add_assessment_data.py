@@ -178,17 +178,18 @@ def add_vocab_questions():
 			is_word = True
 
 		if item_id in [vq.item_id for vq in VocabQuestion.objects.all()]:
-			print "Skipping " + word + " (already in database) . . ."
+			print "Updating " + word + " (already in database) . . ."
+			vq = VocabQuestion.objects.get(item_id=item_id)
 		else:
 
 			print "Adding word:  " + str(item_id) + ", " + str(k_band) + ", " + str(word) + ", " + str(is_word)
 
 			vq = VocabQuestion()
-			vq.item_id = item_id
-			vq.k_band = k_band
-			vq.word = word
-			vq.is_word = is_word
-			vq.save()
+		vq.item_id = item_id
+		vq.k_band = k_band
+		vq.word = word
+		vq.is_word = is_word
+		vq.save()
 	return
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "language_site.settings")
