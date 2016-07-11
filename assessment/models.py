@@ -26,50 +26,105 @@ class Student(models.Model):
 	# question_id not unique, as some questions have multiple attempts
 	passage_results = models.TextField(default = "")
 
+	# the question sets, in order, to be taken
+	pq_set_queue = models.CharField(default = "", max_length = 1024)
+
 	# vocabhint lookups, and their counts
 	# want to treat these like a dictionary/key
 	vocab_query_counts = models.TextField(default = "")
 
 	passage_assigned = models.CharField(max_length = 64, default = "")
 
-	def get_next_passage_question_and_hint(self):
-		"returns (passage_question, hint_needed)"
+	def get_next_question_set_and_saved_responses_and_hints(self):
+		"returns (question_set, saved_responses, hints)"
+
 		if self.passage_assigned == "":
-			return (None, -1)
+			return (None, [], [])
 
-		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned)
-		num_questions = len(pqs)
-		results = self.get_passage_results()
-		num_answered = len(set([x[0] for x in results]))
+		(question_set, saved_responses) = self.pq_set_queue_peek()
 
-		# if we haven't answered anything
-		if num_answered == 0:
-			return (pqs[0], 0)
+		hints = []
+		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned, pq_set = question_set)
+		p_results = self.get_passage_results()
+		qset_results = [p_results[x.pq_id] for x in pqs]
 
-		previous_question = PassageQuestion.objects.get(pq_id = results[-1][0])
-		previous_response = results[-1][1]
-		correct_response = previous_question.correct_answer.strip()
-		prev_num_hints = previous_question.get_number_of_hints()
-
-		# got the last one right (or it's not a type that can be wrong)
-		# or ran out of hints
-		if prev_num_hints == 0 or previous_response == correct_response or (len(results) >= prev_num_hints + 1 and results[-1][0] == results[-prev_num_hints - 1][0]):
-			# if there are no more, we're done
-			if num_answered == num_questions:
-				return (None, 0)
+		for i in range(len(pqs)):
+			# check if each question has been answered, and whether it's due for a hint
+			if len(qset_results[i]) == 0:
+				hint = 0 # never attempted
+			elif len(qset_results[i]) > 0 and qset_results[i][-1] == pqs[i].correct_answer:
+				hint = -1 # correct
+			elif len(qset_results[i]) == 1 and qset_results[i][-1] != pqs[i].correct_answer and pqs[i].get_number_of_hints() > 0:
+				hint = 1 # wrong once
+			elif len(qset_results[i]) == 2 and qset_results[i][-1] != pqs[i].correct_answer and pqs[i].get_number_of_hints() > 1:
+				hint = 2 # wrong twice
 			else:
-				return (pqs[num_answered], 0)
+				hint = -2 # out of hints
 
-		# if they got the last one wrong and have hints remaining, display that one
+			hints.append(hint)
+			
 
-		if len(results) >= 2 and results[-1][0] == results[-2][0]:
-			# last two were wrong
-			return (pqs[num_answered - 1], 2) # needs hint 2
-		else:
-			# only one wrong so far
-			return (pqs[num_answered - 1], 1) # needs hint 1
+		return (question_set, saved_responses, hints)
 
+	def pq_complete(self, pq):
+		"Checks if passage question finished, either due to too many wrong or a right answer."
+		results = self.get_passage_results()[pq.pq_id]
+		if len(results) == 0:
+			return False
+		if len(results) > pq.get_number_of_hints():
+			return True
+		if results[-1] == pq.correct_answer:
+			return True
+		return False
 
+	def submit_question_set(self, responses):
+		"Adds each of the elements of responses as a passage result."
+		(question_set, responses) = self.pq_set_queue_peek()
+		pqs = PassageQuestion.objects.filter(passage_id=self.assigned_passage,pq_set=question_set)
+		move_on = True
+		for i in range(len(responses)):
+			self.add_passage_result(pqs[i], responses[i])
+			if not self.pq_complete(pqs[i]):
+				move_on = False
+		if move_on:
+			self.pq_set_dequeue()
+		return
+
+	def save_and_skip_question_set(self, responses):
+		"Dequeues and enqueues the question set with current responses"
+		question_set = self.pq_set_dequeue()[0]
+		self.pq_set_enqueue(question_set, responses)
+		return
+
+	def pq_set_enqueue(self, question_set, responses):
+		"Enqueues the question set."
+		entry = "<question_set><set_id>" + question_set + "</set_id>"
+
+		for response in responses:
+			entry = entry + "<response>" + response + "</response>"
+
+		entry = entry + "</quesiton_set>"
+		self.pq_set_queue = self.pq_set_queue + entry
+		return
+
+	def pq_set_dequeue(self):
+		"Returns dequeue of (question_set, responses)"
+		# Remove first entry from queue
+		entry = split_by_tag(self.pq_set_queue, "question_set")[0]
+		self.pq_set_queue = self.pq_set_queue[len(entry):]
+
+		# read entry
+		question_set = split_by_tag(entry, "set_id")[0]
+		responses = split_by_tag(entry, "response")
+
+		return (question_set, responses)
+
+	def pq_set_queue_peek(self):
+		"Gets first entry in pq_set_queue without modifying."
+		entry = split_by_tag(self.pq_set_queue, "question_set")[0]
+		question_set = split_by_tag(entry, "set_id")[0]
+		responses = split_by_tag(entry, "response")
+		return (question_set, responses)
 
 	def add_passage_result(self, pq, response):
 		"Adds question_id of pq and response to passage_results."
@@ -80,8 +135,8 @@ class Student(models.Model):
 		return
 
 	def get_passage_results(self):
-		"Returns a list of tuples of the passage question_ids and responses."
-		results = []
+		"Returns a dictionary of passage question_ids to lists of responses."
+		results = {}
 		results_string = copy.deepcopy(self.passage_results)
 		first_result = results_string.find("<response question_id=")
 		while first_result != -1:
@@ -92,7 +147,11 @@ class Student(models.Model):
 			question_id = results_string[:tag_close_index]
 			results_string = results_string[tag_close_index + 1:]
 			result_end = results_string.find("</response>")
-			results.append((question_id, results_string[:result_end]))
+
+			if not question_id in results.keys():
+				results[question_id] = []
+			results[question_id].append(results_string[:result_end])
+
 			first_result = results_string.find("<response question_id=")
 		return results
 
@@ -101,10 +160,15 @@ class Student(models.Model):
 		if self.vocab_score() == -1:
 			#print("Error, can't assign passage without complete vocab score.")
 			self.passage_assigned = ""
+			return
 		elif self.vocab_score(2) >= .85:
 			self.passage_assigned = "hard"
 		else:
 			self.passage_assigned = "easy"
+		pq_sets = [pq.question_set for pq in PassageQuestion.objects.filter(passage=self.passage_assigned)]
+		for pq_set in pq_sets:
+			entry = "<question_set><set_id>" + pq_set + "</set_id></question_set>"
+			self.pq_set_queue = self.pq_set_queue + entry
 		return
 
 	def add_vocab_query(self, vh):
@@ -113,7 +177,7 @@ class Student(models.Model):
 		word_index = self.vocab_query_counts.find(vh.word)
 
 		if word_index == -1:
-			self.vocab_query_counts = self.vocab_query_counts + vh.word + ";1"
+			self.vocab_query_counts = self.vocab_query_counts + vh.word + ";1;"
 			return
 		# okay, it's already in the list
 		count_index = self.vocab_query_counts.find(";",word_index) + 1
@@ -122,14 +186,14 @@ class Student(models.Model):
 		count = int(self.vocab_query_counts[count_index:count_end])
 		count = count + 1
 
-		self.vocab_query_counts = self.vocab_query_counts[count_index:] + str(count) + self.vocab_query_counts[count_end:]
+		self.vocab_query_counts = self.vocab_query_counts[:count_index] + str(count) + self.vocab_query_counts[count_end:]
 		return
 
 	def get_vocab_words_queried(self):
-		"Returns a dictionary of vocabHints and counts."
+		"Returns a dictionary of vocabHint.words to counts."
 		query_counts = {}
 		words_and_counts = self.vocab_query_counts.split(";")
-		for i in range(0, len(words_and_counts), 2):
+		for i in range(0, len(words_and_counts) - 1, 2):
 			word = words_and_counts[i]
 			count = int(words_and_counts[i + 1])
 			query_counts[word] = count
@@ -195,6 +259,9 @@ class Passage(models.Model):
 class PassageQuestion(models.Model):
 	pq_id = models.CharField(unique=True, max_length = 16, default = "")
 
+	# question set
+	question_set = models.CharField(max_length = 16, default = "")
+
 	# what's the name of our associated passage?
 	passage = models.CharField(max_length = 64, default = "")
 
@@ -238,7 +305,7 @@ class PassageQuestion(models.Model):
 	def get_correct_answer(self):
 		"Return correct answer as int, if pick one, tuple if pick many or table."
 		if self.question_type == "pick one":
-			return self.correct_answer
+			return int(self.correct_answer)
 		elif self.question_type == "pick many" or self.question_type == "table":
 			return tuple([int(x) for x in self.correct_answer.split()])
 		else:
@@ -277,3 +344,16 @@ class PassageQuestion(models.Model):
 	def __str__(self):
 		return self.prompt
 
+# helper function
+def split_by_tag(text, tag):
+	"Takes in text and returns an array of strings of stuff between <tag></tag>"
+	items = []
+	open_tag = text.find("<" + tag + ">")
+	while open_tag != -1:
+		text = text[open_tag + len(tag) + 2:]
+		close_tag = text.find("</" + tag + ">")
+
+		items.append(text[:close_tag])
+
+		open_tag = text.find("<" + tag + ">")
+	return items
