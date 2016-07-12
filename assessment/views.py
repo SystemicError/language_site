@@ -256,8 +256,6 @@ def passageView(request):
 
 def process_previous_passage_responses(postdata, st):
 	"Takes in POST data and Student, updates student passage results."
-	print "POST:"
-	print postdata
 	more_qs = "pickone0" in postdata.keys()
 	more_qs = more_qs or " ".join(postdata.keys()).find("pickmany0") != -1
 	more_qs = more_qs or "table0-0-0" in postdata.keys()
@@ -316,11 +314,9 @@ def process_previous_passage_responses(postdata, st):
 
 	if "submit" in postdata.keys():
 		if len(responses) > 0 and postdata["submit"] == "Submit and go on":
-			print "Submitting"
 			st.submit_question_set(responses)
 			st.save()
 		if postdata["submit"] == "Skip and come back":
-			print "Skipping"
 			st.save_and_skip_question_set(responses)
 			st.save()
 
@@ -388,14 +384,31 @@ def format_saved_response(saved_response, pq):
 	return ""
 
 def link_vocab_hints(text):
-	"Links all vocab words in text."
+	"Links all vocab words in text once per paragraph."
+	print text
 	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
+		# Find all the paragraph starts
+		paragraph_starts = [0]
+		index = text.find("<br />\n<br />", paragraph_starts[-1] + 1)
+		while index != -1:
+			paragraph_starts.append(index)
+			index = text.find("<br />\n<br />", paragraph_starts[-1] + 1)
+		print paragraph_starts
+
 		pieces = []
 		pattern = r"[^A-Za-z]" + vocab_word + r"[^A-Za-z]"
 		previous = 0
+		paragraph = 0
 		for m in re.finditer(pattern, text):
-			pieces.append(text[previous:m.start() + 1])
-			previous = m.end() - 1
+			if paragraph < len(paragraph_starts) and m.start() >= paragraph_starts[paragraph]:
+				new_paragraph = True
+				# figure out what paragraph we're in and set paragraph to one more than that
+				paragraph = max([x for x in range(len(paragraph_starts)) if paragraph_starts[x] < m.start()])
+				paragraph += 1
+			if new_paragraph:
+				pieces.append(text[previous:m.start() + 1])
+				previous = m.end() - 1
+				new_paragraph = False
 		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a target=\"_blank\">"
 		if previous != 0:
 			pieces.append(text[previous:])
@@ -404,9 +417,17 @@ def link_vocab_hints(text):
 		pieces = []
 		pattern = r"[^A-Za-z]" + string.capwords(vocab_word) + r"[^A-Za-z]"
 		previous = 0
+		paragraph = 0
 		for m in re.finditer(pattern, text):
-			pieces.append(text[previous:m.start() + 1])
-			previous = m.end() - 1
+			if paragraph < len(paragraph_starts) and m.start() >= paragraph_starts[paragraph]:
+				new_paragraph = True
+				# figure out what paragraph we're in and set paragraph to one more than that
+				paragraph = max([x for x in range(len(paragraph_starts)) if paragraph_starts[x] < m.start()])
+				paragraph += 1
+			if new_paragraph:
+				pieces.append(text[previous:m.start() + 1])
+				previous = m.end() - 1
+				new_paragraph = False
 		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a target=\"_blank\">"
 		if previous != 0:
 			pieces.append(text[previous:])
