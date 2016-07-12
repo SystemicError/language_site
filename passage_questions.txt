@@ -206,7 +206,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 	<answer choice>neither.</answer choice>
 	<answer choice>What</answer choice>
 	<answer choice>gives?</answer choice>
-	<correct answer>0 1 2 3</answer choice>
+	<correct answer>0 1 2 3</correct answer>
 </question>
 
 Change in work schedule
@@ -556,7 +556,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 	<answer choice>neither.</answer choice>
 	<answer choice>What</answer choice>
 	<answer choice>gives?</answer choice>
-	<correct answer>0 1 2 3</answer choice>
+	<correct answer>0 1 2 3</correct answer>
 </question>
 Change in work schedule
 Sleeping in late every day
