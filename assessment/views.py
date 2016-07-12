@@ -257,8 +257,6 @@ def passageView(request):
 def process_previous_passage_responses(postdata, st):
 	"Takes in POST data and Student, updates student passage results."
 
-	print "Post data:"
-	print postdata
 	more_qs = "pickone0" in postdata.keys()
 	more_qs = more_qs or " ".join(postdata.keys()).find("pickmany0") != -1
 	more_qs = more_qs or "table0-0-0" in postdata.keys()
@@ -268,15 +266,11 @@ def process_previous_passage_responses(postdata, st):
 	qi_str = str(question_index)
 	responses = []
 	while more_qs:
-		print "Found question " + qi_str + " of this question set."
 		if "pickone" + qi_str in postdata.keys():
-			print "It is pick one."
 			#pq_id = postdata["question_id" + qi_str]
 			response = postdata["pickone" + qi_str]
 
-		print " ".join(postdata.keys())
 		if " ".join(postdata.keys()).find("pickmany" + qi_str) != -1:
-			print "It is pick many."
 			# remember, checkboxes only send POST data when checked
 			pq = PassageQuestion.objects.get(pq_id = postdata["question_id" + qi_str])
 			boxes = len(pq.get_answer_choices())
@@ -288,7 +282,6 @@ def process_previous_passage_responses(postdata, st):
 			response = response.strip()
 
 		if "table" + qi_str + "-0-0" in postdata.keys():
-			print "It is table."
 			pq = PassageQuestion.objects.get(pq_id = postdata["question_id" + qi_str])
 			rows = len(pq.get_row_headings())
 			cols = len(pq.get_col_headings())
@@ -300,12 +293,10 @@ def process_previous_passage_responses(postdata, st):
 			response = response.strip()
 
 		if "shortresponse" + qi_str in postdata.keys():
-			print "It is short response."
 			#pq_id = postdata["question_id" + qi_str]
 			response = postdata["shortresponse" + qi_str]
 
 		if "longresponse" + qi_str in postdata.keys():
-			print "It is long response."
 			#pq_id = postdata["question_id" + qi_str]
 			response = postdata["longresponse" + qi_str]
 
