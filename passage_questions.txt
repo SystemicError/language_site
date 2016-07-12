@@ -10,7 +10,7 @@
 	<answer choice>internally</answer choice>
 	<answer choice>quickly</answer choice>
 	<answer choice>routinely</answer choice>
-	<correct answer>0</correct answer>
+	<correct answer>1</correct answer>
 </question>
 
 <question>
@@ -361,7 +361,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 	<answer choice>internally</answer choice>
 	<answer choice>quickly</answer choice>
 	<answer choice>routinely</answer choice>
-	<correct answer>0</correct answer>
+	<correct answer>1</correct answer>
 </question>
 
 <question>
