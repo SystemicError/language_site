@@ -237,7 +237,7 @@ def passageView(request):
 	# process previous answers, if any
 	process_previous_passage_responses(request.POST, st)
 
-	# give a question, if necessary
+	# give a question set, if necessary
 
 	next_qs_sr_h = st.get_next_question_set_and_saved_responses_and_hints()
 
@@ -247,7 +247,7 @@ def passageView(request):
 		context['passage_text'] = ""
 		return render(request, 'assessment/passage.html', context)
 
-	# Otherwise, give the next question
+	# Otherwise, give the next question set
 
 	(qset, saved_rs, hints) = next_qs_sr_h
 	pqs = PassageQuestion.objects.filter(question_set = qset, passage = st.passage_assigned)
@@ -311,14 +311,15 @@ def process_previous_passage_responses(postdata, st):
 		more_qs = more_qs or "shortresponse" + qi_str in postdata.keys()
 		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
 
-	if len(responses) > 0 and postdata["submit"] == "Submit and go on":
-		print "Submitting"
-		st.submit_question_set(responses)
-		st.save()
-	if postdata["submit"] == "Skip and come back":
-		print "Skipping"
-		st.save_and_skip_question_set(responses)
-		st.save()
+	if "submit" in postdata.keys():
+		if len(responses) > 0 and postdata["submit"] == "Submit and go on":
+			print "Submitting"
+			st.submit_question_set(responses)
+			st.save()
+		if postdata["submit"] == "Skip and come back":
+			print "Skipping"
+			st.save_and_skip_question_set(responses)
+			st.save()
 
 	return
 
