@@ -30,15 +30,29 @@
 		</p>
 		{# user inputs #}
 		<p>
+		{# following line temporary #}
+		Your saved response to this is: {{ question.saved_response }}<br />
 		{% if question.type == "pick one" %}
 			{% for answer_choice in question.answer_choices %}
-				<p><input type="radio" name="pickone{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+				<p>
+				{% if question.saved_response == forloop.counter0 %}
+					<input type="radio" name="pickone{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}" checked>{{ answer_choice }}
+				{% else %}
+					<input type="radio" name="pickone{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}
+				{% endif %}
+				</p>
 			{% endfor %}
 			<input type="hidden" name="question_id{{ forloop.counter0 }}" value="{{ question.id }}">
 		{% endif %}
 		{% if question.type == "pick many" %}
 			{% for answer_choice in question.answer_choices %}
-				<p><input type="checkbox" name="pickmany{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
+				<p>
+				{% if forloop.counter0 in question.saved_response %}
+					<input type="checkbox" name="pickmany{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}" value="{{ forloop.counter0 }}" checked>{{ answer_choice }}
+				{% else %}
+					<input type="checkbox" name="pickmany{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}" value="{{ forloop.counter0 }}">{{ answer_choice }}
+				{% endif %}
+				</p>
 			{% endfor %}
 			<input type="hidden" name="question_id{{ forloop.counter0 }}" value="{{ question.id }}">
 		{% endif %}
@@ -67,11 +81,11 @@
 		{% endif %}
 		{% if question.type == "short response" %}
 			<input type="hidden" name="question_id{{ forloop.counter0 }}{{ forloop.counter0 }}" value="{{ question.id }}">
-			<textarea name="shortresponse{{ forloop.counter0 }}" form="answerform"></textarea>
+			<textarea name="shortresponse{{ forloop.counter0 }}" form="answerform">{{ question.saved_response }}</textarea>
 		{% endif %}
 		{% if question.type = "long response" %}
 			<input type="hidden" name="question_id{{ forloop.counter0 }}" value="{{ question.id }}">
-			<textarea name="longresponse{{ forloop.counter0 }}" form="answerform"></textarea>
+			<textarea name="longresponse{{ forloop.counter0 }}" form="answerform">{{ question.saved_response }}</textarea>
 		{% endif %}
 		</p>
 	{% endfor %}

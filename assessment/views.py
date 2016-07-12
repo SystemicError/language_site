@@ -267,6 +267,9 @@ def process_previous_passage_responses(postdata, st):
 	qi_str = str(question_index)
 	responses = []
 	while more_qs:
+		# We always append a response, even if it's blank.  This way, we always
+		# pass the correct number of responses
+		response = ""
 		if "pickone" + qi_str in postdata.keys():
 			#pq_id = postdata["question_id" + qi_str]
 			response = postdata["pickone" + qi_str]
@@ -335,6 +338,13 @@ def set_context_from_passage_questions(context, pqs, saved_rs, hints):
 		question['type'] = pq.question_type
 		question['prompt'] = pq.prompt
 		question['answer_choices'] = pq.get_answer_choices()
+
+		# encode saved responses as appropriate to question type
+		if len(saved_rs) > i:
+			saved_response = saved_rs[i]
+			question['saved_response'] = format_saved_response(saved_response, pq)
+
+		# provide hint(s)
 		if hint == 0:
 			question['hint'] = ""
 		elif hint == 1:
@@ -355,6 +365,20 @@ def set_context_from_passage_questions(context, pqs, saved_rs, hints):
 		context['questions'].append(question)
 
 	return
+
+def format_saved_response(saved_response, pq):
+	"Formats a saved response so that the template can easily render it."
+	if pq.question_type == "pick one":
+		return int(saved_response)
+	elif pq.question_type == "pick many":
+		return [int(x) for x in saved_response.strip().split()]
+	elif pq.question_type == "table":
+		return [int(x) for x in saved_response.strip().split()]
+	elif pq.question_type == "short response":
+		return saved_response
+	elif pq.question_type == "long response":
+		return saved_response
+	return ""
 
 def link_vocab_hints(text):
 	"Links all vocab words in text."
