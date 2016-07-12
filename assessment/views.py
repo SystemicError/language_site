@@ -235,7 +235,7 @@ def passageView(request):
 	context['passage_text'] = link_vocab_hints(psg.passage_text)
 
 	# process previous answers, if any
-	process_previous_passage_answers(request.POST, st)
+	process_previous_passage_responses(request.POST, st)
 
 	# give a question, if necessary
 
@@ -254,7 +254,7 @@ def passageView(request):
 	set_context_from_passage_questions(context, pqs, saved_rs, hints)
 	return render(request, 'assessment/passage.html', context)
 
-def process_previous_passage_answers(postdata, st):
+def process_previous_passage_responses(postdata, st):
 	"Takes in POST data and Student, updates student passage results."
 
 	print "Post data:"
