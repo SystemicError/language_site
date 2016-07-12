@@ -116,7 +116,7 @@ class Student(models.Model):
 		for response in responses:
 			entry = entry + "<response>" + response + "</response>"
 
-		entry = entry + "</quesiton_set>"
+		entry = entry + "</question_set>"
 		self.pq_set_queue = self.pq_set_queue + entry
 		return
 
@@ -285,7 +285,7 @@ class PassageQuestion(models.Model):
 	# pick one, pick many, table, short response, long response
 	question_type = models.CharField(max_length = 64)
 
-	# includes the quesiton, or, if table, the rows, columns in xmlish tags
+	# includes the question, or, if table, the rows, columns in xmlish tags
 	prompt = models.TextField(default = "")
 
 	# two hints in the event of a wrong answer

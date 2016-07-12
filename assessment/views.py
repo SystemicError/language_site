@@ -256,7 +256,8 @@ def passageView(request):
 
 def process_previous_passage_responses(postdata, st):
 	"Takes in POST data and Student, updates student passage results."
-
+	print "POST:"
+	print postdata
 	more_qs = "pickone0" in postdata.keys()
 	more_qs = more_qs or " ".join(postdata.keys()).find("pickmany0") != -1
 	more_qs = more_qs or "table0-0-0" in postdata.keys()
@@ -310,8 +311,13 @@ def process_previous_passage_responses(postdata, st):
 		more_qs = more_qs or "shortresponse" + qi_str in postdata.keys()
 		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
 
-	if len(responses) > 0:
+	if len(responses) > 0 and postdata["submit"] == "Submit and go on":
+		print "Submitting"
 		st.submit_question_set(responses)
+		st.save()
+	if postdata["submit"] == "Skip and come back":
+		print "Skipping"
+		st.save_and_skip_question_set(responses)
 		st.save()
 
 	return
