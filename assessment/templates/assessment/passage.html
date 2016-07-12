@@ -30,8 +30,6 @@
 		</p>
 		{# user inputs #}
 		<p>
-		{# following line temporary #}
-		Your saved response to this is: {{ question.saved_response }}<br />
 		{% if question.type == "pick one" %}
 			{% for answer_choice in question.answer_choices %}
 				<p>
@@ -70,6 +68,7 @@
 				{% for col in question.cols %}
 					<td>
 					{% for answer_choice in question.answer_choices %}
+						{# We need some kind of code here to get table saved responses #}
 						<p><input type="radio" name="table{{ forloop.parentloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.counter0}}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
 					{% endfor %}
 					</td>

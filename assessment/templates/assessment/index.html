@@ -2,6 +2,7 @@
 <p>{{ greeting }}</p>
 {# Vocab quiz results #}
 {% if scores %}
+	<h3>Vocabulary Size Test Results</h3>
 	<p>
 	<table border="1">
 	<tr>
@@ -15,6 +16,7 @@
 		</tr>
 	{% endfor %}
 	</table><br />
+	K-band scores estimate how many of the most frequent words you know in English.  For example, K-band 1 roughly estimates what percentage of the most 1000 frequent words that you know.<br /><br />
 	Your overall vocabulary score was {{ overall_score }}%
 	</p>
 {% endif %}

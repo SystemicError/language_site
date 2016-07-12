@@ -373,7 +373,14 @@ def format_saved_response(saved_response, pq):
 	elif pq.question_type == "pick many":
 		return [int(x) for x in saved_response.strip().split()]
 	elif pq.question_type == "table":
-		return [int(x) for x in saved_response.strip().split()]
+		srs = [int(x) for x in saved_response.strip().split()]
+		# have an array of triples of (row, col, saved_response)
+		formatted = []
+		index = 0
+		for row in range(len(pq.get_row_headings())):
+			for col in range(len(pq.get_col_headings())):
+				formatted.append((row, col, srs[index]))
+		return formatted
 	elif pq.question_type == "short response":
 		return saved_response
 	elif pq.question_type == "long response":
