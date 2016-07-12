@@ -393,12 +393,12 @@ def link_vocab_hints(text):
 		while index != -1:
 			paragraph_starts.append(index)
 			index = text.find("<br />\n<br />", paragraph_starts[-1] + 1)
-		print paragraph_starts
 
 		pieces = []
-		pattern = r"[^A-Za-z]" + vocab_word + r"[^A-Za-z]"
+		pattern = r"[^A-Za-z](" + vocab_word + r"|" + string.capwords(vocab_word) + r")[^A-Za-z]"
 		previous = 0
 		paragraph = 0
+		is_capitalized = []
 		for m in re.finditer(pattern, text):
 			if paragraph < len(paragraph_starts) and m.start() >= paragraph_starts[paragraph]:
 				new_paragraph = True
@@ -407,31 +407,29 @@ def link_vocab_hints(text):
 				paragraph += 1
 			if new_paragraph:
 				pieces.append(text[previous:m.start() + 1])
+
+				# Mark if this is capital or lowercase
+				if text[m.start() +1] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+					is_capitalized.append(True)
+				else:
+					is_capitalized.append(False)
+
 				previous = m.end() - 1
 				new_paragraph = False
+
 		link = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + vocab_word + "</a target=\"_blank\">"
-		if previous != 0:
-			pieces.append(text[previous:])
-			text = link.join(pieces)
-
-		pieces = []
-		pattern = r"[^A-Za-z]" + string.capwords(vocab_word) + r"[^A-Za-z]"
-		previous = 0
-		paragraph = 0
-		for m in re.finditer(pattern, text):
-			if paragraph < len(paragraph_starts) and m.start() >= paragraph_starts[paragraph]:
-				new_paragraph = True
-				# figure out what paragraph we're in and set paragraph to one more than that
-				paragraph = max([x for x in range(len(paragraph_starts)) if paragraph_starts[x] < m.start()])
-				paragraph += 1
-			if new_paragraph:
-				pieces.append(text[previous:m.start() + 1])
-				previous = m.end() - 1
-				new_paragraph = False
 		caplink = "<a href=\"/assessment/vocab_query/" + vocab_word + "\"/>" + string.capwords(vocab_word) + "</a target=\"_blank\">"
 		if previous != 0:
 			pieces.append(text[previous:])
-			text = caplink.join(pieces)
+			text = ""
+			for i in range(len(is_capitalized)):
+				text = text + pieces[i]
+				if is_capitalized[i]:
+					text = text + caplink
+				else:
+					text = text + link
+			text = text + pieces[-1]
+
 	return text
 
 def get_index_context_from_user(username):
