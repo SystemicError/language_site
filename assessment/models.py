@@ -91,7 +91,8 @@ class Student(models.Model):
 
 	def submit_question_set(self, responses):
 		"Adds each of the elements of responses as a passage result."
-		(question_set, responses) = self.pq_set_queue_peek()
+		# We may discard existing responses
+		question_set = self.pq_set_queue_peek()[0]
 		pqs = PassageQuestion.objects.filter(passage=self.passage_assigned,question_set=question_set)
 		move_on = True
 		for i in range(len(responses)):
@@ -123,7 +124,7 @@ class Student(models.Model):
 		"Returns dequeue of (question_set, responses)"
 		# Remove first entry from queue
 		entry = split_by_tag(self.pq_set_queue, "question_set")[0]
-		self.pq_set_queue = self.pq_set_queue[len(entry):]
+		self.pq_set_queue = self.pq_set_queue[self.pq_set_queue.find("</question_set>") + len("</question_set>"):]
 
 		# read entry
 		question_set = split_by_tag(entry, "set_id")[0]
@@ -181,6 +182,7 @@ class Student(models.Model):
 		else:
 			self.passage_assigned = "easy"
 		pq_sets = set([pq.question_set for pq in PassageQuestion.objects.filter(passage=self.passage_assigned)])
+		self.pq_set_queue = ""
 		for pq_set in pq_sets:
 			entry = "<question_set><set_id>" + str(pq_set) + "</set_id></question_set>"
 			self.pq_set_queue = self.pq_set_queue + entry
