@@ -85,11 +85,11 @@
 		{% endif %}
 		{% if question.type == "short response" %}
 			<input type="hidden" name="question_id{{ forloop.counter0 }}{{ forloop.counter0 }}" value="{{ question.id }}">
-			<textarea rows="6" cols="44" name="shortresponse{{ forloop.counter0 }}" form="answerform">{{ question.saved_response }}</textarea>
+			<textarea name="shortresponse{{ forloop.counter0 }}" form="answerform">{{ question.saved_response }}</textarea>
 		{% endif %}
 		{% if question.type = "long response" %}
 			<input type="hidden" name="question_id{{ forloop.counter0 }}" value="{{ question.id }}">
-			<textarea rows="6" cols="44" name="longresponse{{ forloop.counter0 }}" form="answerform">{{ question.saved_response }}</textarea>
+			<textarea name="longresponse{{ forloop.counter0 }}" form="answerform">{{ question.saved_response }}</textarea>
 		{% endif %}
 		</p>
 	{% endfor %}

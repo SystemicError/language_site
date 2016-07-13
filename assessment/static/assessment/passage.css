@@ -8,3 +8,7 @@ table, th, td {
 	padding: 10px;
 }
 
+textarea {
+	height:  100px;
+	width:  400px;
+}
