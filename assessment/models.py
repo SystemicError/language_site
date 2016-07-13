@@ -98,7 +98,7 @@ class Student(models.Model):
 
 	def submit_question_set(self, responses):
 		"Adds each of the elements of responses as a passage result."
-		# We may discard existing responses
+		# We may discard saved responses
 		question_set = self.pq_set_queue_peek()[0]
 		pqs = PassageQuestion.objects.filter(passage=self.passage_assigned,question_set=question_set)
 		move_on = True
@@ -106,8 +106,14 @@ class Student(models.Model):
 			self.add_passage_result(pqs[i], responses[i])
 			if not self.pq_complete(pqs[i]):
 				move_on = False
-		if move_on:
-			self.pq_set_dequeue()
+		self.pq_set_dequeue()
+		if not move_on:
+			# prepend the same question set on to the queue, but with our given responses
+			entry = "<question_set><set_id>" + question_set + "</set_id>"
+			for response in responses:
+				entry = entry + "<response>" + response + "</response>"
+			entry = entry + "</question_set>"
+			self.pq_set_queue = entry + self.pq_set_queue
 		return
 
 	def save_and_skip_question_set(self, responses):
