@@ -27,7 +27,7 @@ class Student(models.Model):
 	passage_results = models.TextField(default = "{}")
 
 	# the question sets, in order, to be taken, with saved responses
-	pq_set_queue = models.TextField(default = "")
+	pq_set_queue = models.TextField(default = "[]")
 
 	# vocabhint lookups, and their counts
 	# want to treat these like a dictionary/key
@@ -41,13 +41,13 @@ class Student(models.Model):
 		if self.passage_assigned == "":
 			return "unassigned"
 
-		peek = self.pq_set_queue_peek()
+		queue = json.loads(self.pq_set_queue)
 
 		# if they're done with the assessment
-		if peek == None:
+		if len(queue) == 0:
 			return "finished"
 
-		(question_set, saved_responses) = peek
+		(question_set, saved_responses) = queue[0]
 
 		hints = []
 		pqs = PassageQuestion.objects.filter(passage = self.passage_assigned, question_set = question_set)
@@ -80,7 +80,7 @@ class Student(models.Model):
 
 	def has_completed_passage(self):
 		"Returns True if passage complete."
-		if self.passage_assigned != "" and self.pq_set_queue == "":
+		if self.passage_assigned != "" and len(json.loads(self.pq_set_queue)) == 0:
 			return True
 		else:
 			return False
@@ -99,21 +99,20 @@ class Student(models.Model):
 	def submit_question_set(self, responses):
 		"Adds each of the elements of responses as a passage result."
 		# We may discard saved responses
-		question_set = self.pq_set_queue_peek()[0]
+		queue = json.loads(self.pq_set_queue)
+		question_set = queue[0][0]
 		pqs = PassageQuestion.objects.filter(passage=self.passage_assigned,question_set=question_set)
 		move_on = True
 		for i in range(len(responses)):
 			self.add_passage_result(pqs[i], responses[i])
 			if not self.pq_complete(pqs[i]):
 				move_on = False
-		self.pq_set_dequeue()
+		queue.pop(0)
 		if not move_on:
 			# prepend the same question set on to the queue, but with our given responses
-			entry = "<question_set><set_id>" + question_set + "</set_id>"
-			for response in responses:
-				entry = entry + "<response>" + response + "</response>"
-			entry = entry + "</question_set>"
-			self.pq_set_queue = entry + self.pq_set_queue
+			entry = (question_set, responses)
+			queue.insert(0, entry)
+		self.pq_set_queue = json.dumps(queue)
 		return
 
 	def save_and_skip_question_set(self, responses):
@@ -124,35 +123,23 @@ class Student(models.Model):
 
 	def pq_set_enqueue(self, question_set, responses):
 		"Enqueues the question set."
-		entry = "<question_set><set_id>" + question_set + "</set_id>"
-
-		for response in responses:
-			entry = entry + "<response>" + response + "</response>"
-
-		entry = entry + "</question_set>"
-		self.pq_set_queue = self.pq_set_queue + entry
+		queue = json.loads(self.pq_set_queue)
+		queue.append((question_set, responses))
+		self.pq_set_queue = json.dumps(queue)
 		return
 
 	def pq_set_dequeue(self):
 		"Returns dequeue of (question_set, responses)"
+		queue = json.loads(self.pq_set_queue)
+
 		# Remove first entry from queue
-		entry = split_by_tag(self.pq_set_queue, "question_set")[0]
-		self.pq_set_queue = self.pq_set_queue[self.pq_set_queue.find("</question_set>") + len("</question_set>"):]
+		entry = queue.pop(0)
 
 		# read entry
-		question_set = split_by_tag(entry, "set_id")[0]
-		responses = split_by_tag(entry, "response")
+		question_set = entry[0]
+		responses = entry[1]
 
-		return (question_set, responses)
-
-	def pq_set_queue_peek(self):
-		"Gets first entry in pq_set_queue without modifying."
-		entries = split_by_tag(self.pq_set_queue, "question_set")
-		if len(entries) < 1:
-			return None
-		entry = entries[0]
-		question_set = split_by_tag(entry, "set_id")[0]
-		responses = split_by_tag(entry, "response")
+		self.pq_set_queue = json.dumps(queue)
 		return (question_set, responses)
 
 	def add_passage_result(self, pq, response):
@@ -179,10 +166,7 @@ class Student(models.Model):
 		else:
 			self.passage_assigned = "easy"
 		pq_sets = set([pq.question_set for pq in PassageQuestion.objects.filter(passage=self.passage_assigned)])
-		self.pq_set_queue = ""
-		for pq_set in pq_sets:
-			entry = "<question_set><set_id>" + str(pq_set) + "</set_id></question_set>"
-			self.pq_set_queue = self.pq_set_queue + entry
+		self.pq_set_queue = json.dumps([(x, []) for x in pq_sets])
 		return
 
 	def add_vocab_query(self, vh):
