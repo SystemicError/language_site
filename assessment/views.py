@@ -97,7 +97,7 @@ def vocabView(request):
 		st.add_vocab_result(vq, previous_response)
 		st.save()
 
-	vresults = st.get_vocab_results() #Must re-retrieve b/c of new entry
+	vresults = st.get_vocab_results() # Must re-retrieve b/c of new entry
 
 	# present a new question, or, if they're done, present none
 

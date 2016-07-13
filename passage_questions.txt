@@ -28,13 +28,16 @@
 	<correct answer>(any)</correct answer>
 </question>
 
-2.2
-Is your most alert time during the day consistent with what the passage says about circadian biological clocks?
-pick one
-Yes
-No
-Yes (if they pick any answer from question2.1 except option 3 "between 12pm and 4pm" or option 6 "between 12am and 4am") or No (if they pick "between 12pm and 4pm" or "between 12am and 4am")
-Look at the paragraph 1 again. When do circadian rhythms create our strongest sleep drive?  Is this time different from when you are alert, or is it the same?
+<question>
+	<id>hard_2.2</id>
+	<set>2</set>
+	<passage>hard</passage>
+	<question type>pick one</question type>
+	<prompt>Is your most alert time during the day consistent with what the passage says about circadian biological clocks?</prompt>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
 
 <question>
 	<id>hard_2.3</id>
@@ -57,7 +60,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 	<set>4</set>
 	<passage>hard</passage>
 	<question type>pick many</question type>
-	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? Check all that apply.</prompt>
+	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? <u>Check all that apply.</u></prompt>
 	<hint1>That is incorrect.  Focus on the relations between parts of the text. Pay attention to lexical and grammatical cohesion devices used within and across sentences. </hint1>
 	<hint2>What is the literal meaning of each sentence in the paragraph?</hint2>
 	<answer choice>changing your work hours from a day shift to a night shift (explicit)</answer choice>
@@ -182,7 +185,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 	<set>11</set>
 	<passage>hard</passage>
 	<question type>pick many</question type>
-	<prompt>What are the author's main ponts of writing paragraph 6? Check all that apply.</prompt>
+	<prompt>What are the author's main ponts of writing paragraph 6? <u>Check all that apply.</u></prompt>
 	<hint1>Evaluate the importance of the information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
 	<answer choice>To indicate that DSPS is the most common circadian rhythm disorder.</answer choice>
 	<answer choice>To inform us that people with DSPS stay up from 1:00 am to 4:00 am.</answer choice>
@@ -244,7 +247,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 	<answer choice>Bright light therapy</answer choice>
 	<answer choice>Sleep disorder diagnosis</answer choice>
 	<answer choice>Sleep hygiene techniques</answer choice>
-	<correct answer>3</correct answer>
+	<correct answer>2</correct answer>
 </question>
 
 <question>
@@ -379,13 +382,17 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 	<correct answer>(any)</correct answer>
 </question>
 
-2.2
-Is your most alert time during the day consistent with what the passage says about circadian biological clocks?
-pick one
-Yes
-No
-Yes (if they pick any answer from question2.1 except option 3 "between 12pm and 4pm" or option 6 "between 12am and 4am") or No (if they pick "between 12pm and 4pm" or "between 12am and 4am")
-Look at the paragraph 1 again. When do circadian rhythms create our strongest sleep drive?  Is this time different from when you are alert, or is it the same?
+<question>
+	<id>easy_2.2</id>
+	<set>2</set>
+	<passage>easy</passage>
+	<question type>pick one</question type>
+	<prompt>Is your most alert time during the day consistent with what the passage says about circadian biological clocks?</prompt>
+	<answer choice>Yes</answer choice>
+	<answer choice>No</answer choice>
+	<correct answer>(any)</correct answer>
+</question>
+
 
 <question>
 	<id>easy_2.3</id>
@@ -408,7 +415,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 	<set>4</set>
 	<passage>easy</passage>
 	<question type>pick many</question type>
-	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? Check all that apply.</prompt>
+	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? <u>Check all that apply.</u></prompt>
 	<hint1>That is incorrect.  Focus on the relations between parts of the text. Pay attention to lexical and grammatical cohesion devices used within and across sentences. </hint1>
 	<hint2>What is the literal meaning of each sentence in the paragraph?</hint2>
 	<answer choice>changing your work hours from a day shift to a night shift (explicit)</answer choice>
@@ -533,7 +540,7 @@ Look at the paragraph 1 again. When do circadian rhythms create our strongest sl
 	<set>11</set>
 	<passage>easy</passage>
 	<question type>pick many</question type>
-	<prompt>What are the author's main ponts of writing paragraph 6? Check all that apply.</prompt>
+	<prompt>What are the author's main ponts of writing paragraph 6? <u>Check all that apply.</u></prompt>
 	<hint1>Evaluate the importance of the information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
 	<answer choice>To indicate that DSPS is the most common circadian rhythm disorder.</answer choice>
 	<answer choice>To inform us that people with DSPS stay up from 1:00 am to 4:00 am.</answer choice>
@@ -593,7 +600,7 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 	<answer choice>Bright light therapy</answer choice>
 	<answer choice>Sleep disorder diagnosis</answer choice>
 	<answer choice>Sleep hygiene techniques</answer choice>
-	<correct answer>3</correct answer>
+	<correct answer>2</correct answer>
 </question>
 
 <question>
