@@ -235,10 +235,10 @@ def passageView(request):
 	context['passage_text'] = link_vocab_hints(psg.passage_text)
 
 	# process previous answers, if any
-	process_previous_passage_responses(request.POST, st)
+	if not st.has_completed_passage():
+		process_previous_passage_responses(request.POST, st)
 
 	# give a question set, if necessary
-
 	next_qs_sr_h = st.get_next_question_set_and_saved_responses_and_hints()
 
 	# if they've finished the passage, just return them
@@ -385,7 +385,6 @@ def format_saved_response(saved_response, pq):
 
 def link_vocab_hints(text):
 	"Links all vocab words in text once per paragraph."
-	print text
 	for vocab_word in [vh.word for vh in VocabHint.objects.all()]:
 		# Find all the paragraph starts
 		paragraph_starts = [0]

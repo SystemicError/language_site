@@ -78,6 +78,13 @@ class Student(models.Model):
 
 		return (question_set, saved_responses, hints)
 
+	def has_completed_passage(self):
+		"Returns True if passage complete."
+		if self.passage_assigned != "" and self.pq_set_queue == "":
+			return True
+		else:
+			return False
+
 	def pq_complete(self, pq):
 		"Checks if passage question finished, either due to too many wrong or a right answer."
 		results = self.get_passage_results()[pq.pq_id]
