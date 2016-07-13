@@ -316,17 +316,3 @@ class PassageQuestion(models.Model):
 
 	def __str__(self):
 		return self.prompt
-
-# helper function
-def split_by_tag(text, tag):
-	"Takes in text and returns an array of strings of stuff between <tag></tag>"
-	items = []
-	open_tag = text.find("<" + tag + ">")
-	while open_tag != -1:
-		text = text[open_tag + len(tag) + 2:]
-		close_tag = text.find("</" + tag + ">")
-
-		items.append(text[:close_tag])
-
-		open_tag = text.find("<" + tag + ">")
-	return items
