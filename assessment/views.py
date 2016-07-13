@@ -86,19 +86,20 @@ def vocabView(request):
 	# for vocab quiz questions
 	context = {}
 	st = Student.objects.get(name = request.user.username)
+	vresults = st.get_vocab_results()
 
-	# process previous answer, if any
-
-	if "is_word" in request.POST.keys():
+	# process previous answer, if it exists (and the quiz is not over)
+	if "is_word" in request.POST.keys() and len(vresults) < 150:
 		previous_response = (request.POST["is_word"] == "yes")
 		previous_word = request.POST["word"]
 		vq = VocabQuestion.objects.get(word = previous_word)
 		st.add_vocab_result(vq, previous_response)
 		st.save()
 
+	vresults = st.get_vocab_results() #Must re-retrieve b/c of new entry
+
 	# present a new question, or, if they're done, present none
 
-	vresults = st.get_vocab_results()
 	context['num_complete'] = len(vresults)
 	context['finished'] = len(vresults) >= 150
 	if context['finished']:
@@ -109,7 +110,7 @@ def vocabView(request):
 		# select the next word
 
 		# select all words not already used
-		unused_vqs = [x for x in VocabQuestion.objects.all() if x not in [y[0] for y in vresults]]
+		unused_vqs = [x for x in VocabQuestion.objects.all() if not x in [y[0] for y in vresults]]
 
 		# kband		nonword length
 		# 1-2		3-7
