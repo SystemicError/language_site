@@ -24,10 +24,10 @@ class Student(models.Model):
 
 	# populate with (question_id, response) pairs
 	# question_id not unique, as some questions have multiple attempts
-	passage_results = models.TextField(default = "")
+	passage_results = models.TextField(default = "{}")
 
-	# the question sets, in order, to be taken
-	pq_set_queue = models.CharField(default = "", max_length = 1024)
+	# the question sets, in order, to be taken, with saved responses
+	pq_set_queue = models.TextField(default = "")
 
 	# vocabhint lookups, and their counts
 	# want to treat these like a dictionary/key
@@ -156,33 +156,17 @@ class Student(models.Model):
 		return (question_set, responses)
 
 	def add_passage_result(self, pq, response):
-		"Adds question_id of pq and response to passage_results."
-		result = "<response question_id="
-		result = result + str(pq.pq_id)
-		result = result + ">" + response + "</response>"
-		self.passage_results = self.passage_results + result
+		"Adds response to passage_results[pq.pq_id]."
+		results = self.get_passage_results()
+		if not pq.pq_id in results.keys():
+			results[pq.pq_id] = []
+		results[pq.pq_id].append(response)
+		self.passage_results = json.dumps(results)
 		return
 
 	def get_passage_results(self):
 		"Returns a dictionary of passage question_ids to lists of responses."
-		results = {}
-		results_string = copy.deepcopy(self.passage_results)
-		first_result = results_string.find("<response question_id=")
-		while first_result != -1:
-			results_string = results_string[first_result + len("<response question_id="):]
-			tag_close_index = results_string.find(">")
-			#if tag_close_index == -1:
-				#print("No closing > on result string, panic!")
-			question_id = results_string[:tag_close_index]
-			results_string = results_string[tag_close_index + 1:]
-			result_end = results_string.find("</response>")
-
-			if not question_id in results.keys():
-				results[question_id] = []
-			results[question_id].append(results_string[:result_end])
-
-			first_result = results_string.find("<response question_id=")
-		return results
+		return json.loads(self.passage_results)
 
 	def assign_passage(self):
 		"Assigns passage based on vocab quiz results."
