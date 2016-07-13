@@ -2,7 +2,7 @@ from django.db import models
 
 from django.utils.encoding import python_2_unicode_compatible
 
-import datetime, copy
+import datetime, copy, json
 from django.utils import timezone
 
 @python_2_unicode_compatible
@@ -20,7 +20,7 @@ class Student(models.Model):
 	name = models.CharField(unique=True, max_length = 64)
 
 	# populate with (question, response) pairs
-	vocab_results = models.TextField(default = "")
+	vocab_results = models.TextField(default = "[]")
 
 	# populate with (question_id, response) pairs
 	# question_id not unique, as some questions have multiple attempts
@@ -230,24 +230,12 @@ class Student(models.Model):
 		return query_counts
 
 	def add_vocab_result(self, vq, response):
-		self.vocab_results = self.vocab_results + str(vq.word) + "," + str(response) + ";"
+		self.vocab_results = json.dumps(json.loads(self.vocab_results) + [(vq.word, response)])
 		return
 
 	def get_vocab_results(self):
-		vr = []
-		if self.vocab_results.find(";") == -1:
-			return []
-
-		for entry in self.vocab_results.split(";")[:-1]:
-			wd = entry.split(",")[0]
-			response = entry.split(",")[1]
-			vq = VocabQuestion.objects.get(word = wd)
-			if response == "True":
-				response = True
-			else:
-				response = False
-			vr.append((vq, response))
-		return vr
+		results = [(VocabQuestion.objects.get(word=x[0]), x[1]) for x in json.loads(self.vocab_results)]
+		return results
 
 	def vocab_score(self, k_band=-1):
 		"Returns score for a given k band (or overall by default)."
