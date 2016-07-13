@@ -62,7 +62,7 @@ class Student(models.Model):
 
 		for i in range(len(pqs)):
 			# check if each question has been answered, and whether it's due for a hint
-			if len(qset_results[i]) == 0:
+			if len(qset_results[i]) == 0 or pqs[i].question_type in ["short response", "long response"]:
 				hint = 0 # never attempted
 			elif len(qset_results[i]) > 0 and qset_results[i][-1] == pqs[i].correct_answer:
 				hint = -1 # correct
