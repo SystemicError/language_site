@@ -31,7 +31,7 @@ class Student(models.Model):
 
 	# vocabhint lookups, and their counts
 	# want to treat these like a dictionary/key
-	vocab_query_counts = models.TextField(default = "")
+	vocab_query_counts = models.TextField(default = "{}")
 
 	passage_assigned = models.CharField(max_length = 64, default = "")
 
@@ -203,30 +203,17 @@ class Student(models.Model):
 
 	def add_vocab_query(self, vh):
 		"Adds one to query of vocabHint vh (or creates new record if previously zero)."
-		# words and counts are ; separated
-		word_index = self.vocab_query_counts.find(vh.word)
-
-		if word_index == -1:
-			self.vocab_query_counts = self.vocab_query_counts + vh.word + ";1;"
-			return
-		# okay, it's already in the list
-		count_index = self.vocab_query_counts.find(";",word_index) + 1
-		count_end = self.vocab_query_counts.find(";",count_index)
-
-		count = int(self.vocab_query_counts[count_index:count_end])
-		count = count + 1
-
-		self.vocab_query_counts = self.vocab_query_counts[:count_index] + str(count) + self.vocab_query_counts[count_end:]
+		query_counts = self.get_vocab_words_queried()
+		if vh.word in query_counts.keys():
+			query_counts[vh.word] += 1
+		else:
+			query_counts[vh.word] = 1
+		self.vocab_query_counts = json.dumps(query_counts)
 		return
 
 	def get_vocab_words_queried(self):
 		"Returns a dictionary of vocabHint.words to counts."
-		query_counts = {}
-		words_and_counts = self.vocab_query_counts.split(";")
-		for i in range(0, len(words_and_counts) - 1, 2):
-			word = words_and_counts[i]
-			count = int(words_and_counts[i + 1])
-			query_counts[word] = count
+		query_counts = json.loads(self.vocab_query_counts)
 		return query_counts
 
 	def add_vocab_result(self, vq, response):

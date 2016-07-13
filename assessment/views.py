@@ -71,6 +71,7 @@ def vocabQueryView(request, vocab_word):
 	if vocab_word in [x.word for x in VocabHint.objects.all()]:
 		vh = VocabHint.objects.get(word = vocab_word)
 		st.add_vocab_query(vh)
+		st.save()
 		context['word'] = vh.word
 		context['translation'] = vh.translation
 		context['definition'] = vh.definition
