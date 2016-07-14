@@ -247,10 +247,10 @@ class PassageQuestion(models.Model):
 	# what's the name of our associated passage?
 	passage = models.CharField(max_length = 64, default = "")
 
-	# pick one, pick many, table, short response, long response
+	# pick one, pick many, short response, long response
 	question_type = models.CharField(max_length = 64)
 
-	# includes the question, or, if table, the rows, columns in xmlish tags
+	# the question text
 	prompt = models.TextField(default = "")
 
 	# two hints in the event of a wrong answer
@@ -285,43 +285,13 @@ class PassageQuestion(models.Model):
 		return choices
 
 	def get_correct_answer(self):
-		"Return correct answer as int, if pick one, tuple if pick many or table."
+		"Return correct answer as int, if pick one, tuple if pick many."
 		if self.question_type == "pick one":
 			return int(self.correct_answer)
-		elif self.question_type == "pick many" or self.question_type == "table":
+		elif self.question_type == "pick many":
 			return tuple([int(x) for x in self.correct_answer.split()])
 		else:
 			return None
-
-	def get_row_headings(self):
-		"For a table type question, gets row headings."
-		if self.question_type != "table":
-			return None
-		rows = []
-		rows_string = copy.deepcopy(self.prompt)
-		first_row = rows_string.find("<row>")
-		while first_row != -1:
-			rows_string = rows_string[first_row + len("<row>"):]
-			row_end = rows_string.find("</row>")
-			rows.append(rows_string[:row_end])
-			first_row = rows_string.find("<row>")
-		return rows
-		
-
-	def get_col_headings(self):
-		"For a table type question, gets col headings."
-		if self.question_type != "table":
-			return None
-		cols = []
-		cols_string = copy.deepcopy(self.prompt)
-		first_col = cols_string.find("<col>")
-		while first_col != -1:
-			cols_string = cols_string[first_col + len("<col>"):]
-			col_end = cols_string.find("</col>")
-			cols.append(cols_string[:col_end])
-			first_col = cols_string.find("<col>")
-		return cols
-		
 
 	def __str__(self):
 		return self.prompt

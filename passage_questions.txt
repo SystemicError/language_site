@@ -195,32 +195,85 @@
 </question>
 
 <question>
-	<id>hard_12</id>
+	<id>hard_12.1</id>
 	<set>12</set>
 	<passage>hard</passage>
-	<question type>table</question type>
-	<prompt>
-		<row>I have</row>
-		<row>no clue</row>
-		<col>what to make</col>
-		<col>of the data for this question.</col>
+	<question type>pick many</question type>
+	<prompt>Fill out the following graphic organizer:<br />
+		<table>
+			<tr>
+				<td></td>
+				<td>Fire Type</td>
+				<td>Water Type</td>
+			</tr>
+			<tr>
+				<td>Flying Type</td>
+				<td>Cell A</td>
+				<td>Cell B</td>
+			</tr>
+			<tr>
+				<td>Dark Type</td>
+				<td>Cell C</td>
+				<td>Cell D</td>
+			</tr>
+		</table>
+		<br /><br />
+		What belongs in <b>Cell A</b>?
 	</prompt>
-	<answer choice>Me,</answer choice>
-	<answer choice>neither.</answer choice>
-	<answer choice>What</answer choice>
-	<answer choice>gives?</answer choice>
-	<correct answer>0 1 2 3</correct answer>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>0 1</correct answer>
+	<hint1>There are two.</hint1>
+	<hint2>They have wings and are bad for hayrides.</hint2>
 </question>
-
-Change in work schedule
-Sleeping in late every day
-Moving across time zones
-Staying up late every night
-Your body feels like it is a different time than it actually is
-Chronic sleep deficiency 
-Sleep up to 4 hours less than the average person
-Feeling like you want to sleep when you are working or doing leisure activities
-Leads to sleep deprivation when one cannot "sleep in," or wake up later in the morning
+<question>
+	<id>hard_12.2</id>
+	<set>12</set>
+	<passage>hard</passage>
+	<question type>pick many</question type>
+	<prompt>What belongs in <b>Cell B</b>?</prompt>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>2</correct answer>
+	<hint1>There's only one.</hint1>
+	<hint2>MAGIKARP</hint2>
+</question>
+<question>
+	<id>hard_12.3</id>
+	<set>12</set>
+	<passage>hard</passage>
+	<question type>pick many</question type>
+	<prompt>What belongs in <b>Cell C</b>?</prompt>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>3</correct answer>
+	<hint1>It's not one of the original 150.</hint1>
+	<hint2>It looks like a dog.</hint2>
+</question>
+<question>
+	<id>hard_12.4</id>
+	<set>12</set>
+	<passage>hard</passage>
+	<question type>pick many</question type>
+	<prompt>What belongs in <b>Cell D</b>?</prompt>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>4</correct answer>
+	<hint1>It's not one of the original 150.</hint1>
+	<hint2>It looks like a shark.</hint2>
+</question>
 
 <question>
 	<id>hard_13</id>
@@ -548,32 +601,87 @@ Leads to sleep deprivation when one cannot "sleep in," or wake up later in the m
 	<answer choice>To inform us that people with DSPS may suffer from sleep deprivation.</answer choice>
 	<correct answer>2 3</correct answer>
 </question>
+
 <question>
-	<id>easy_12</id>
+	<id>easy_12.1</id>
 	<set>12</set>
 	<passage>easy</passage>
-	<question type>table</question type>
-	<prompt>
-		<row>I have</row>
-		<row>no clue</row>
-		<col>what to make</col>
-		<col>of the data for this question.</col>
+	<question type>pick many</question type>
+	<prompt>Fill out the following graphic organizer:<br />
+		<table>
+			<tr>
+				<td></td>
+				<td>Fire Type</td>
+				<td>Water Type</td>
+			</tr>
+			<tr>
+				<td>Flying Type</td>
+				<td>Cell A</td>
+				<td>Cell B</td>
+			</tr>
+			<tr>
+				<td>Dark Type</td>
+				<td>Cell C</td>
+				<td>Cell D</td>
+			</tr>
+		</table>
+		<br /><br />
+		What belongs in <b>Cell A</b>?
 	</prompt>
-	<answer choice>Me,</answer choice>
-	<answer choice>neither.</answer choice>
-	<answer choice>What</answer choice>
-	<answer choice>gives?</answer choice>
-	<correct answer>0 1 2 3</correct answer>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>0 1</correct answer>
+	<hint1>There are two.</hint1>
+	<hint2>They have wings and are bad for hayrides.</hint2>
 </question>
-Change in work schedule
-Sleeping in late every day
-Moving across time zones
-Staying up late every night
-Your body feels like it is a different time than it actually is
-Chronic sleep deficiency 
-Sleep up to 4 hours less than the average person
-Feeling like you want to sleep when you are working or doing leisure activities
-Leads to sleep deprivation when one cannot "sleep in," or wake up later in the morning
+<question>
+	<id>easy_12.2</id>
+	<set>12</set>
+	<passage>easy</passage>
+	<question type>pick many</question type>
+	<prompt>What belongs in <b>Cell B</b>?</prompt>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>2</correct answer>
+	<hint1>There's only one.</hint1>
+	<hint2>MAGIKARP</hint2>
+</question>
+<question>
+	<id>easy_12.3</id>
+	<set>12</set>
+	<passage>easy</passage>
+	<question type>pick many</question type>
+	<prompt>What belongs in <b>Cell C</b>?</prompt>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>3</correct answer>
+	<hint1>It's not one of the original 150.</hint1>
+	<hint2>It looks like a dog.</hint2>
+</question>
+<question>
+	<id>easy_12.4</id>
+	<set>12</set>
+	<passage>easy</passage>
+	<question type>pick many</question type>
+	<prompt>What belongs in <b>Cell D</b>?</prompt>
+	<answer choice>Moltres</answer choice>
+	<answer choice>Charizard</answer choice>
+	<answer choice>Gyrados</answer choice>
+	<answer choice>Houndour</answer choice>
+	<answer choice>Sharpedo</answer choice>
+	<correct answer>4</correct answer>
+	<hint1>It's not one of the original 150.</hint1>
+	<hint2>It looks like a shark.</hint2>
+</question>
 
 <question>
 	<id>easy_13</id>

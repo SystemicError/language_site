@@ -40,7 +40,7 @@ def add_passage_questions():
 		question_type = split_by_tag(question, "question type")[0]
 		prompt = split_by_tag(question, "prompt")[0]
 
-		if question_type == "pick one" or question_type == "pick many" or question_type == "table":
+		if question_type == "pick one" or question_type == "pick many":
 			hint1 = split_by_tag(question, "hint1")
 			if len(hint1) == 0:
 				hint1 = None

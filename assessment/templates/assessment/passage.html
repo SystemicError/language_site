@@ -25,10 +25,6 @@
 		{% if question.type == "pick one" or question.type == "pick many" or question.type == "short response" or question.type == "long response" %}
 			{{ question.prompt|safe }}
 		{% endif %}
-		{% if question.type == "table" %}
-			{# tables always have the same question #}
-			Fill out this graphic organizer:
-		{% endif %}
 		</p>
 		{# hint #}
 		<p style="color:red">
@@ -60,30 +56,6 @@
 				{% endif %}
 				</p>
 			{% endfor %}
-			<input type="hidden" name="question_id{{ forloop.counter0 }}" value="{{ question.id }}">
-		{% endif %}
-		{% if question.type == "table" %}
-			<table>
-			<tr>
-			<td></td>
-			{% for col in question.cols %}
-				<td>{{ col }}</td>
-			{% endfor %}
-			</tr>
-			{% for row in question.rows %}
-				<tr>
-				<td>{{ row }}</td>
-				{% for col in question.cols %}
-					<td>
-					{% for answer_choice in question.answer_choices %}
-						{# We need some kind of code here to get table saved responses #}
-						<p><input type="radio" name="table{{ forloop.parentloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.parentloop.counter0}}-{{ forloop.parentloop.counter0}}" value="{{ forloop.counter0 }}">{{ answer_choice }}</p>
-					{% endfor %}
-					</td>
-				{% endfor %}
-				</tr>
-			{% endfor %}
-			</table>
 			<input type="hidden" name="question_id{{ forloop.counter0 }}" value="{{ question.id }}">
 		{% endif %}
 		{% if question.type == "short response" %}

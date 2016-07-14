@@ -260,7 +260,6 @@ def process_previous_passage_responses(postdata, st):
 	"Takes in POST data and Student, updates student passage results."
 	more_qs = "pickone0" in postdata.keys()
 	more_qs = more_qs or " ".join(postdata.keys()).find("pickmany0") != -1
-	more_qs = more_qs or "table0-0-0" in postdata.keys()
 	more_qs = more_qs or "shortresponse0" in postdata.keys()
 	more_qs = more_qs or "longresponse0" in postdata.keys()
 	question_index = 0
@@ -285,17 +284,6 @@ def process_previous_passage_responses(postdata, st):
 					response = response + str(box) + " "
 			response = response.strip()
 
-		if "table" + qi_str + "-0-0" in postdata.keys():
-			pq = PassageQuestion.objects.get(pq_id = postdata["question_id" + qi_str])
-			rows = len(pq.get_row_headings())
-			cols = len(pq.get_col_headings())
-			response = ""
-			for row in range(rows):
-				for col in range(cols):
-					entry_name = "table" + qi_str + "-" + str(row) + "-" + str(col)
-					response = response + postdata[entry_name] + " "
-			response = response.strip()
-
 		if "shortresponse" + qi_str in postdata.keys():
 			#pq_id = postdata["question_id" + qi_str]
 			response = postdata["shortresponse" + qi_str]
@@ -309,8 +297,7 @@ def process_previous_passage_responses(postdata, st):
 		question_index += 1
 		qi_str = str(question_index)
 		more_qs = "pickone" + qi_str in postdata.keys()
-		more_qs = more_qs or "pickmany" + qi_str in postdata.keys()
-		more_qs = more_qs or "table" + qi_str + "-0-0" in postdata.keys()
+		more_qs = more_qs or " ".join(postdata.keys()).find("pickmany" + qi_str) != -1
 		more_qs = more_qs or "shortresponse" + qi_str in postdata.keys()
 		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
 
@@ -355,12 +342,6 @@ def set_context_from_passage_questions(context, pqs, saved_rs, hints):
 		else:
 			question['hint'] = "You are out of attempts for this question."
 
-		# additional info for table questions
-
-		if pq.question_type == "table":
-			question['rows'] = pq.get_row_headings()
-			question['cols'] = pq.get_col_headings()
-
 		context['questions'].append(question)
 
 	return
@@ -371,15 +352,6 @@ def format_saved_response(saved_response, pq):
 		return int(saved_response)
 	elif pq.question_type == "pick many":
 		return [int(x) for x in saved_response.strip().split()]
-	elif pq.question_type == "table":
-		srs = [int(x) for x in saved_response.strip().split()]
-		# have an array of triples of (row, col, saved_response)
-		formatted = []
-		index = 0
-		for row in range(len(pq.get_row_headings())):
-			for col in range(len(pq.get_col_headings())):
-				formatted.append((row, col, srs[index]))
-		return formatted
 	elif pq.question_type == "short response":
 		return saved_response
 	elif pq.question_type == "long response":
