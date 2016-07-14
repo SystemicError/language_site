@@ -142,6 +142,11 @@ class Student(models.Model):
 		self.pq_set_queue = json.dumps(queue)
 		return (question_set, responses)
 
+	def pq_set_queue_peek(self):
+		"Returns first element of pq_set_queue with modifying."
+		queue = json.loads(self.pq_set_queue)
+		return queue[0]
+
 	def add_passage_result(self, pq, response):
 		"Adds response to passage_results[pq.pq_id]."
 		results = self.get_passage_results()

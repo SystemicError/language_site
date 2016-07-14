@@ -3,6 +3,8 @@
 <head>
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'assessment/passage.css' %}" />
+<script src="{% static 'assessment/passage.js' %}">
+</script>
 </head>
 <body>
 <h1>Passage quiz</h1>
@@ -12,9 +14,9 @@
 	<tr>
 	<td width="50%">
 	<p>{{ passage_text|safe }}</p>
-	{# questions #}
 	</td>
-	<td valign="top">
+	<td>
+	{# questions #}
 	<form method="post" action="passage" id="answerform">
 	{% csrf_token %}
 	{% for question in questions %}

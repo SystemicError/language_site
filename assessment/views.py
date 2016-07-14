@@ -315,7 +315,7 @@ def process_previous_passage_responses(postdata, st):
 		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
 
 	if "submit" in postdata.keys():
-		if len(responses) > 0 and postdata["submit"] == "Submit and go on":
+		if postdata["submit"] == "Submit and go on" and len(responses) > 0:
 			st.submit_question_set(responses)
 			st.save()
 		if postdata["submit"] == "Skip and come back":
