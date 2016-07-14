@@ -327,6 +327,7 @@ def process_previous_passage_responses(postdata, st):
 def set_context_from_passage_questions(context, pqs, saved_rs, hints):
 	"Set context for passage view."
 	context['questions'] = []
+	context['question_set'] = pqs[0].question_set
 	for i in range(len(pqs)):
 		question = {}
 		pq = pqs[i]

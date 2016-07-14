@@ -19,6 +19,7 @@
 	{# questions #}
 	<form method="post" action="passage" id="answerform">
 	{% csrf_token %}
+	<p><b>({{ question_set }})</b></p>
 	{% for question in questions %}
 		<p>
 		{% if question.type == "pick one" or question.type == "pick many" or question.type == "short response" or question.type == "long response" %}
