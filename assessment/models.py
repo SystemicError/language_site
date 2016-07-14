@@ -176,11 +176,15 @@ class Student(models.Model):
 
 	def add_vocab_query(self, vh):
 		"Adds one to query of vocabHint vh (or creates new record if previously zero)."
+		qset = self.pq_set_queue_peek()[0]
 		query_counts = self.get_vocab_words_queried()
 		if vh.word in query_counts.keys():
-			query_counts[vh.word] += 1
+			if qset in query_counts[vh.word].keys():
+				query_counts[vh.word][qset] += 1
+			else:
+				query_counts[vh.word][qset] = 1
 		else:
-			query_counts[vh.word] = 1
+			query_counts[vh.word] = {qset: 1}
 		self.vocab_query_counts = json.dumps(query_counts)
 		return
 
