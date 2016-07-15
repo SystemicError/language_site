@@ -238,7 +238,10 @@ def passageView(request):
 
 	# process previous answers, if any
 	if not st.has_completed_passage():
-		process_previous_passage_responses(request.POST, st)
+		response_result = process_previous_passage_responses(request.POST, st)
+
+	if response_result == "left_blanks":
+		context['left_blanks'] = True
 
 	# give a question set, if necessary
 	next_qs_sr_h = st.get_next_question_set_and_saved_responses_and_hints()
@@ -258,58 +261,83 @@ def passageView(request):
 
 def process_previous_passage_responses(postdata, st):
 	"Takes in POST data and Student, updates student passage results."
-	more_qs = "pickone0" in postdata.keys()
-	more_qs = more_qs or " ".join(postdata.keys()).find("pickmany0") != -1
-	more_qs = more_qs or "shortresponse0" in postdata.keys()
-	more_qs = more_qs or "longresponse0" in postdata.keys()
 	question_index = 0
 	qi_str = str(question_index)
 	responses = []
-	while more_qs:
+
+	# if we have questions from the wrong question set, reject this data
+	question_set = st.pq_set_queue_peek()[0]
+	if "question_id0" in postdata.keys():
+		try:
+			pq = PassageQuestion.objects.get(pq_id = postdata["question_id0"])
+		except ObjectDoesNotExist:
+			# Rejecting:  invalid question data in referrer
+			return "invalid_question"
+		if pq.question_set != question_set:
+			# Rejected because wrong question set present.
+			# This probably happened b/c the user hit back and resubmit
+			return "wrong_question_set"
+
+	question_skipped = False
+	while "question_id" + qi_str in postdata.keys():
 		# We always append a response, even if it's blank.  This way, we always
 		# pass the correct number of responses
-		response = ""
-		if "pickone" + qi_str in postdata.keys():
-			#pq_id = postdata["question_id" + qi_str]
-			response = postdata["pickone" + qi_str]
+		pq = PassageQuestion.objects.get(pq_id = postdata["question_id" + qi_str])
 
-		if " ".join(postdata.keys()).find("pickmany" + qi_str) != -1:
-			# remember, checkboxes only send POST data when checked
-			pq = PassageQuestion.objects.get(pq_id = postdata["question_id" + qi_str])
-			boxes = len(pq.get_answer_choices())
-			response = ""
-			for box in range(boxes):
-				entry_name = "pickmany" + qi_str + "-" + str(box)
-				if entry_name in postdata.keys():
-					response = response + str(box) + " "
-			response = response.strip()
-
-		if "shortresponse" + qi_str in postdata.keys():
-			#pq_id = postdata["question_id" + qi_str]
-			response = postdata["shortresponse" + qi_str]
-
-		if "longresponse" + qi_str in postdata.keys():
-			#pq_id = postdata["question_id" + qi_str]
-			response = postdata["longresponse" + qi_str]
+		if pq.question_type == "pick one":
+			if "pickone" + qi_str in postdata.keys():
+				response = postdata["pickone" + qi_str]
+			else:
+				response = "-1"  # if left blank
+				question_skipped = True
+		elif pq.question_type == "pick many":
+			if " ".join(postdata.keys()).find("pickmany" + qi_str) != -1:
+				# remember, checkboxes only send POST data when checked
+				boxes = len(pq.get_answer_choices())
+				response = ""
+				for box in range(boxes):
+					entry_name = "pickmany" + qi_str + "-" + str(box)
+					if entry_name in postdata.keys():
+						response = response + str(box) + " "
+				response = response.strip()
+			else:
+				response = "-1"  # if left blank
+				question_skipped = True
+		elif pq.question_type == "short response":
+			if "shortresponse" + qi_str in postdata.keys() and postdata["shortresponse" + qi_str] != "":
+				response = postdata["shortresponse" + qi_str]
+			else:
+				response = ""  # if left blank
+				question_skipped = True
+		elif pq.question_type == "long response":
+			if "longresponse" + qi_str in postdata.keys() and postdata["longresponse" + qi_str] != "":
+				response = postdata["longresponse" + qi_str]
+			else:
+				response = ""  # if left blank
+				question_skipped = True
 
 		responses.append(response)
 
 		question_index += 1
 		qi_str = str(question_index)
-		more_qs = "pickone" + qi_str in postdata.keys()
-		more_qs = more_qs or " ".join(postdata.keys()).find("pickmany" + qi_str) != -1
-		more_qs = more_qs or "shortresponse" + qi_str in postdata.keys()
-		more_qs = more_qs or "longresponse" + qi_str in postdata.keys()
 
 	if "submit" in postdata.keys():
-		if postdata["submit"] == "Submit and go on" and len(responses) > 0:
-			st.submit_question_set(responses)
-			st.save()
+		if postdata["submit"] == "Submit and go on":
+			if not question_skipped:
+				# if they answered everything, submit responses
+				st.submit_question_set(responses)
+				st.save()
+				return "submitted"
+			else:
+				# if they left things blank, don't submit
+				st.save_and_dont_skip_question_set(responses)
+				return "left_blanks"
 		if postdata["submit"] == "Skip and come back":
 			st.save_and_skip_question_set(responses)
 			st.save()
-
-	return
+			return "skipped"
+	# Rejecting because referred from wrong page, i.e. no responses to process
+	return "invalid_referrer"
 
 def set_context_from_passage_questions(context, pqs, saved_rs, hints):
 	"Set context for passage view."

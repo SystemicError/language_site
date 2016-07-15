@@ -16,6 +16,10 @@
 	<p>{{ passage_text|safe }}</p>
 	</td>
 	<td>
+	{# if they left questions blank last time #}
+	{% if left_blanks %}
+		<p style="color:blue">You must answer every question before submitting an answer.  If you would like to save your answers so far and come back to this question later, click "Skip and come back."</p>
+	{% endif %}
 	{# questions #}
 	<form method="post" action="passage" id="answerform">
 	{% csrf_token %}

@@ -121,6 +121,13 @@ class Student(models.Model):
 		self.pq_set_enqueue(question_set, responses)
 		return
 
+	def save_and_dont_skip_question_set(self, responses):
+		"Saves a set of responses without advancing the queue."
+		queue = json.loads(self.pq_set_queue)
+		queue[0][1] = responses
+		self.pq_set_queue = json.dumps(queue)
+		return
+
 	def pq_set_enqueue(self, question_set, responses):
 		"Enqueues the question set."
 		queue = json.loads(self.pq_set_queue)
