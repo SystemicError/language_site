@@ -61,8 +61,8 @@
 	<passage>hard</passage>
 	<question type>pick many</question type>
 	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? <u>Check all that apply.</u></prompt>
-	<hint1>That is incorrect.  Focus on the relations between parts of the text. Pay attention to lexical and grammatical cohesion devices used within and across sentences. </hint1>
-	<hint2>What is the literal meaning of each sentence in the paragraph?</hint2>
+	<hint1>At least one of your answers is incorrect. Focus on the relations between parts of the text in paragraph 3. Pay attention to lexical and grammatical cohesion devices used within and across sentences.</hint1>
+	<hint2>At least one of your answers is still incorrect. What is the literal meaning of the second sentence in paragraph 3? Which choices above does it apply to?</hint2>
 	<answer choice>changing your work hours from a day shift to a night shift (explicit)</answer choice>
 	<answer choice>staying up unusually late every night watching TV (implicit)</answer choice>
 	<answer choice>exercising</answer choice>
@@ -78,7 +78,8 @@
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>What is the main purpose of paragraph 3? </prompt>
-	<hint1>That is incorrect.  Evaluate the importance of information in paragraph 3 by distinguishing major ideas from supporting details.</hint1>
+	<hint1>That is incorrect. Try to evaluate the importance of information in paragraph 3 by distinguishing major ideas from supporting details.</hint1>
+	<hint2>That is still incorrect. What is the key verb used in most of the sentences?</hint2>
 	<answer choice>To summarize what a circadian rhythm is.</answer choice>
 	<answer choice>To describe the causes of circadian rhythm disorders.</answer choice>
 	<answer choice>To emphasize the harmfulness of circadian rhythm disorder.</answer choice>
@@ -92,7 +93,7 @@
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>According to the text, could moving from Boston, MA to California lead to a circadian rhythm disorder?</prompt>
-	<hint1>That is incorrect.  Think about where Boston, MA and California are located.  Is there a time difference between these places?</hint1>
+	<hint1>That is incorrect. Think about where Boston and California are located. Is there a time difference between these places?</hint1>
 	<answer choice>Yes</answer choice>
 	<answer choice>No</answer choice>
 	<correct answer>0</correct answer>
@@ -112,6 +113,7 @@
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>Once in California, will your body feel awake or drowsy at 7:00am?</prompt>
+	<hint1>That is incorrect.  Notice that if it is 7am in California, it is 3 hours LATER in Boston.</hint1>
 	<answer choice>awake</answer choice>
 	<answer choice>drowsy</answer choice>
 	<correct answer>0</correct answer>
@@ -186,7 +188,9 @@
 	<passage>hard</passage>
 	<question type>pick many</question type>
 	<prompt>What are the author's main ponts of writing paragraph 6? <u>Check all that apply.</u></prompt>
-	<hint1>Evaluate the importance of the information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
+	<hint1>At least one of your answers is incorrect. Try to evaluate the importance of information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
+	<hint2>At least one of your answers is still incorrect. As with other circadian rhythm disorders; it's important to know the symptoms and negative consequences of the disorder.</hint2>
+</hint2>
 	<answer choice>To indicate that DSPS is the most common circadian rhythm disorder.</answer choice>
 	<answer choice>To inform us that people with DSPS stay up from 1:00 am to 4:00 am.</answer choice>
 	<answer choice>To emphasize that people with DSPS stay up late and wake up late.</answer choice>
@@ -281,6 +285,8 @@
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>The word (3) "conducive" is closest in meaning to:</prompt>
+	<hint1>That is incorrect. Locate the word "conducive" in the text. What is the general meaning of the whole sentence in which the word appears?</hint1>
+	<hint2>That is still incorrect. Focus on the contextual clues provided in the text. What is the connection between the part of the sentence before the parentheses and the part inside the parentheses (line 5)?</hint2>
 	<answer choice>proper</answer choice>
 	<answer choice>harmful</answer choice>
 	<answer choice>relative</answer choice>
@@ -295,7 +301,7 @@
 	<question type>pick one</question type>
 	<prompt>According to paragraph 7, all the following are treatments of circadian rhythm disorders EXCEPT:</prompt>
 	<hint1>That is incorrect.  What are two major categories of circadian rhythm disorders?</hint1>
-	<hint2>What are the two major types of external stimulus therapy?</hint2>
+	<hint2>That is still incorrect. What are the two types of external stimulus therapy mentioned in paragraph 7?</hint2>
 	<answer choice>Chronotherapy</answer choice>
 	<answer choice>Bright light therapy</answer choice>
 	<answer choice>Sleep disorder diagnosis</answer choice>
@@ -317,6 +323,8 @@
 	<passage>hard</passage>
 	<question type>pick one</question type>
 	<prompt>Why would bright light therapy be an effective treatment for a circadian rhythm disorder?</prompt>
+	<hint1>That is incorrect. Focus on information from all parts of the text. Where is "bright light therapy" mentioned in the text? How can it help a person who has a circadian rhythm disorder?</hint1>
+	<hint2>That is still incorrect. Re-read the last paragraph on the text. What is the difference between "bright light therapy" and "chronotherapy"?</hint2>
 	<answer choice>The light serves as an external cue that helps your body's clock adjust to a different time schedule.</answer choice>
 	<answer choice>The light helps you relax and get more sleep.</answer choice>
 	<answer choice>It helps you gradually and systematically adjust your sleep schedule until a desired bedtime is achieved.</answer choice>
@@ -405,6 +413,7 @@
 	<prompt>What recommendations would you give to a person who suffers from a circadian rhythm disorder and why?</prompt>
 </question>
 
+
 <question>
 	<id>easy_1</id>
 	<set>1</set>
@@ -446,7 +455,6 @@
 	<correct answer>(any)</correct answer>
 </question>
 
-
 <question>
 	<id>easy_2.3</id>
 	<set>2</set>
@@ -469,8 +477,8 @@
 	<passage>easy</passage>
 	<question type>pick many</question type>
 	<prompt>According to the passage, which of the following might cause a circadian rhythm disorder? <u>Check all that apply.</u></prompt>
-	<hint1>That is incorrect.  Focus on the relations between parts of the text. Pay attention to lexical and grammatical cohesion devices used within and across sentences. </hint1>
-	<hint2>What is the literal meaning of each sentence in the paragraph?</hint2>
+	<hint1>At least one of your answers is incorrect. Focus on the relations between parts of the text in paragraph 3. Pay attention to lexical and grammatical cohesion devices used within and across sentences.</hint1>
+	<hint2>At least one of your answers is still incorrect. What is the literal meaning of the second sentence in paragraph 3? Which choices above does it apply to?</hint2>
 	<answer choice>changing your work hours from a day shift to a night shift (explicit)</answer choice>
 	<answer choice>staying up unusually late every night watching TV (implicit)</answer choice>
 	<answer choice>exercising</answer choice>
@@ -486,7 +494,8 @@
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>What is the main purpose of paragraph 3? </prompt>
-	<hint1>That is incorrect.  Evaluate the importance of information in paragraph 3 by distinguishing major ideas from supporting details.</hint1>
+	<hint1>That is incorrect. Try to evaluate the importance of information in paragraph 3 by distinguishing major ideas from supporting details.</hint1>
+	<hint2>That is still incorrect. What is the key verb used in most of the sentences?</hint2>
 	<answer choice>To summarize what a circadian rhythm is.</answer choice>
 	<answer choice>To describe the causes of circadian rhythm disorders.</answer choice>
 	<answer choice>To emphasize the harmfulness of circadian rhythm disorder.</answer choice>
@@ -500,7 +509,7 @@
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>According to the text, could moving from Boston, MA to California lead to a circadian rhythm disorder?</prompt>
-	<hint1>That is incorrect.  Think about where Boston, MA and California are located.  Is there a time difference between these places?</hint1>
+	<hint1>That is incorrect. Think about where Boston and California are located. Is there a time difference between these places?</hint1>
 	<answer choice>Yes</answer choice>
 	<answer choice>No</answer choice>
 	<correct answer>0</correct answer>
@@ -520,6 +529,7 @@
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>Once in California, will your body feel awake or drowsy at 7:00am?</prompt>
+	<hint1>That is incorrect.  Notice that if it is 7am in California, it is 3 hours LATER in Boston.</hint1>
 	<answer choice>awake</answer choice>
 	<answer choice>drowsy</answer choice>
 	<correct answer>0</correct answer>
@@ -594,7 +604,9 @@
 	<passage>easy</passage>
 	<question type>pick many</question type>
 	<prompt>What are the author's main ponts of writing paragraph 6? <u>Check all that apply.</u></prompt>
-	<hint1>Evaluate the importance of the information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
+	<hint1>At least one of your answers is incorrect. Try to evaluate the importance of information in paragraph 6 by distinguishing major ideas from supporting details.</hint1>
+	<hint2>At least one of your answers is still incorrect. As with other circadian rhythm disorders; it's important to know the symptoms and negative consequences of the disorder.</hint2>
+</hint2>
 	<answer choice>To indicate that DSPS is the most common circadian rhythm disorder.</answer choice>
 	<answer choice>To inform us that people with DSPS stay up from 1:00 am to 4:00 am.</answer choice>
 	<answer choice>To emphasize that people with DSPS stay up late and wake up late.</answer choice>
@@ -689,6 +701,8 @@
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>The word (3) "conducive" is closest in meaning to:</prompt>
+	<hint1>That is incorrect. Locate the word "conducive" in the text. What is the general meaning of the whole sentence in which the word appears?</hint1>
+	<hint2>That is still incorrect. Focus on the contextual clues provided in the text. What is the connection between the part of the sentence before the parentheses and the part inside the parentheses (line 5)?</hint2>
 	<answer choice>proper</answer choice>
 	<answer choice>harmful</answer choice>
 	<answer choice>relative</answer choice>
@@ -703,7 +717,7 @@
 	<question type>pick one</question type>
 	<prompt>According to paragraph 7, all the following are treatments of circadian rhythm disorders EXCEPT:</prompt>
 	<hint1>That is incorrect.  What are two major categories of circadian rhythm disorders?</hint1>
-	<hint2>What are the two major types of external stimulus therapy?</hint2>
+	<hint2>That is still incorrect. What are the two types of external stimulus therapy mentioned in paragraph 7?</hint2>
 	<answer choice>Chronotherapy</answer choice>
 	<answer choice>Bright light therapy</answer choice>
 	<answer choice>Sleep disorder diagnosis</answer choice>
@@ -725,6 +739,8 @@
 	<passage>easy</passage>
 	<question type>pick one</question type>
 	<prompt>Why would bright light therapy be an effective treatment for a circadian rhythm disorder?</prompt>
+	<hint1>That is incorrect. Focus on information from all parts of the text. Where is "bright light therapy" mentioned in the text? How can it help a person who has a circadian rhythm disorder?</hint1>
+	<hint2>That is still incorrect. Re-read the last paragraph on the text. What is the difference between "bright light therapy" and "chronotherapy"?</hint2>
 	<answer choice>The light serves as an external cue that helps your body's clock adjust to a different time schedule.</answer choice>
 	<answer choice>The light helps you relax and get more sleep.</answer choice>
 	<answer choice>It helps you gradually and systematically adjust your sleep schedule until a desired bedtime is achieved.</answer choice>
@@ -812,4 +828,3 @@
 	<question type>long response</question type>
 	<prompt>What recommendations would you give to a person who suffers from a circadian rhythm disorder and why?</prompt>
 </question>
-
