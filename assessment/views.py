@@ -57,7 +57,27 @@ def logoutView(request):
 	return render(request, 'assessment/logout.html', context)
 
 @login_required(login_url='/assessment/login')
+def vocabQueryView(request, vocab_word):
+	# for vocab lookups during the passage
+	context = {}
+	st = Student.objects.get(name = request.user.username)
+
+	# give them the definition of this vocab word and note the query in the student database
+
+	vh = VocabHint.objects.get(word = vocab_word)
+
+	# unfinished, need to account of invalid word looked up
+
+	st.add_vocab_query(vh)
+
+	context['word'] = vh.word
+	context['definition'] = vh.definition
+
+	return context
+
+@login_required(login_url='/assessment/login')
 def vocabView(request):
+	# for vocab quiz questions
 	context = {}
 	st = Student.objects.get(name = request.user.username)
 	print "Student:" + str(st)
@@ -80,14 +100,14 @@ def vocabView(request):
 
 	vresults = st.get_vocab_results()
 	context['num_complete'] = len(vresults)
-	context['finished'] = len(vresults) >= 10
+	context['finished'] = len(vresults) >= 30
 	if context['finished']:
 		return render(request, 'assessment/vocab.html', context)
 	else:
 		# select the next word
 		# unfinished -- doesn't currently select a unique word
 		# unfinished -- doesn't select by band/frequency
-		vqs = VocabQuestion.objects.all()
+		vqs = [x for x in VocabQuestion.objects.all() if x not in [y[0] for y in vresults]]
 		vq = vqs[random.randint(0, len(vqs) - 1)]
 		context['word'] = vq.word
 	return render(request, 'assessment/vocab.html', context)
@@ -96,14 +116,17 @@ def vocabView(request):
 def passageView(request):
 	context = {}
 	st = Student.objects.get(name = request.user.username)
-
 	# if vocab_score == -1, they shouldn't be here
 	if st.vocab_score() == -1:
 		context['message'] = "You need to go back to the index."
-	elif st.vocab_score > .5:
+	elif st.vocab_score() > .5:
 		context['message'] = "You get the hard passage."
+		psg = Passage.objects.get(passage_id = 0)
+		context['passage_text'] = psg.passage_text
 	else:
 		context['message'] = "You get the easy passage."
+		psg = Passage.objects.get(passage_id = 1)
+		context['passage_text'] = psg.passage_text
 
 	return render(request, 'assessment/passage.html', context)
 
@@ -117,7 +140,7 @@ def get_user_context(username):
 	# if they are in the database, see how much progress they've made and direct them
 	if username in [x.name for x in Student.objects.all()]:
 		st = Student.objects.get(name = username)
-		if st.vocab_score() == -1:
+		if len(st.get_vocab_results()) < 30:
 			context['content'] = "You need to take the vocab test."
 			context['link'] = "vocab"
 		else:

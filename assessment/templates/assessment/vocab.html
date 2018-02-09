@@ -7,8 +7,8 @@
 	<form method="post" action="vocab">
 	{% csrf_token %}
 	<p><input type="hidden" name="word" value="{{ word }}"></p>
-       	<p><input type="radio" name="is_word" value="yes" checked>Yes</p>
-       	<p><input type="radio" name="is_word" value="no">No</p>
+       	<p><input type="radio" accesskey="y" name="is_word" value="yes" checked>Yes</p>
+       	<p><input type="radio" accesskey="n" name="is_word" value="no">No</p>
        	</p>
        	<p class="submit"><input type="submit" name="commit" value="Submit"></p>
      		</form>

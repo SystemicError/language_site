@@ -1,0 +1,7 @@
+<h1>Vocab Lookup</h1>
+{% if definition %}
+	<p><b>{{ word }}</b></p><br /><br />
+	<p>{{ definition }}</p><br /><br />
+{% else %}
+	<p>Couldn't look up {{ word }}.  Not sure how you got here.</p><br />
+{% endif %}
